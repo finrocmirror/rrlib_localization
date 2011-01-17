@@ -1,6 +1,6 @@
 //
-// You received this file as part of MCA2
-// Modular Controller Architecture Version 2
+// You received this file as part of RRLib
+// Robotics Research Library
 //
 //Copyright (C) AG Robotersysteme TU Kaiserslautern
 //
@@ -53,12 +53,6 @@ using rrlib::math::tMat3x3d;
 using rrlib::math::tAngleRad;
 using rrlib::util::tTime;
 using rrlib::localisation::tOdometry;
-//----------------------------------------------------------------------
-// Debugging
-//----------------------------------------------------------------------
-//#undef LOCAL_DEBUG
-#define LOCAL_DEBUG
-#include "kernel/LocalDebug.h"
 
 //----------------------------------------------------------------------
 // class tOdometry constructor

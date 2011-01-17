@@ -1,6 +1,6 @@
 //
-// You received this file as part of MCA2
-// Modular Controller Architecture Version 2
+// You received this file as part of RRLib
+// Robotics Research Library
 //
 //Copyright (C) AG Robotersysteme TU Kaiserslautern
 //
@@ -75,19 +75,6 @@ namespace localisation
 class tOdometry
 {
 public:
-  /*!
-    Anonymous enumeration type for selection etc
-   */
-// CAVE: 7 = size of prefix which is ignored during building of descriptions
-// --> eSTATE_DIMENSION is transformed to "Dimension" due to strlen(eSTATE_) == 7
-//   _DE//SCR_(static,tOdometry, state_description,7,Natural);
-//   enum {
-//     eSTATE_DIMENSION /*!< Endmarker and Dimension */
-//   };
-// NOTE: Remove the // in _DE//SCR_ if you want to use the above code. The // are only used as the
-//       description builder does not understand comments and would process the above lines although
-//       they are commented out.
-
   /*!
    */
   tOdometry(
