@@ -128,7 +128,7 @@ public:
     return this->vel_vector_wcs;
   }
 
-  const rrlib::math::tPose3D& AttitudeVectorWcs() const
+  const rrlib::math::tPose3D& AngularVelocityVectorWcs() const
   {
     return this->av_vector_wcs;
   }
