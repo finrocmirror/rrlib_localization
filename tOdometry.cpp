@@ -32,7 +32,7 @@
 // non MCA Includes - include with <>
 // MCA Includes - include with ""
 //----------------------------------------------------------------------
-#include "rrlib/localisation/tOdometry.h"
+#include "rrlib/localization/tOdometry.h"
 
 //----------------------------------------------------------------------
 // typedefs and enums
@@ -52,7 +52,7 @@ using rrlib::math::tMat4x4d;
 using rrlib::math::tMat3x3d;
 using rrlib::math::tAngleRad;
 using rrlib::util::tTime;
-using rrlib::localisation::tOdometry;
+using rrlib::localization::tOdometry;
 
 //----------------------------------------------------------------------
 // class tOdometry constructor

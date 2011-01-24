@@ -33,14 +33,14 @@
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_localisation_tOdometry_h_
-#define _rrlib_localisation_tOdometry_h_
+#ifndef _rrlib_localization_tOdometry_h_
+#define _rrlib_localization_tOdometry_h_
 
 //----------------------------------------------------------------------
 // Global includes - include with <>
 // Local includes - include with ""
 //----------------------------------------------------------------------
-#include "rrlib/localisation/definitions.h"
+#include "rrlib/localization/definitions.h"
 #include "rrlib/math/tPose3D.h"
 #include "rrlib/math/tMatrix.h"
 #include "rrlib/util/tTime.h"
@@ -58,7 +58,7 @@
 //----------------------------------------------------------------------
 namespace rrlib
 {
-namespace localisation
+namespace localization
 {
 //----------------------------------------------------------------------
 // Forward class declarations
@@ -176,6 +176,6 @@ private:
 //----------------------------------------------------------------------
 // End of namespace declaration
 //----------------------------------------------------------------------
-}; // namespace localisation
+}; // namespace localization
 }; // namespace rrlib
 #endif

@@ -29,12 +29,12 @@
  *
  * \b
  *
- * Contains definition of localisation log domain.
+ * Contains definition of localization log domain.
  *
  */
 //----------------------------------------------------------------------
-#ifndef _rrlib_localisation_definitions_h_
-#define _rrlib_localisation_definitions_h_
+#ifndef _rrlib_localization_definitions_h_
+#define _rrlib_localization_definitions_h_
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
@@ -50,14 +50,14 @@
 //----------------------------------------------------------------------
 namespace rrlib
 {
-namespace localisation
+namespace localization
 {
-RRLIB_LOG_CREATE_DEFAULT_DOMAIN("localisation");
+RRLIB_LOG_CREATE_DEFAULT_DOMAIN("localization");
 
 //----------------------------------------------------------------------
 // End of namespace declaration
 //----------------------------------------------------------------------
-}; // namespace localisation
+}; // namespace localization
 }; // namespace rrlib
 
 #endif
