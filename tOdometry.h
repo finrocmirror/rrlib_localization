@@ -40,10 +40,10 @@
 // Global includes - include with <>
 // Local includes - include with ""
 //----------------------------------------------------------------------
-#include "rrlib/localization/definitions.h"
 #include "rrlib/math/tPose3D.h"
 #include "rrlib/math/tMatrix.h"
 #include "rrlib/util/tTime.h"
+#include "rrlib/logging/messages.h"
 
 //----------------------------------------------------------------------
 // typedefs and enums
@@ -79,7 +79,7 @@ public:
    */
   tOdometry(
     bool use_timestamp,
-    rrlib::math::tPose3D initial_pose = rrlib::math::tPose3D::Zero()
+    math::tPose3D initial_pose = math::tPose3D::Zero()
   );
 
   /*!
@@ -115,20 +115,20 @@ public:
       this->reset_timer = true;
     }
     this->use_timestamp = val;
-    RRLIB_LOG_MESSAGE(rrlib::logging::eLL_DEBUG_VERBOSE_1, "Setting use timestamp to %d.\n", this->use_timestamp);
+    RRLIB_LOG_PRINTF(logging::eLL_DEBUG_VERBOSE_1, "Setting use timestamp to %d.\n", this->use_timestamp);
   }
 
-  const rrlib::math::tPose3D& CurrentPoseWcs() const
+  const math::tPose3D& CurrentPoseWcs() const
   {
     return this->current_pose_wcs;
   }
 
-  const rrlib::math::tPose3D& VelocityVectorWcs() const
+  const math::tPose3D& VelocityVectorWcs() const
   {
     return this->vel_vector_wcs;
   }
 
-  const rrlib::math::tPose3D& AngularVelocityVectorWcs() const
+  const math::tPose3D& AngularVelocityVectorWcs() const
   {
     return this->av_vector_wcs;
   }
@@ -136,10 +136,10 @@ public:
   void CorrectPose(
     bool _reset,
     int _pose_changed,
-    const rrlib::math::tPose3D& _current_pose_wcs,
-    const rrlib::math::tPose3D& _delta_pose_wcs);
+    const math::tPose3D& _current_pose_wcs,
+    const math::tPose3D& _delta_pose_wcs);
 
-  void UpdateTime(const rrlib::util::tTime& internal_time, const rrlib::util::tTime& external_time);
+  void UpdateTime(const util::tTime& internal_time, const util::tTime& external_time);
 
   bool UpdatePose(double velocity, double angular_velocity, double side_slip_angle);
 
@@ -157,7 +157,7 @@ private:
   float side_slip_angle;
 
   float elapsed_time;
-  rrlib::util::tTime timer;
+  util::tTime timer;
 
   int data_select;
   bool reset;
@@ -166,12 +166,12 @@ private:
 
   int data_changed;
 
-  rrlib::math::tPose3D current_pose_wcs, previous_pose_wcs, ci_delta_pose_wcs, delta_pose_lcs;
-  rrlib::math::tPose3D velocity_conversion;
-  rrlib::math::tPose3D vel_vector_lcs;
-  rrlib::math::tPose3D vel_vector_wcs, av_vector_wcs;
-  rrlib::math::tPose3D local_side_slip_rotation;
-  rrlib::math::tMat4x4d previous_pose_wcs_matrix;
+  math::tPose3D current_pose_wcs, previous_pose_wcs, ci_delta_pose_wcs, delta_pose_lcs;
+  math::tPose3D velocity_conversion;
+  math::tPose3D vel_vector_lcs;
+  math::tPose3D vel_vector_wcs, av_vector_wcs;
+  math::tPose3D local_side_slip_rotation;
+  math::tMat4x4d previous_pose_wcs_matrix;
 };
 //----------------------------------------------------------------------
 // End of namespace declaration

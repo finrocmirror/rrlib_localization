@@ -35,6 +35,14 @@
 #include "rrlib/localization/tOdometry.h"
 
 //----------------------------------------------------------------------
+// Namespace declaration
+//----------------------------------------------------------------------
+namespace rrlib
+{
+namespace localization
+{
+
+//----------------------------------------------------------------------
 // typedefs and enums
 //----------------------------------------------------------------------
 
@@ -47,17 +55,11 @@
 // Forward class declarations
 // Extern methods
 //----------------------------------------------------------------------
-using rrlib::math::tPose3D;
-using rrlib::math::tMat4x4d;
-using rrlib::math::tMat3x3d;
-using rrlib::math::tAngleRad;
-using rrlib::util::tTime;
-using rrlib::localization::tOdometry;
 
 //----------------------------------------------------------------------
 // class tOdometry constructor
 //----------------------------------------------------------------------
-tOdometry::tOdometry(bool _use_timestamp, rrlib::math::tPose3D _initial_pose)
+tOdometry::tOdometry(bool _use_timestamp, math::tPose3D _initial_pose)
     :
     pose_changed(0),
     vel_veh(0.0f),
@@ -72,14 +74,14 @@ tOdometry::tOdometry(bool _use_timestamp, rrlib::math::tPose3D _initial_pose)
     data_changed(0),
     current_pose_wcs(_initial_pose),
     previous_pose_wcs(_initial_pose),
-    ci_delta_pose_wcs(tPose3D::Zero()),
-    delta_pose_lcs(tPose3D::Zero()),
-    velocity_conversion(tPose3D::Zero()),
-    vel_vector_lcs(tPose3D::Zero()),
-    vel_vector_wcs(tPose3D::Zero()),
-    av_vector_wcs(tPose3D::Zero()),
-    local_side_slip_rotation(tPose3D::Zero()),
-    previous_pose_wcs_matrix(tMat4x4d::Identity())
+    ci_delta_pose_wcs(math::tPose3D::Zero()),
+    delta_pose_lcs(math::tPose3D::Zero()),
+    velocity_conversion(math::tPose3D::Zero()),
+    vel_vector_lcs(math::tPose3D::Zero()),
+    vel_vector_wcs(math::tPose3D::Zero()),
+    av_vector_wcs(math::tPose3D::Zero()),
+    local_side_slip_rotation(math::tPose3D::Zero()),
+    previous_pose_wcs_matrix(math::tMat4x4d::Identity())
 {}
 
 //----------------------------------------------------------------------
@@ -94,8 +96,8 @@ tOdometry::~tOdometry()
 void tOdometry::CorrectPose(
   bool _reset,
   int _pose_changed,
-  const tPose3D& _current_pose_wcs,
-  const tPose3D& _delta_pose_wcs)
+  const math::tPose3D& _current_pose_wcs,
+  const math::tPose3D& _delta_pose_wcs)
 {
   if (_reset)
   {
@@ -120,7 +122,7 @@ void tOdometry::CorrectPose(
 //----------------------------------------------------------------------
 // class tOdometry UpdateTime()
 //----------------------------------------------------------------------
-void tOdometry::UpdateTime(const tTime& internal_time, const tTime& external_time)
+void tOdometry::UpdateTime(const util::tTime& internal_time, const util::tTime& external_time)
 {
   if (!this->use_timestamp)
   {
@@ -193,7 +195,7 @@ bool tOdometry::UpdatePose(double vel_veh, double av_z_veh, double side_slip_ang
       }
 
       //rotate vectors in lcs according to side slip:
-      tMat4x4d local_side_slip_rotation_matrix = local_side_slip_rotation.GetTransformationMatrix();
+      math::tMat4x4d local_side_slip_rotation_matrix = local_side_slip_rotation.GetTransformationMatrix();
       this->delta_pose_lcs.Set(local_side_slip_rotation_matrix * delta_pose_lcs.GetTransformationMatrix(), false);
       this->vel_vector_lcs.Set(local_side_slip_rotation_matrix * vel_vector_lcs.GetTransformationMatrix(), false);
 
@@ -207,8 +209,8 @@ bool tOdometry::UpdatePose(double vel_veh, double av_z_veh, double side_slip_ang
       velocity_conversion = current_pose_wcs;
       velocity_conversion.Set(0., 0., 0.);
 
-      tMat4x4d current_pose_wcs_matrix = current_pose_wcs.GetTransformationMatrix();
-      tMat3x3d current_pose_wcs_rotation_matrix = current_pose_wcs.GetRotationMatrix();
+      math::tMat4x4d current_pose_wcs_matrix = current_pose_wcs.GetTransformationMatrix();
+      math::tMat3x3d current_pose_wcs_rotation_matrix = current_pose_wcs.GetRotationMatrix();
 
       this->vel_vector_wcs.Set(this->velocity_conversion.GetTransformationMatrix() * vel_vector_lcs.GetTransformationMatrix(), false);
 
@@ -218,12 +220,17 @@ bool tOdometry::UpdatePose(double vel_veh, double av_z_veh, double side_slip_ang
 
       //use difference to determine angular velocities:
       av_vector_wcs.SetOrientation(
-        tAngleRad(current_pose_wcs.Roll() - previous_pose_wcs.Roll()) / elapsed_time,
-        tAngleRad(current_pose_wcs.Pitch() - previous_pose_wcs.Pitch()) / elapsed_time,
-        tAngleRad(current_pose_wcs.Yaw() - previous_pose_wcs.Yaw()) / elapsed_time);
+        math::tAngleRad(current_pose_wcs.Roll() - previous_pose_wcs.Roll()) / elapsed_time,
+        math::tAngleRad(current_pose_wcs.Pitch() - previous_pose_wcs.Pitch()) / elapsed_time,
+        math::tAngleRad(current_pose_wcs.Yaw() - previous_pose_wcs.Yaw()) / elapsed_time);
       this->data_changed = (this->data_changed + 1) % 1000;
     }
     return true;
   }
 } // UpdatePose()
 
+//----------------------------------------------------------------------
+// Namespace declaration
+//----------------------------------------------------------------------
+}
+}
