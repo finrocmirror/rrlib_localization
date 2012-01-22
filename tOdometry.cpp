@@ -60,28 +60,28 @@ namespace localization
 // class tOdometry constructor
 //----------------------------------------------------------------------
 tOdometry::tOdometry(bool _use_timestamp, math::tPose3D _initial_pose)
-    :
-    pose_changed(0),
-    vel_veh(0.0f),
-    av_z_veh(0.0f),
-    side_slip_angle(0.0f),
-    elapsed_time(0.0f),
-    timer(),
-    data_select(0),
-    reset(false),
-    use_timestamp(_use_timestamp),
-    reset_timer(true),
-    data_changed(0),
-    current_pose_wcs(_initial_pose),
-    previous_pose_wcs(_initial_pose),
-    ci_delta_pose_wcs(math::tPose3D::Zero()),
-    delta_pose_lcs(math::tPose3D::Zero()),
-    velocity_conversion(math::tPose3D::Zero()),
-    vel_vector_lcs(math::tPose3D::Zero()),
-    vel_vector_wcs(math::tPose3D::Zero()),
-    av_vector_wcs(math::tPose3D::Zero()),
-    local_side_slip_rotation(math::tPose3D::Zero()),
-    previous_pose_wcs_matrix(math::tMat4x4d::Identity())
+  :
+  pose_changed(0),
+  vel_veh(0.0f),
+  av_z_veh(0.0f),
+  side_slip_angle(0.0f),
+  elapsed_time(0.0f),
+  timer(),
+  data_select(0),
+  reset(false),
+  use_timestamp(_use_timestamp),
+  reset_timer(true),
+  data_changed(0),
+  current_pose_wcs(_initial_pose),
+  previous_pose_wcs(_initial_pose),
+  ci_delta_pose_wcs(math::tPose3D::Zero()),
+  delta_pose_lcs(math::tPose3D::Zero()),
+  velocity_conversion(math::tPose3D::Zero()),
+  vel_vector_lcs(math::tPose3D::Zero()),
+  vel_vector_wcs(math::tPose3D::Zero()),
+  av_vector_wcs(math::tPose3D::Zero()),
+  local_side_slip_rotation(math::tPose3D::Zero()),
+  previous_pose_wcs_matrix(math::tMat4x4d::Identity())
 {}
 
 //----------------------------------------------------------------------
@@ -181,7 +181,7 @@ bool tOdometry::UpdatePose(double vel_veh, double av_z_veh, double side_slip_ang
       {
         this->delta_pose_lcs.Set(
           vel_veh / av_z_veh * sin(av_z_veh * elapsed_time),
-          vel_veh / av_z_veh *(1. - cos(av_z_veh * elapsed_time)),
+          vel_veh / av_z_veh * (1. - cos(av_z_veh * elapsed_time)),
           this->delta_pose_lcs.Z());
         this->vel_vector_lcs.Set(
           this->delta_pose_lcs.X() / elapsed_time,
