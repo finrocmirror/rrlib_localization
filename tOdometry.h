@@ -115,7 +115,7 @@ public:
       this->reset_timer = true;
     }
     this->use_timestamp = val;
-    RRLIB_LOG_PRINTF(logging::eLL_DEBUG_VERBOSE_1, "Setting use timestamp to %d.\n", this->use_timestamp);
+    RRLIB_LOG_PRINTF(DEBUG_VERBOSE_1, "Setting use timestamp to %d.\n", this->use_timestamp);
   }
 
   const math::tPose3D& CurrentPoseWcs() const
