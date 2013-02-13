@@ -210,7 +210,6 @@ bool tOdometry::UpdatePose(double vel_veh, double av_z_veh, double side_slip_ang
       velocity_conversion.Set(0., 0., 0.);
 
       math::tMat4x4d current_pose_wcs_matrix = current_pose_wcs.GetTransformationMatrix();
-      math::tMat3x3d current_pose_wcs_rotation_matrix = current_pose_wcs.GetRotationMatrix();
 
       this->vel_vector_wcs.Set(this->velocity_conversion.GetTransformationMatrix() * vel_vector_lcs.GetTransformationMatrix(), false);
 
