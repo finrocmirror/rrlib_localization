@@ -2,18 +2,16 @@
 <!DOCTYPE targets PUBLIC "-//RRLIB//DTD make 1.0" "http://rrlib.org/xml/1.0/make.dtd">
 <targets>
 
-  <rrlib name="odometry">
+  <unittest name="twist">
     <sources>
-      tOdometry.*
+      unit_test_twist.cpp
     </sources>
-  </rrlib>
+  </unittest>
 
-  <rrlib name="pose_and_twist">
+  <unittest name="pose">
     <sources>
-      tPose*
-      tTwist*
-      rtti.cpp    
+      unit_test_pose.cpp
     </sources>
-  </rrlib>
+  </unittest>
 
 </targets>
