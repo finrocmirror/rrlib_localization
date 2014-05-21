@@ -2,9 +2,9 @@
 <!DOCTYPE targets PUBLIC "-//RRLIB//DTD make 1.0" "http://rrlib.org/xml/1.0/make.dtd">
 <targets>
 
-  <rrlib>
+  <rrlib name="odometry">
     <sources>
-      *
+      tOdometry.*
     </sources>
   </rrlib>
 
