@@ -19,20 +19,20 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 //----------------------------------------------------------------------
-/*!\file    rrlib/localization/tPose.h
+/*!\file    rrlib/localization/tOrientation.h
  *
  * \author  Tobias Foehst
  *
  * \date    2010-11-28
  *
- * \brief   Contains tPose
+ * \brief   Contains tOrientation
  *
- * \b tPose
+ * \b tOrientation
  *
  */
 //----------------------------------------------------------------------
-#ifndef __rrlib__localization__tPose_h__
-#define __rrlib__localization__tPose_h__
+#ifndef __rrlib__localization__tOrientation_h__
+#define __rrlib__localization__tOrientation_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
@@ -42,12 +42,12 @@
 //----------------------------------------------------------------------
 // Internal includes with ""
 //----------------------------------------------------------------------
-#define __rrlib__localization__pose__include_guard__
+#define __rrlib__localization__orientation__include_guard__
 
-#include "rrlib/localization/pose/tPose2D.h"
-#include "rrlib/localization/pose/tPose3D.h"
+#include "rrlib/localization/orientation/tOrientation2D.h"
+#include "rrlib/localization/orientation/tOrientation3D.h"
 
-#undef __rrlib__localization__pose__include_guard__
+#undef __rrlib__localization__orientation__include_guard__
 
 //----------------------------------------------------------------------
 // Debugging
@@ -65,69 +65,65 @@ namespace localization
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
 template <typename TElement = double>
-using tPose2D = tPose<2, TElement, si_units::tMeter, si_units::tNoUnit>;
+using tOrientation2D = tOrientation<2, TElement, si_units::tNoUnit>;
 template <typename TElement = double>
-using tPoseChange2D = tPose < 2, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-template <typename TElement = double>
-using tTwist2D = tPoseChange2D<TElement>;
+using tOrientationChange2D = tOrientation<2, TElement, si_units::tHertz>;
 
 template <typename TElement = double>
-using tPose3D = tPose<3, TElement, si_units::tMeter, si_units::tNoUnit>;
+using tOrientation3D = tOrientation<3, TElement, si_units::tNoUnit>;
 template <typename TElement = double>
-using tPoseChange3D = tPose < 3, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-template <typename TElement = double>
-using tTwist3D = tPoseChange3D<TElement>;
+using tOrientationChange3D = tOrientation<3, TElement, si_units::tHertz>;
 
 //----------------------------------------------------------------------
 // Arithmetic operators
 //----------------------------------------------------------------------
 template <typename TElement, typename TValue>
-tPose2D<decltype(TElement() * TValue())> operator * (const tPoseChange2D<TElement> &pose_change, si_units::tTime<TValue> time)
+tOrientation2D<decltype(TElement() * TValue())> operator * (const tOrientationChange2D<TElement> &orientation_change, si_units::tTime<TValue> time)
 {
-  return tPose2D<decltype(TElement() * TValue())>(pose_change.Position() * time, pose_change.Orientation() * time);
+  return tOrientation2D<decltype(TElement() * TValue())>(orientation_change.Yaw() * time);
 }
 template <typename TElement, typename TValue>
-tPose2D<decltype(TElement() * TValue())> operator * (si_units::tTime<TValue> time, const tPoseChange2D<TElement> &pose_change)
+tOrientation2D<decltype(TElement() * TValue())> operator * (si_units::tTime<TValue> time, const tOrientationChange2D<TElement> &orientation_change)
 {
-  return pose_change * time;
-}
-
-template <typename TElement, typename TValue>
-tPose3D<decltype(TElement() * TValue())> operator * (const tPoseChange3D<TElement> &pose_change, si_units::tTime<TValue> time)
-{
-  return tPose3D<decltype(TElement() * TValue())>(pose_change.Position() * time, pose_change.Orientation() * time);
-}
-template <typename TElement, typename TValue>
-tPose3D<decltype(TElement() * TValue())> operator * (si_units::tTime<TValue> time, const tPoseChange3D<TElement> &pose_change)
-{
-  return pose_change * time;
+  return orientation_change * time;
 }
 
 template <typename TElement, typename TValue>
-tPoseChange2D < decltype(TElement() / TValue()) > operator / (const tPose2D<TElement> &pose, si_units::tTime<TValue> time)
+tOrientation3D<decltype(TElement() * TValue())> operator * (const tOrientationChange3D<TElement> &orientation_change, si_units::tTime<TValue> time)
 {
-  return tPoseChange2D < decltype(TElement() / TValue()) > (pose.Position() / time, pose.Orientation() / time);
+  return tOrientation3D<decltype(TElement() * TValue())>(orientation_change.Roll() * time, orientation_change.Pitch() * time, orientation_change.Yaw() * time);
+}
+template <typename TElement, typename TValue>
+tOrientation3D<decltype(TElement() * TValue())> operator * (si_units::tTime<TValue> time, const tOrientationChange3D<TElement> &orientation_change)
+{
+  return orientation_change * time;
 }
 
 template <typename TElement, typename TValue>
-tPoseChange3D < decltype(TElement() / TValue()) > operator / (const tPose3D<TElement> &pose, si_units::tTime<TValue> time)
+tOrientationChange2D < decltype(TElement() / TValue()) > operator / (const tOrientation2D<TElement> &orientation, si_units::tTime<TValue> time)
 {
-  return tPoseChange3D < decltype(TElement() / TValue()) > (pose.Position() / time, pose.Orientation() / time);
+  return tOrientationChange2D < decltype(TElement() / TValue()) > (orientation.Yaw() / time);
+}
+
+template <typename TElement, typename TValue>
+tOrientationChange3D < decltype(TElement() / TValue()) > operator / (const tOrientation3D<TElement> &orientation, si_units::tTime<TValue> time)
+{
+  return tOrientationChange3D < decltype(TElement() / TValue()) > (orientation.Roll() / time, orientation.Pitch() / time, orientation.Yaw() / time);
 }
 
 //----------------------------------------------------------------------
 // Explicit template instantiation
 //----------------------------------------------------------------------
 
-extern template class tPose<2, double, si_units::tMeter, si_units::tNoUnit>;
-extern template class tPose<2, float, si_units::tMeter, si_units::tNoUnit>;
-extern template class tPose < 2, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-extern template class tPose < 2, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+extern template class tOrientation<2, double, si_units::tNoUnit>;
+extern template class tOrientation<2, float, si_units::tNoUnit>;
+extern template class tOrientation<2, double, si_units::tHertz>;
+extern template class tOrientation<2, float, si_units::tHertz>;
 
-extern template class tPose<3, double, si_units::tMeter, si_units::tNoUnit>;
-extern template class tPose<3, float, si_units::tMeter, si_units::tNoUnit>;
-extern template class tPose < 3, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-extern template class tPose < 3, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+extern template class tOrientation<3, double, si_units::tNoUnit>;
+extern template class tOrientation<3, float, si_units::tNoUnit>;
+extern template class tOrientation<3, double, si_units::tHertz>;
+extern template class tOrientation<3, float, si_units::tHertz>;
 
 //----------------------------------------------------------------------
 // End of namespace declaration

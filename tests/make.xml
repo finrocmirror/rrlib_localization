@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE targets PUBLIC "-//FINROC//DTD make 14.05" "http://finroc.org/xml/14.04/make.dtd">
+<targets>
+
+  <program name="orientation" sources="orientation.cpp" />
+  <program name="pose" sources="pose.cpp" />
+  <program name="position" sources="position.cpp" />
+
+</targets>

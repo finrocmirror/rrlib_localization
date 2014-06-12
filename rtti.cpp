@@ -39,9 +39,6 @@
 // Internal includes with ""
 //----------------------------------------------------------------------
 #include "rrlib/localization/tPose.h"
-#include "rrlib/localization/tPoseWithUncertainty.h"
-#include "rrlib/localization/tTwist.h"
-#include "rrlib/localization/tTwistWithUncertainty.h"
 
 //----------------------------------------------------------------------
 // Debugging
@@ -51,20 +48,21 @@
 // Namespace usage
 //----------------------------------------------------------------------
 using namespace rrlib::rtti;
+using namespace rrlib::localization;
 
 //----------------------------------------------------------------------
 // Type initializers
 //----------------------------------------------------------------------
 
-static tDataType<rrlib::localization::tPose2D<>> init_type_pose_2d;
-static tDataType<rrlib::localization::tPose3D<>> init_type_pose_3d;
-static tDataType<rrlib::localization::tPoseWithUncertainty2D<>> init_type_pose_with_uncertainty_2d;
-static tDataType<rrlib::localization::tPoseWithUncertainty3D<>> init_type_pose_with_uncertainty_3d;
+static tDataType<tPose2D<>> init_type_pose_2d;
+static tDataType<tPose3D<>> init_type_pose_3d;
+//static tDataType<tPoseWithUncertainty2D<>> init_type_pose_with_uncertainty_2d;
+//static tDataType<tPoseWithUncertainty3D<>> init_type_pose_with_uncertainty_3d;
 
-static tDataType<rrlib::localization::tTwist2D<>> init_type_twist_2d;
-static tDataType<rrlib::localization::tTwist3D<>> init_type_twist_3d;
-static tDataType<rrlib::localization::tTwistWithUncertainty2D<>> init_type_twist_with_uncertainty_2d;
-static tDataType<rrlib::localization::tTwistWithUncertainty3D<>> init_type_twist_with_uncertainty_3d;
+static tDataType<tTwist2D<>> init_type_twist_2d;
+static tDataType<tTwist3D<>> init_type_twist_3d;
+//static tDataType<tTwistWithUncertainty2D<>> init_type_twist_with_uncertainty_2d;
+//static tDataType<tTwistWithUncertainty3D<>> init_type_twist_with_uncertainty_3d;
 
 #endif
 

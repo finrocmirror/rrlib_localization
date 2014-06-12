@@ -2,7 +2,7 @@
 // You received this file as part of RRLib
 // Robotics Research Library
 //
-// Copyright (C) AG Robotersysteme TU Kaiserslautern
+// Copyright (C) Finroc GbR (finroc.org)
 //
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -19,13 +19,15 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 //----------------------------------------------------------------------
-/*!\file    rrlib/localization/tPose.cpp
+/*!\file    rrlib/localization/tPose2D.cpp
  *
- * \author  Michael Arndt
+ * \author  Tobias Foehst
  *
- * \date    2014-04-17
+ * \date    2014-06-05
+ *
  */
 //----------------------------------------------------------------------
+#include "rrlib/localization/tPose.h"
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
@@ -34,7 +36,14 @@
 //----------------------------------------------------------------------
 // Internal includes with ""
 //----------------------------------------------------------------------
-#include "rrlib/localization/tPose.h"
+
+//----------------------------------------------------------------------
+// Debugging
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+// Namespace usage
+//----------------------------------------------------------------------
 
 //----------------------------------------------------------------------
 // Namespace declaration
@@ -44,20 +53,30 @@ namespace rrlib
 namespace localization
 {
 
-/* explicit class instantiation of common template types */
-// TODO: unfortunately the explicit class instantiation does not seem to work with alias templates
-//template class tPose2D<float>;
-//template class tPoseBase<2, rrlib::si_units::tLength<float>, rrlib::math::tAngle<float, rrlib::math::angle::Radian, rrlib::math::angle::Signed>>;
-//template class tPose2D<double>;
-template class tPoseBase<2, rrlib::si_units::tLength<double>, rrlib::math::tAngle<double, rrlib::math::angle::Radian, rrlib::math::angle::Signed>>;
-//template class tPose3D<float>;
-//template class tPoseBase<3, rrlib::si_units::tLength<float>, rrlib::math::tAngle<float, rrlib::math::angle::Radian, rrlib::math::angle::Signed>>;
-//template class tPose3D<double>;
-template class tPoseBase<3, rrlib::si_units::tLength<double>, rrlib::math::tAngle<double, rrlib::math::angle::Radian, rrlib::math::angle::Signed>>;
+//----------------------------------------------------------------------
+// Forward declarations / typedefs / enums
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+// Const values
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+// Implementation
+//----------------------------------------------------------------------
+
+template class tPose<2, double, si_units::tMeter, si_units::tNoUnit>;
+template class tPose<2, float, si_units::tMeter, si_units::tNoUnit>;
+template class tPose < 2, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+template class tPose < 2, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+
+template class tPose<3, double, si_units::tMeter, si_units::tNoUnit>;
+template class tPose<3, float, si_units::tMeter, si_units::tNoUnit>;
+template class tPose < 3, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+template class tPose < 3, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
 
 //----------------------------------------------------------------------
 // End of namespace declaration
 //----------------------------------------------------------------------
 }
 }
-
