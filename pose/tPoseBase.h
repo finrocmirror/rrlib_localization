@@ -110,6 +110,17 @@ public:
     return pose;
   }
 
+  tPoseBase();
+
+  template <typename TPositionElement, typename TOrientationElement = TElement>
+  tPoseBase(const tPosition<TPositionElement> &position, const tOrientation<TOrientationElement> &orientation = tOrientation<TElement>::Zero());
+
+  template <typename TMatrixElement>
+  tPoseBase(const math::tMatrix < Tdimension + 1, Tdimension + 1, TMatrixElement > &matrix, double max_error = 1E-6);
+
+  template <typename TOtherElement>
+  tPoseBase(const tPose<Tdimension, TOtherElement, TPositionSIUnit, TOrientationSIUnit> &other);
+
   inline const tPosition<> &Position() const
   {
     return this->position;
@@ -175,22 +186,6 @@ public:
   void ApplyRelativePoseTransformation(const tPose<Tdimension, TTransformationElement, TPositionSIUnit, TOrientationSIUnit> &relative_transformation);
 
   bool IsZero(double epsilon) const;
-
-//----------------------------------------------------------------------
-// Protected methods
-//----------------------------------------------------------------------
-protected:
-
-  tPoseBase();
-
-  template <typename TPositionElement, typename TOrientationElement = TElement>
-  tPoseBase(const tPosition<TPositionElement> &position, const tOrientation<TOrientationElement> &orientation = tOrientation<TElement>::Zero());
-
-  template <typename TMatrixElement>
-  tPoseBase(const math::tMatrix < Tdimension + 1, Tdimension + 1, TMatrixElement > &matrix, double max_error = 1E-6);
-
-  template <typename TOtherElement>
-  tPoseBase(const tPose<Tdimension, TOtherElement, TPositionSIUnit, TOrientationSIUnit> &other);
 
 //----------------------------------------------------------------------
 // Private fields and methods

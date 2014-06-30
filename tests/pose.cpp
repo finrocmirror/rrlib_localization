@@ -191,7 +191,7 @@ private:
 
   void ComparisonOperators()
   {
-    typedef localization::tPose2D<double> tPose2D;
+    typedef localization::tPose2D<float> tPose2D;
     typedef tPose2D::tOrientationComponent<> tAngle2D;
     RRLIB_UNIT_TESTS_ASSERT(tPose2D(1, 2, tAngle2D(3)) == tPose2D(1, 2, tAngle2D(3)));
     RRLIB_UNIT_TESTS_ASSERT(tPose2D(1, 2, tAngle2D(3)) != tPose2D(2, 3, tAngle2D(4)));
@@ -314,14 +314,17 @@ private:
     output_stream << tPose3D<float>(2, 3, 4, math::tAngle<double, math::angle::Radian>(1.5), math::tAngle<double, math::angle::Radian>(2.5), math::tAngle<double, math::angle::Radian>(3.5));
     output_stream.Flush();
 
+    tPose2D<float> pose_2d_float;
+    tPose3D<float> pose_3d_float;
+
     input_stream >> pose_2d;
     RRLIB_UNIT_TESTS_EQUALITY(tPose2D<double>(10, 20, math::tAngle<double, math::angle::Radian>(M_PI_2)), pose_2d);
-    input_stream >> pose_2d;
-    RRLIB_UNIT_TESTS_EQUALITY(tPose2D<double>(3, 2, math::tAngle<double, math::angle::Radian>(0)), pose_2d);
+    input_stream >> pose_2d_float;
+    RRLIB_UNIT_TESTS_EQUALITY(tPose2D<float>(3, 2, math::tAngle<double, math::angle::Radian>(0)), pose_2d_float);
     input_stream >> pose_3d;
     RRLIB_UNIT_TESTS_EQUALITY(tPose3D<double>(10, 20, 30, math::tAngle<double, math::angle::Radian>(1), math::tAngle<double, math::angle::Radian>(2), math::tAngle<double, math::angle::Radian>(3)), pose_3d);
-    input_stream >> pose_3d;
-    RRLIB_UNIT_TESTS_ASSERT(IsEqual(tPose3D<double>(2, 3, 4, math::tAngle<double, math::angle::Radian>(1.5), math::tAngle<double, math::angle::Radian>(2.5), math::tAngle<double, math::angle::Radian>(3.5)), pose_3d, 1E-6));
+    input_stream >> pose_3d_float;
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(tPose3D<float>(2, 3, 4, math::tAngle<double, math::angle::Radian>(1.5), math::tAngle<double, math::angle::Radian>(2.5), math::tAngle<double, math::angle::Radian>(3.5)), pose_3d_float, 1E-6));
   }
 
   void UnitChanges()
