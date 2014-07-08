@@ -346,7 +346,6 @@ const bool operator < (const tPose<2, TElement, TPositionSIUnit, TOrientationSIU
 //----------------------------------------------------------------------
 // Streaming
 //----------------------------------------------------------------------
-
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
 
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
@@ -354,8 +353,7 @@ serialization::tStringOutputStream &operator << (serialization::tStringOutputStr
 {
   std::stringstream s;
   s << pose;
-  stream << s.str();
-  return stream;
+  return stream << s.str();
 }
 
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>

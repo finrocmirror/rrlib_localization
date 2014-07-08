@@ -191,15 +191,13 @@ std::istream &operator >> (std::istream &stream, tPose<3, TElement, TPositionSIU
 template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
 serialization::tOutputStream &operator << (serialization::tOutputStream &stream, const tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
 {
-  stream << pose.X() << pose.Y() << pose.Z() << pose.Roll() << pose.Pitch() << pose.Yaw();
-  return stream;
+  return stream << pose.X() << pose.Y() << pose.Z() << pose.Roll() << pose.Pitch() << pose.Yaw();
 }
 
 template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
 serialization::tInputStream &operator >> (serialization::tInputStream &stream, tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
 {
-  stream >> pose.X() >> pose.Y() >> pose.Z() >> pose.Roll() >> pose.Pitch() >> pose.Yaw();
-  return stream;
+  return stream >> pose.X() >> pose.Y() >> pose.Z() >> pose.Roll() >> pose.Pitch() >> pose.Yaw();
 }
 
 #endif

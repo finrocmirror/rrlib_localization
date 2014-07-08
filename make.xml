@@ -10,10 +10,13 @@
 
   <rrlib name="pose">
     <sources>
+      orientation/*
+      pose/*
       rtti.cpp    
       tOrientation.cpp
       tPose.cpp
       tPosition.h
+      tUncertainPose.cpp
     </sources>
   </rrlib>
 
