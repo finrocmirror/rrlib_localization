@@ -19,19 +19,22 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 //----------------------------------------------------------------------
-/*!\file    rrlib/localization/tPoseWithUncertainty.cpp
+/*!\file    rrlib/localization/pose/tUncertainPose3D.hpp
  *
  * \author  Michael Arndt
+ * \author  Tobias Föhst
  *
- * \date    2014-04-17
+ * \date    2014-04-21
  *
  */
 //----------------------------------------------------------------------
-#include "rrlib/localization/tPoseWithUncertainty.h"
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
 //----------------------------------------------------------------------
+#ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
+#include <sstream>
+#endif
 
 //----------------------------------------------------------------------
 // Internal includes with ""
@@ -43,10 +46,6 @@
 #include <cassert>
 
 //----------------------------------------------------------------------
-// Namespace usage
-//----------------------------------------------------------------------
-
-//----------------------------------------------------------------------
 // Namespace declaration
 //----------------------------------------------------------------------
 namespace rrlib
@@ -54,12 +53,30 @@ namespace rrlib
 namespace localization
 {
 
-/* explicit class instantiation of common template types */
-// TODO: unfortunately the explicit class instantiation does not seem to work with alias templates
-//template class tPoseWithUncertainty2D<float>;
-//template class tPoseWithUncertainty2D<double>;
-//template class tPoseWithUncertainty3D<float>;
-//template class tPoseWithUncertainty3D<double>;
+//----------------------------------------------------------------------
+// Forward declarations / typedefs / enums
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+// Const values
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+// Implementation
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+// tUncertainPose2D constructors
+//----------------------------------------------------------------------
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+tUncertainPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPose()
+{}
+
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TX, typename TY, typename TYaw, typename TCovarianceElement>
+tUncertainPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPose(TX x, TY y, TYaw yaw, const tCovarianceMatrix<TCovarianceElement> &covariance) :
+  tPoseBase(tPose2D<>(x, y, yaw), covariance)
+{}
 
 //----------------------------------------------------------------------
 // End of namespace declaration

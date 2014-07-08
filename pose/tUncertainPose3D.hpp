@@ -19,32 +19,31 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 //----------------------------------------------------------------------
-/*!\file    rrlib/localization/tPoseWithUncertainty.h
+/*!\file    rrlib/localization/pose/tUncertainPose3D.hpp
  *
  * \author  Michael Arndt
+ * \author  Tobias Föhst
  *
- * \date    2014-04-17
- *
- * \brief   Contains tPoseWithUncertainty
- *
- * \b tPoseWithUncertainty
- *
- * Representation of a 3D Pose in Cartesian space with uncertainty (attached covariance matrix)
+ * \date    2014-04-21
  *
  */
 //----------------------------------------------------------------------
-#ifndef __rrlib__localization__tPoseWithUncertainty_h__
-#define __rrlib__localization__tPoseWithUncertainty_h__
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
 //----------------------------------------------------------------------
-#include "rrlib/si_units/si_units.h"
+#ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
+#include <sstream>
+#endif
 
 //----------------------------------------------------------------------
 // Internal includes with ""
 //----------------------------------------------------------------------
-#include "rrlib/localization/tPoseWithUncertaintyBase.h"
+
+//----------------------------------------------------------------------
+// Debugging
+//----------------------------------------------------------------------
+#include <cassert>
 
 //----------------------------------------------------------------------
 // Namespace declaration
@@ -59,33 +58,40 @@ namespace localization
 //----------------------------------------------------------------------
 
 //----------------------------------------------------------------------
-// Class declaration
+// Const values
 //----------------------------------------------------------------------
-//! Representation of a Pose in Cartesian space with uncertainty
-/*!
- * Representation of a Pose in Cartesian space with uncertainty (attached covariance matrix)
- */
-template <
-size_t Tdimension = 3,
-       typename TLinearPosition = rrlib::si_units::tLength<>,
-       typename TAngularPosition = rrlib::math::tAngleRadSigned
-       >
-using tPoseWithUncertainty = tPoseWithUncertaintyBase<Tdimension, TLinearPosition, TAngularPosition>;
 
-/** alias declaration for the "standard" 2D pose with uncertainty */
-template <typename TElement = double>
-using tPoseWithUncertainty2D = tPoseWithUncertainty<2, rrlib::si_units::tLength<TElement>, rrlib::math::tAngle<TElement, rrlib::math::angle::Radian, rrlib::math::angle::Signed>>;
+//----------------------------------------------------------------------
+// Implementation
+//----------------------------------------------------------------------
 
-/** alias declaration for the "standard" 3D pose with uncertainty */
-template <typename TElement = double>
-using tPoseWithUncertainty3D = tPoseWithUncertainty<3, rrlib::si_units::tLength<TElement>, rrlib::math::tAngle<TElement, rrlib::math::angle::Radian, rrlib::math::angle::Signed>>;
+//----------------------------------------------------------------------
+// tUncertainPose3D constructors
+//----------------------------------------------------------------------
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPose()
+{}
 
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TX, typename TY, typename TZ, typename TCovarianceElement>
+tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPose(TX x, TY y, TZ z, const tCovarianceMatrix<TCovarianceElement> &covariance) :
+  tPoseBase(tPose3D<>(x, y, z), covariance)
+{}
+
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename T1, typename T2, typename T3, typename T4, typename TCovarianceElement>
+tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPose(T1 arg_1, T2 arg_2, T3 arg_3, T4 arg_4, const tCovarianceMatrix<TCovarianceElement> &covariance) :
+  tPoseBase(tPose3D<>(arg_1, arg_2, arg_3, arg_4), covariance)
+{}
+
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TX, typename TY, typename TZ, typename TRoll, typename TPitch, typename TYaw, typename TCovarianceElement>
+tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPose(TX x, TY y, TZ z, TRoll roll, TPitch pitch, TYaw yaw, const tCovarianceMatrix<TCovarianceElement> &covariance) :
+  tPoseBase(tPose3D<>(x, y, z, roll, pitch, yaw), covariance)
+{}
 
 //----------------------------------------------------------------------
 // End of namespace declaration
 //----------------------------------------------------------------------
 }
 }
-
-
-#endif

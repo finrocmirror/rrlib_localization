@@ -19,14 +19,16 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 //----------------------------------------------------------------------
-/*!\file    rrlib/localization/tPoseWithUncertaintyBase.hpp
+/*!\file    rrlib/localization/tUncertainPose.cpp
  *
  * \author  Michael Arndt
+ * \author  Tobias Föhst
  *
- * \date    2014-04-21
+ * \date    2014-04-17
  *
  */
 //----------------------------------------------------------------------
+#include "rrlib/localization/tUncertainPose.h"
 
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
@@ -39,7 +41,10 @@
 //----------------------------------------------------------------------
 // Debugging
 //----------------------------------------------------------------------
-#include <cassert>
+
+//----------------------------------------------------------------------
+// Namespace usage
+//----------------------------------------------------------------------
 
 //----------------------------------------------------------------------
 // Namespace declaration
@@ -49,6 +54,27 @@ namespace rrlib
 namespace localization
 {
 
+//----------------------------------------------------------------------
+// Forward declarations / typedefs / enums
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+// Const values
+//----------------------------------------------------------------------
+
+//----------------------------------------------------------------------
+// Implementation
+//----------------------------------------------------------------------
+
+template class tUncertainPose<2, double, si_units::tMeter, si_units::tNoUnit>;
+template class tUncertainPose<2, float, si_units::tMeter, si_units::tNoUnit>;
+template class tUncertainPose < 2, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+template class tUncertainPose < 2, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+
+template class tUncertainPose<3, double, si_units::tMeter, si_units::tNoUnit>;
+template class tUncertainPose<3, float, si_units::tMeter, si_units::tNoUnit>;
+template class tUncertainPose < 3, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+template class tUncertainPose < 3, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
 
 //----------------------------------------------------------------------
 // End of namespace declaration

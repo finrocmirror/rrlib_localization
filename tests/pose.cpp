@@ -36,6 +36,7 @@
 #include <cstring>
 
 #include "rrlib/localization/tPose.h"
+#include "rrlib/localization/tUncertainPose.h"
 
 //----------------------------------------------------------------------
 // Internal includes with ""
@@ -81,6 +82,7 @@ class TestPose : public util::tUnitTestSuite
   RRLIB_UNIT_TESTS_ADD_TEST(ArithmeticOperators);
   RRLIB_UNIT_TESTS_ADD_TEST(Streaming);
   RRLIB_UNIT_TESTS_ADD_TEST(UnitChanges);
+  RRLIB_UNIT_TESTS_ADD_TEST(Uncertainty);
   RRLIB_UNIT_TESTS_END_SUITE;
 
 private:
@@ -344,6 +346,26 @@ private:
     RRLIB_UNIT_TESTS_EQUALITY(pose_3d, si_units::tTime<float>(10) * pose_change_3d);
 
     RRLIB_UNIT_TESTS_EQUALITY(pose_change_3d, pose_3d / si_units::tTime<float>(10));
+  }
+
+  void Uncertainty()
+  {
+    RRLIB_UNIT_TESTS_EQUALITY(tPose2D<>(), static_cast<const tPose2D<> &>(tUncertainPose2D<>()));
+    RRLIB_UNIT_TESTS_EQUALITY(tPose2D<>(1, 2, math::tAngleDeg(3)), static_cast<const tPose2D<> &>(tUncertainPose2D<>(1, 2, math::tAngleDeg(3))));
+    RRLIB_UNIT_TESTS_EQUALITY(tPose2D<>(2, 3, math::tAngleDeg(4)), static_cast<const tPose2D<> &>(tUncertainPose2D<>(tPosition2D<>(2, 3), tOrientation2D<>(math::tAngleDeg(4)))));
+    RRLIB_UNIT_TESTS_EQUALITY(tPose2D<>(3, 4, math::tAngleDeg(5)), static_cast<const tPose2D<> &>(tUncertainPose2D<>(tPose2D<>(3, 4, math::tAngleDeg(5)))));
+
+    tUncertainPose2D<> pose_1(tPose2D<>(1, 2, math::tAngleDeg(3)), tUncertainPose2D<>::tCovarianceMatrix<>(1, 2, 3, 2, 4, 5, 3, 5, 6));
+    RRLIB_UNIT_TESTS_EQUALITY(tPose2D<>(1, 2, math::tAngleDeg(3)), static_cast<const tPose2D<> &>(pose_1));
+    RRLIB_UNIT_TESTS_EQUALITY((math::tMatrix<3, 3, double>(1, 2, 3, 2, 4, 5, 3, 5, 6)), pose_1.Covariance());
+
+    tUncertainPose2D<> pose_2(2, 3, math::tMatrix<3, 3, double>(1, 2, 3, 2, 4, 5, 3, 5, 6));
+    RRLIB_UNIT_TESTS_EQUALITY(tPose2D<>(2, 3), static_cast<const tPose2D<> &>(pose_2));
+    RRLIB_UNIT_TESTS_EQUALITY((math::tMatrix<3, 3, double>(1, 2, 3, 2, 4, 5, 3, 5, 6)), pose_2.Covariance());
+
+    tUncertainPose2D<> pose_3(3, 4, math::tAngleDeg(5), math::tMatrix<3, 3, double>(1, 2, 3, 2, 4, 5, 3, 5, 6));
+    RRLIB_UNIT_TESTS_EQUALITY(tPose2D<>(3, 4, math::tAngleDeg(5)), static_cast<const tPose2D<> &>(pose_3));
+    RRLIB_UNIT_TESTS_EQUALITY((math::tMatrix<3, 3, double>(1, 2, 3, 2, 4, 5, 3, 5, 6)), pose_3.Covariance());
   }
 };
 
