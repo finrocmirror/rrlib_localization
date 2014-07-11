@@ -90,6 +90,7 @@ private:
   void Constructors2D()
   {
     RRLIB_UNIT_TESTS_EQUALITY(3 * sizeof(double), sizeof(tPose2D<double>));
+    RRLIB_UNIT_TESTS_EQUALITY(static_cast<unsigned int>(2), tPose2D<double>::cDIMENSION);
 
     double raw[3] = { 0.0, 0.0, 0.0 };
 
@@ -122,6 +123,7 @@ private:
   void Constructors3D()
   {
     RRLIB_UNIT_TESTS_EQUALITY(6 * sizeof(double), sizeof(tPose3D<double>));
+    RRLIB_UNIT_TESTS_EQUALITY(static_cast<unsigned int>(3), tPose3D<double>::cDIMENSION);
 
     double raw[6] = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
 

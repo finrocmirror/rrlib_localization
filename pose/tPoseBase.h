@@ -95,6 +95,8 @@ class tPoseBase
 //----------------------------------------------------------------------
 public:
 
+  static const unsigned int cDIMENSION;
+
   template <typename TPositionElement = TElement>
   using tPosition = tPosition<Tdimension, TPositionElement, TPositionSIUnit>;
 

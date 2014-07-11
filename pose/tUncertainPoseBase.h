@@ -100,7 +100,7 @@ public:
   using tOrientationComponent = typename tPose<>::template tOrientationComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy>;
 
   template <typename TCovarianceElement = TElement>
-  using tCovarianceMatrix = math::tMatrix < sizeof(tPose<>) / sizeof(TElement), sizeof(tPose<>) / sizeof(TElement), TCovarianceElement >;
+  using tCovarianceMatrix = math::tMatrix < tPosition<>::cSIZE + tOrientation<>::cSIZE, tPosition<>::cSIZE + tOrientation<>::cSIZE, TCovarianceElement >;
 
   using tPose<>::tPose;
 

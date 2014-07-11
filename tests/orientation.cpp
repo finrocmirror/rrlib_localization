@@ -88,6 +88,8 @@ private:
   void Constructors2D()
   {
     RRLIB_UNIT_TESTS_EQUALITY(sizeof(double), sizeof(tOrientation2D<double>));
+    RRLIB_UNIT_TESTS_EQUALITY(static_cast<size_t>(1), tOrientation2D<double>::cSIZE);
+    RRLIB_UNIT_TESTS_EQUALITY(static_cast<unsigned int>(2), tOrientation2D<double>::cDIMENSION);
 
     double raw = 0.0;
 
@@ -119,6 +121,8 @@ private:
   void Constructors3D()
   {
     RRLIB_UNIT_TESTS_EQUALITY(3 * sizeof(double), sizeof(tOrientation3D<double>));
+    RRLIB_UNIT_TESTS_EQUALITY(static_cast<size_t>(3), tOrientation3D<double>::cSIZE);
+    RRLIB_UNIT_TESTS_EQUALITY(static_cast<unsigned int>(3), tOrientation3D<double>::cDIMENSION);
 
     double raw[3] = { 0.0, 0.0, 0.0 };
 
@@ -162,6 +166,8 @@ private:
     RRLIB_UNIT_TESTS_EQUALITY(M_PI_2, orientation_2d.Yaw().Value().Value());
     orientation_2d.Yaw() = tDegree2D(-90);
     RRLIB_UNIT_TESTS_EQUALITY(-M_PI_2, orientation_2d.Yaw().Value().Value());
+    RRLIB_UNIT_TESTS_EQUALITY(-M_PI_2, orientation_2d[0].Value().Value());
+    RRLIB_UNIT_TESTS_EXCEPTION(orientation_2d[1], std::logic_error);
 
     typedef tOrientation3D<double>::tComponent<double, math::angle::Degree> tDegree3D;
     tOrientation3D<double> orientation_3d(tDegree3D(0), tDegree3D(-90), tDegree3D(90));
@@ -174,6 +180,10 @@ private:
     RRLIB_UNIT_TESTS_EQUALITY(-M_PI_2, orientation_3d.Roll().Value().Value());
     RRLIB_UNIT_TESTS_EQUALITY(M_PI_2, orientation_3d.Pitch().Value().Value());
     RRLIB_UNIT_TESTS_EQUALITY(0.0, orientation_3d.Yaw().Value().Value());
+    RRLIB_UNIT_TESTS_EQUALITY(-M_PI_2, orientation_3d[0].Value().Value());
+    RRLIB_UNIT_TESTS_EQUALITY(M_PI_2, orientation_3d[1].Value().Value());
+    RRLIB_UNIT_TESTS_EQUALITY(0.0, orientation_3d[2].Value().Value());
+    RRLIB_UNIT_TESTS_EXCEPTION(orientation_3d[3], std::logic_error);
   }
 
   void ComparisonOperators()

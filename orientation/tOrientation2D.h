@@ -82,6 +82,8 @@ class tOrientation<2, TElement, TSIUnit> : public orientation::tOrientationBase<
 //----------------------------------------------------------------------
 public:
 
+  static const size_t cSIZE;
+
   template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = math::angle::NoWrap>
   using tComponent = typename tOrientationBase::template tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy>;
 

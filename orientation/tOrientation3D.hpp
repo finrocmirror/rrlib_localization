@@ -59,6 +59,8 @@ namespace localization
 //----------------------------------------------------------------------
 // Const values
 //----------------------------------------------------------------------
+template <typename TElement, typename TSIUnit>
+const size_t tOrientation<3, TElement, TSIUnit>::cSIZE = 3;
 
 //----------------------------------------------------------------------
 // Implementation

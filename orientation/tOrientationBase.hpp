@@ -61,6 +61,8 @@ namespace orientation
 //----------------------------------------------------------------------
 // Const values
 //----------------------------------------------------------------------
+template <unsigned int Tdimension, typename TElement, typename TSIUnit>
+const unsigned int tOrientationBase<Tdimension, TElement, TSIUnit>::cDIMENSION = Tdimension;
 
 //----------------------------------------------------------------------
 // Implementation

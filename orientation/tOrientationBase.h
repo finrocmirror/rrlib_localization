@@ -93,6 +93,8 @@ class tOrientationBase
 //----------------------------------------------------------------------
 public:
 
+  static const unsigned int cDIMENSION;
+
   template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = math::angle::NoWrap>
   using tComponent = si_units::tQuantity<TSIUnit, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy>>;
 
@@ -100,6 +102,21 @@ public:
   {
     static tOrientation<Tdimension, TElement, TSIUnit> orientation;
     return orientation;
+  }
+
+  inline const tComponent<> &operator[](unsigned int i) const
+  {
+    return const_cast<tOrientationBase &>(*this)[i];
+  }
+  inline tComponent<> &operator[](unsigned int i)
+  {
+    if (i > tOrientation<Tdimension, TElement, TSIUnit>::cSIZE - 1)
+    {
+      std::stringstream stream;
+      stream << "Component index (" << i << ") out of bounds [0.." << tOrientation<Tdimension, TElement, TSIUnit>::cSIZE - 1 << "].";
+      throw std::logic_error(stream.str());
+    }
+    return reinterpret_cast<tComponent<> *>(this)[i];
   }
 
   void Reset();

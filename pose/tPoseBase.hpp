@@ -61,6 +61,8 @@ namespace pose
 //----------------------------------------------------------------------
 // Const values
 //----------------------------------------------------------------------
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+const unsigned int tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit>::cDIMENSION = Tdimension;
 
 //----------------------------------------------------------------------
 // Implementation
