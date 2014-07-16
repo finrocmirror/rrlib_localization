@@ -100,7 +100,7 @@ std::ostream &operator << (std::ostream &stream, const tUncertainPose<Tdimension
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
 std::istream &operator >> (std::istream &stream, tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
 {
-  return stream >> static_cast<const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &>(pose) >> pose.Covariance();
+  return stream >> static_cast<tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &>(pose) >> pose.Covariance();
 }
 
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
@@ -114,7 +114,7 @@ serialization::tOutputStream &operator << (serialization::tOutputStream &stream,
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
 serialization::tInputStream &operator >> (serialization::tInputStream &stream, tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
 {
-  return stream >> static_cast<const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &>(pose) >> pose.Covariance();
+  return stream >> static_cast<tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &>(pose) >> pose.Covariance();
 }
 
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
