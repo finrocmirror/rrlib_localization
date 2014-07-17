@@ -178,6 +178,12 @@ public:
   template <typename TTranslationElement>
   tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &Translated(const math::tVector<Tdimension, TTranslationElement> &translation);
 
+  template <typename TRotationElement>
+  void Rotate(const math::tMatrix<Tdimension, Tdimension, TRotationElement> &rotation);
+
+  template <typename TRotationElement>
+  tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &Rotated(const math::tMatrix<Tdimension, Tdimension, TRotationElement> &rotation);
+
   template <typename TFactor>
   void Scale(TFactor factor);
 

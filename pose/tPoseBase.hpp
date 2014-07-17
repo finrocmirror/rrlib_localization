@@ -231,6 +231,28 @@ tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &tPoseBase<Tdim
 }
 
 //----------------------------------------------------------------------
+// tPoseBase Rotate
+//----------------------------------------------------------------------
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TRotationElement>
+void tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit>::Rotate(const math::tMatrix<Tdimension, Tdimension, TRotationElement> &rotation)
+{
+  this->SetOrientation(rotation * this->Orientation().GetMatrix());
+}
+
+//----------------------------------------------------------------------
+// tPoseBase Rotated
+//----------------------------------------------------------------------
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TRotationElement>
+tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit>::Rotated(const math::tMatrix<Tdimension, Tdimension, TRotationElement> &rotation)
+{
+  tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> temp(*this);
+  temp.Rotate(rotation);
+  return temp;
+}
+
+//----------------------------------------------------------------------
 // tPoseBase Scale
 //----------------------------------------------------------------------
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
