@@ -251,7 +251,7 @@ bool IsEqual(const tOrientation<3, TElement, TSIUnit> &left, const tOrientation<
 template <typename TElement, typename TSIUnit>
 const bool operator == (const tOrientation<3, TElement, TSIUnit> &left, const tOrientation<3, TElement, TSIUnit> &right)
 {
-  return left.Yaw() == right.Yaw();
+  return left.Roll() == right.Roll() && left.Pitch() == right.Pitch() && left.Yaw() == right.Yaw();
 }
 
 //----------------------------------------------------------------------

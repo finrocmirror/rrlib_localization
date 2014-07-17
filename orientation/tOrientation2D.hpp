@@ -229,15 +229,6 @@ const bool operator == (const tOrientation<2, TElement, TSIUnit> &left, const tO
 }
 
 //----------------------------------------------------------------------
-// Inequality
-//----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
-const bool operator != (const tOrientation<2, TElement, TSIUnit> &left, const tOrientation<2, TElement, TSIUnit> &right)
-{
-  return !(left == right);
-}
-
-//----------------------------------------------------------------------
 // Ordering
 //----------------------------------------------------------------------
 template <typename TElement, typename TSIUnit>
