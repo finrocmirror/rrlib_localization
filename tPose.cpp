@@ -65,15 +65,15 @@ namespace localization
 // Implementation
 //----------------------------------------------------------------------
 
-template class tPose<2, double, si_units::tMeter, si_units::tNoUnit>;
-template class tPose<2, float, si_units::tMeter, si_units::tNoUnit>;
-template class tPose < 2, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-template class tPose < 2, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+template class tPose<2, double, si_units::tMeter, si_units::tNoUnit, math::angle::Signed>;
+template class tPose<2, float, si_units::tMeter, si_units::tNoUnit, math::angle::Signed>;
+template class tPose < 2, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, math::angle::NoWrap >;
+template class tPose < 2, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, math::angle::NoWrap >;
 
-template class tPose<3, double, si_units::tMeter, si_units::tNoUnit>;
-template class tPose<3, float, si_units::tMeter, si_units::tNoUnit>;
-template class tPose < 3, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-template class tPose < 3, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+template class tPose<3, double, si_units::tMeter, si_units::tNoUnit, math::angle::Signed>;
+template class tPose<3, float, si_units::tMeter, si_units::tNoUnit, math::angle::Signed>;
+template class tPose < 3, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, math::angle::NoWrap >;
+template class tPose < 3, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, math::angle::NoWrap >;
 
 //----------------------------------------------------------------------
 // End of namespace declaration

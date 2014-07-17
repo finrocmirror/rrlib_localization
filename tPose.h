@@ -64,41 +64,41 @@ namespace localization
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
-template <typename TElement = double>
-using tPose2D = tPose<2, TElement, si_units::tMeter, si_units::tNoUnit>;
-template <typename TElement = double>
-using tPoseChange2D = tPose < 2, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-template <typename TElement = double>
-using tTwist2D = tPoseChange2D<TElement>;
+template <typename TElement = double, typename TAutoWrapPolicy = math::angle::Signed>
+using tPose2D = tPose<2, TElement, si_units::tMeter, si_units::tNoUnit, TAutoWrapPolicy>;
+template <typename TElement = double, typename TAutoWrapPolicy = math::angle::NoWrap>
+using tPoseChange2D = tPose < 2, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy >;
+template <typename TElement = double, typename TAutoWrapPolicy = math::angle::NoWrap>
+using tTwist2D = tPoseChange2D<TElement, TAutoWrapPolicy>;
 
-template <typename TElement = double>
-using tPose3D = tPose<3, TElement, si_units::tMeter, si_units::tNoUnit>;
-template <typename TElement = double>
-using tPoseChange3D = tPose < 3, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-template <typename TElement = double>
-using tTwist3D = tPoseChange3D<TElement>;
+template <typename TElement = double, typename TAutoWrapPolicy = math::angle::Signed>
+using tPose3D = tPose<3, TElement, si_units::tMeter, si_units::tNoUnit, TAutoWrapPolicy>;
+template <typename TElement = double, typename TAutoWrapPolicy = math::angle::NoWrap>
+using tPoseChange3D = tPose < 3, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy >;
+template <typename TElement = double, typename TAutoWrapPolicy = math::angle::NoWrap>
+using tTwist3D = tPoseChange3D<TElement, TAutoWrapPolicy>;
 
 //----------------------------------------------------------------------
 // Arithmetic operators
 //----------------------------------------------------------------------
 template <typename TElement, typename TValue>
-tPose2D<decltype(TElement() * TValue())> operator * (const tPoseChange2D<TElement> &pose_change, si_units::tTime<TValue> time)
+tPose2D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (const tPoseChange2D<TElement> &pose_change, si_units::tTime<TValue> time)
 {
-  return tPose2D<decltype(TElement() * TValue())>(pose_change.Position() * time, pose_change.Orientation() * time);
+  return tPose2D<decltype(TElement() * TValue()), math::angle::NoWrap>(pose_change.Position() * time, pose_change.Orientation() * time);
 }
 template <typename TElement, typename TValue>
-tPose2D<decltype(TElement() * TValue())> operator * (si_units::tTime<TValue> time, const tPoseChange2D<TElement> &pose_change)
+tPose2D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tPoseChange2D<TElement> &pose_change)
 {
   return pose_change * time;
 }
 
 template <typename TElement, typename TValue>
-tPose3D<decltype(TElement() * TValue())> operator * (const tPoseChange3D<TElement> &pose_change, si_units::tTime<TValue> time)
+tPose3D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (const tPoseChange3D<TElement> &pose_change, si_units::tTime<TValue> time)
 {
-  return tPose3D<decltype(TElement() * TValue())>(pose_change.Position() * time, pose_change.Orientation() * time);
+  return tPose3D<decltype(TElement() * TValue()), math::angle::NoWrap>(pose_change.Position() * time, pose_change.Orientation() * time);
 }
 template <typename TElement, typename TValue>
-tPose3D<decltype(TElement() * TValue())> operator * (si_units::tTime<TValue> time, const tPoseChange3D<TElement> &pose_change)
+tPose3D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tPoseChange3D<TElement> &pose_change)
 {
   return pose_change * time;
 }
@@ -119,15 +119,15 @@ tPoseChange3D < decltype(TElement() / TValue()) > operator / (const tPose3D<TEle
 // Explicit template instantiation
 //----------------------------------------------------------------------
 
-extern template class tPose<2, double, si_units::tMeter, si_units::tNoUnit>;
-extern template class tPose<2, float, si_units::tMeter, si_units::tNoUnit>;
-extern template class tPose < 2, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-extern template class tPose < 2, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+extern template class tPose<2, double, si_units::tMeter, si_units::tNoUnit, math::angle::Signed>;
+extern template class tPose<2, float, si_units::tMeter, si_units::tNoUnit, math::angle::Signed>;
+extern template class tPose < 2, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, math::angle::NoWrap >;
+extern template class tPose < 2, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, math::angle::NoWrap >;
 
-extern template class tPose<3, double, si_units::tMeter, si_units::tNoUnit>;
-extern template class tPose<3, float, si_units::tMeter, si_units::tNoUnit>;
-extern template class tPose < 3, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-extern template class tPose < 3, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+extern template class tPose<3, double, si_units::tMeter, si_units::tNoUnit, math::angle::Signed>;
+extern template class tPose<3, float, si_units::tMeter, si_units::tNoUnit, math::angle::Signed>;
+extern template class tPose < 3, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, math::angle::NoWrap >;
+extern template class tPose < 3, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, math::angle::NoWrap >;
 
 //----------------------------------------------------------------------
 // End of namespace declaration

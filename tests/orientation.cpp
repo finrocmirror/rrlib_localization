@@ -215,7 +215,7 @@ private:
     orientation_3d = tOrientation3D<double>(tOrientation3D<double>::tComponent<>(1), tOrientation3D<double>::tComponent<>(2), tOrientation3D<double>::tComponent<>(3));
     RRLIB_UNIT_TESTS_EQUALITY(tOrientation3D<double>(tOrientation3D<double>::tComponent<>(1), tOrientation3D<double>::tComponent<>(2), tOrientation3D<double>::tComponent<>(3)), orientation_3d);
     orientation_3d = tOrientation3D<float>(tOrientation3D<double>::tComponent<>(2), tOrientation3D<double>::tComponent<>(3), tOrientation3D<double>::tComponent<>(4));
-    RRLIB_UNIT_TESTS_EQUALITY(tOrientation3D<double>(tOrientation3D<double>::tComponent<>(2), tOrientation3D<double>::tComponent<>(3), tOrientation3D<double>::tComponent<>(4)), orientation_3d);
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(tOrientation3D<double>(tOrientation3D<double>::tComponent<>(2), tOrientation3D<double>::tComponent<>(3), tOrientation3D<double>::tComponent<>(4)), orientation_3d, 0));
     orientation_3d.Set(tOrientation3D<double>::tComponent<>(3), tOrientation3D<double>::tComponent<>(4), tOrientation3D<double>::tComponent<>(5));
     RRLIB_UNIT_TESTS_EQUALITY(tOrientation3D<double>(tOrientation3D<double>::tComponent<>(3), tOrientation3D<double>::tComponent<>(4), tOrientation3D<double>::tComponent<>(5)), orientation_3d);
     orientation_3d.Set(math::tAngle<float, math::angle::Degree>(4), math::tAngle<float, math::angle::Degree>(5), math::tAngle<float, math::angle::Degree>(6));
@@ -331,18 +331,18 @@ private:
     tOrientation2D<> orientation_2d(tAngle(20));
     tOrientationChange2D<> orientation_change_2d(tAngularVelocity(2));
 
-    RRLIB_UNIT_TESTS_EQUALITY(orientation_2d, orientation_change_2d * si_units::tTime<float>(10));
-    RRLIB_UNIT_TESTS_EQUALITY(orientation_2d, si_units::tTime<float>(10) * orientation_change_2d);
+    RRLIB_UNIT_TESTS_EQUALITY(orientation_2d, tOrientation2D<>(orientation_change_2d * si_units::tTime<float>(10)));
+    RRLIB_UNIT_TESTS_EQUALITY(orientation_2d, tOrientation2D<>(si_units::tTime<float>(10) * orientation_change_2d));
 
-    RRLIB_UNIT_TESTS_EQUALITY(orientation_change_2d, orientation_2d / si_units::tTime<float>(10));
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(orientation_change_2d, orientation_2d / si_units::tTime<float>(10), 0));
 
     tOrientation3D<> orientation_3d(tAngle(10), tAngle(20), tAngle(30));
     tOrientationChange3D<> orientation_change_3d(tAngularVelocity(1), tAngularVelocity(2), tAngularVelocity(3));
 
-    RRLIB_UNIT_TESTS_EQUALITY(orientation_3d, orientation_change_3d * si_units::tTime<float>(10));
-    RRLIB_UNIT_TESTS_EQUALITY(orientation_3d, si_units::tTime<float>(10) * orientation_change_3d);
+    RRLIB_UNIT_TESTS_EQUALITY(orientation_3d, tOrientation3D<>(orientation_change_3d * si_units::tTime<float>(10)));
+    RRLIB_UNIT_TESTS_EQUALITY(orientation_3d, tOrientation3D<>(si_units::tTime<float>(10) * orientation_change_3d));
 
-    RRLIB_UNIT_TESTS_EQUALITY(orientation_change_3d, orientation_3d / si_units::tTime<float>(10));
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(orientation_change_3d, orientation_3d / si_units::tTime<float>(10), 0));
   }
 };
 

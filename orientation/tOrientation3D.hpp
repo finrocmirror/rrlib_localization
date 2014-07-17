@@ -59,8 +59,8 @@ namespace localization
 //----------------------------------------------------------------------
 // Const values
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
-const size_t tOrientation<3, TElement, TSIUnit>::cSIZE = 3;
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+const size_t tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::cSIZE = 3;
 
 //----------------------------------------------------------------------
 // Implementation
@@ -69,32 +69,32 @@ const size_t tOrientation<3, TElement, TSIUnit>::cSIZE = 3;
 //----------------------------------------------------------------------
 // tOrientation3D constructors
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
-tOrientation<3, TElement, TSIUnit>::tOrientation() :
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::tOrientation() :
   roll(0),
   pitch(0),
   yaw(0)
 {}
 
-template <typename TElement, typename TSIUnit>
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
-tOrientation<3, TElement, TSIUnit>::tOrientation(tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw) :
+tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::tOrientation(tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw) :
   roll(roll),
   pitch(pitch),
   yaw(yaw)
 {}
 
-template <typename TElement, typename TSIUnit>
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
-tOrientation<3, TElement, TSIUnit>::tOrientation(math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw) :
+tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::tOrientation(math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw) :
   roll(roll),
   pitch(pitch),
   yaw(yaw)
 {}
 
-template <typename TElement, typename TSIUnit>
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TMatrixElement>
-tOrientation<3, TElement, TSIUnit>::tOrientation(const math::tMatrix<3, 3, TMatrixElement> &matrix, double max_error) :
+tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::tOrientation(const math::tMatrix<3, 3, TMatrixElement> &matrix, double max_error) :
   roll(0),
   pitch(0),
   yaw(0)
@@ -102,9 +102,9 @@ tOrientation<3, TElement, TSIUnit>::tOrientation(const math::tMatrix<3, 3, TMatr
   this->Set(matrix, max_error);
 }
 
-template <typename TElement, typename TSIUnit>
-template <typename TOtherElement>
-tOrientation<3, TElement, TSIUnit>::tOrientation(const tOrientation<3, TOtherElement, TSIUnit> &other) :
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+template <typename TOtherElement, typename TOtherAutoWrapPolicy>
+tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::tOrientation(const tOrientation<3, TOtherElement, TSIUnit, TOtherAutoWrapPolicy> &other) :
   roll(other.Roll()),
   pitch(other.Pitch()),
   yaw(other.Yaw())
@@ -113,27 +113,27 @@ tOrientation<3, TElement, TSIUnit>::tOrientation(const tOrientation<3, TOtherEle
 //----------------------------------------------------------------------
 // tOrientation3D Set
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
-void tOrientation<3, TElement, TSIUnit>::Set(tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw)
+void tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::Set(tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw)
 {
   this->roll = roll;
   this->pitch = pitch;
   this->yaw = yaw;
 }
 
-template <typename TElement, typename TSIUnit>
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
-void tOrientation<3, TElement, TSIUnit>::Set(math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw)
+void tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::Set(math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw)
 {
   this->roll = tComponent<>(roll);
   this->pitch = tComponent<>(pitch);
   this->yaw = tComponent<>(yaw);
 }
 
-template <typename TElement, typename TSIUnit>
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TMatrixElement>
-void tOrientation<3, TElement, TSIUnit>::Set(const math::tMatrix<3, 3, TMatrixElement> &matrix, double max_error, bool use_second_solution)
+void tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::Set(const math::tMatrix<3, 3, TMatrixElement> &matrix, double max_error, bool use_second_solution)
 {
   math::tAngle<TElement, math::angle::Radian> roll, pitch, yaw;
   matrix.ExtractRollPitchYaw(roll, pitch, yaw, use_second_solution, max_error);
@@ -145,9 +145,9 @@ void tOrientation<3, TElement, TSIUnit>::Set(const math::tMatrix<3, 3, TMatrixEl
 //----------------------------------------------------------------------
 // tOrientation3D operator +=
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
-template <typename TOtherElement>
-tOrientation<3, TElement, TSIUnit> &tOrientation<3, TElement, TSIUnit>::operator += (const tOrientation<3, TOtherElement, TSIUnit> &other)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+template <typename TOtherElement, typename TOtherAutoWrapPolicy>
+tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::operator += (const tOrientation<3, TOtherElement, TSIUnit, TOtherAutoWrapPolicy> &other)
 {
   this->roll += other.Roll();
   this->pitch += other.Pitch();
@@ -158,9 +158,9 @@ tOrientation<3, TElement, TSIUnit> &tOrientation<3, TElement, TSIUnit>::operator
 //----------------------------------------------------------------------
 // tOrientation3D operator -=
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
-template <typename TOtherElement>
-tOrientation<3, TElement, TSIUnit> &tOrientation<3, TElement, TSIUnit>::operator -= (const tOrientation<3, TOtherElement, TSIUnit> &other)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+template <typename TOtherElement, typename TOtherAutoWrapPolicy>
+tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::operator -= (const tOrientation<3, TOtherElement, TSIUnit, TOtherAutoWrapPolicy> &other)
 {
   this->roll -= other.Roll();
   this->pitch -= other.Pitch();
@@ -171,8 +171,8 @@ tOrientation<3, TElement, TSIUnit> &tOrientation<3, TElement, TSIUnit>::operator
 //----------------------------------------------------------------------
 // tOrientation3D GetMatrix
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
-math::tMatrix<3, 3, TElement> tOrientation<3, TElement, TSIUnit>::GetMatrix() const
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+math::tMatrix<3, 3, TElement> tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::GetMatrix() const
 {
   return math::Get3DRotationMatrixFromRollPitchYaw<TElement>(this->roll.Value(), this->pitch.Value(), this->yaw.Value());
 }
@@ -180,8 +180,8 @@ math::tMatrix<3, 3, TElement> tOrientation<3, TElement, TSIUnit>::GetMatrix() co
 //----------------------------------------------------------------------
 // tOrientation3D GetHomogeneousTransformationMatrix
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
-math::tMatrix<4, 4, TElement> tOrientation<3, TElement, TSIUnit>::GetHomogeneousTransformationMatrix() const
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+math::tMatrix<4, 4, TElement> tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::GetHomogeneousTransformationMatrix() const
 {
   math::tMatrix<3, 3, TElement> rotation = this->GetMatrix();
   return math::tMatrix<4, 4, TElement>(rotation[0][0], rotation[0][1], rotation[0][2], 0,
@@ -193,9 +193,9 @@ math::tMatrix<4, 4, TElement> tOrientation<3, TElement, TSIUnit>::GetHomogeneous
 //----------------------------------------------------------------------
 // tOrientation3D Rotate
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
-void tOrientation<3, TElement, TSIUnit>::Rotate(tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw)
+void tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::Rotate(tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw)
 {
   this->roll += roll;
   this->pitch += pitch;
@@ -203,9 +203,9 @@ void tOrientation<3, TElement, TSIUnit>::Rotate(tComponent<TAngleElement, TAngle
   return *this;
 }
 
-template <typename TElement, typename TSIUnit>
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
-void tOrientation<3, TElement, TSIUnit>::Rotate(math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw)
+void tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::Rotate(math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw)
 {
   return this->Rotate(tComponent<>(roll), tComponent<>(pitch), tComponent<>(yaw));
 }
@@ -213,16 +213,16 @@ void tOrientation<3, TElement, TSIUnit>::Rotate(math::tAngle<TAngleElement, TAng
 //----------------------------------------------------------------------
 // tOrientation3D Rotated
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
-tOrientation<3, TElement, TSIUnit> tOrientation<3, TElement, TSIUnit>::Rotated(tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw) const
+tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::Rotated(tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw) const
 {
   return tOrientation(this->roll + roll, this->pitch + pitch, this->yaw + yaw);
 }
 
-template <typename TElement, typename TSIUnit>
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
-tOrientation<3, TElement, TSIUnit> tOrientation<3, TElement, TSIUnit>::Rotated(math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw) const
+tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::Rotated(math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw) const
 {
   return this->Rotated(tComponent<>(roll), tComponent<>(pitch), tComponent<>(yaw));
 }
@@ -230,8 +230,8 @@ tOrientation<3, TElement, TSIUnit> tOrientation<3, TElement, TSIUnit>::Rotated(m
 //----------------------------------------------------------------------
 // tOrientation3D GetEuclideanNorm
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
-const TElement tOrientation<3, TElement, TSIUnit>::GetEuclideanNorm() const
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+const TElement tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::GetEuclideanNorm() const
 {
   return math::tVector<3, TElement>(this->roll.Value().Value(), this->pitch.Value().Value(), this->yaw.Value().Value()).Length();
 }
@@ -239,8 +239,8 @@ const TElement tOrientation<3, TElement, TSIUnit>::GetEuclideanNorm() const
 //----------------------------------------------------------------------
 // Numeric equality
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
-bool IsEqual(const tOrientation<3, TElement, TSIUnit> &left, const tOrientation<3, TElement, TSIUnit> &right, float max_error, math::tFloatComparisonMethod method)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+bool IsEqual(const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &right, float max_error, math::tFloatComparisonMethod method)
 {
   return IsEqual(left.Roll(), right.Roll(), max_error, method) && IsEqual(left.Pitch(), right.Pitch(), max_error, method) && IsEqual(left.Yaw(), right.Yaw(), max_error, method);
 }
@@ -248,8 +248,8 @@ bool IsEqual(const tOrientation<3, TElement, TSIUnit> &left, const tOrientation<
 //----------------------------------------------------------------------
 // Equality
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
-const bool operator == (const tOrientation<3, TElement, TSIUnit> &left, const tOrientation<3, TElement, TSIUnit> &right)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+const bool operator == (const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &right)
 {
   return left.Roll() == right.Roll() && left.Pitch() == right.Pitch() && left.Yaw() == right.Yaw();
 }
@@ -257,26 +257,26 @@ const bool operator == (const tOrientation<3, TElement, TSIUnit> &left, const tO
 //----------------------------------------------------------------------
 // Ordering
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
-const bool operator < (const tOrientation<3, TElement, TSIUnit> &left, const tOrientation<3, TElement, TSIUnit> &right)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+const bool operator < (const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &right)
 {
   return left.Roll() < right.Roll() ||
-         ((left.Roll() == right.Roll() && left.Pitch().Value() < right.Pitch().Value())) ||
-         ((left.Roll() == right.Roll() && left.Pitch().Value() == right.Pitch().Value()) && left.Yaw() < right.Yaw());
+         ((left.Roll() == right.Roll() && left.Pitch() < right.Pitch())) ||
+         ((left.Roll() == right.Roll() && left.Pitch() == right.Pitch()) && left.Yaw() < right.Yaw());
 }
 
 //----------------------------------------------------------------------
 // Streaming
 //----------------------------------------------------------------------
-template <typename TElement, typename TSIUnit>
-std::ostream &operator << (std::ostream &stream, const tOrientation<3, TElement, TSIUnit> &orientation)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+std::ostream &operator << (std::ostream &stream, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &orientation)
 {
   typedef math::tAngle<TElement, math::angle::Degree, math::angle::Signed> tDegreeSigned;
   return stream << "(" << tDegreeSigned(orientation.Roll().Value()) << ", " << tDegreeSigned(orientation.Pitch().Value()) << ", " << tDegreeSigned(orientation.Yaw().Value()) << ")";
 }
 
-template <typename TElement, typename TSIUnit>
-std::istream &operator >> (std::istream &stream, tOrientation<3, TElement, TSIUnit> &orientation)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+std::istream &operator >> (std::istream &stream, tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &orientation)
 {
   std::istream::sentry stream_ok(stream, true);
   if (!stream_ok || stream.peek() == std::char_traits<char>::eof())
@@ -298,15 +298,15 @@ std::istream &operator >> (std::istream &stream, tOrientation<3, TElement, TSIUn
 
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
 
-template <typename TElement, typename TSIUnit>
-serialization::tOutputStream &operator << (serialization::tOutputStream &stream, const tOrientation<3, TElement, TSIUnit> &orientation)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+serialization::tOutputStream &operator << (serialization::tOutputStream &stream, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &orientation)
 {
   stream << orientation.Roll() << orientation.Pitch() << orientation.Yaw();
   return stream;
 }
 
-template <typename TElement, typename TSIUnit>
-serialization::tInputStream &operator >> (serialization::tInputStream &stream, tOrientation<3, TElement, TSIUnit> &orientation)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+serialization::tInputStream &operator >> (serialization::tInputStream &stream, tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &orientation)
 {
   stream >> orientation.Roll() >> orientation.Pitch() >> orientation.Yaw();
   return stream;

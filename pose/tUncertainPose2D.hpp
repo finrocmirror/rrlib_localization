@@ -68,13 +68,13 @@ namespace localization
 //----------------------------------------------------------------------
 // tUncertainPose2D constructors
 //----------------------------------------------------------------------
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-tUncertainPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPose()
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+tUncertainPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tUncertainPose()
 {}
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TX, typename TY, typename TYaw, typename TCovarianceElement>
-tUncertainPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPose(TX x, TY y, TYaw yaw, const tCovarianceMatrix<TCovarianceElement> &covariance) :
+tUncertainPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tUncertainPose(TX x, TY y, TYaw yaw, const tCovarianceMatrix<TCovarianceElement> &covariance) :
   tPoseBase(tPose2D<>(x, y, yaw), covariance)
 {}
 

@@ -65,15 +65,15 @@ namespace localization
 // Implementation
 //----------------------------------------------------------------------
 
-template class tOrientation<2, double, si_units::tNoUnit>;
-template class tOrientation<2, float, si_units::tNoUnit>;
-template class tOrientation<2, double, si_units::tHertz>;
-template class tOrientation<2, float, si_units::tHertz>;
+template class tOrientation<2, double, si_units::tNoUnit, math::angle::Signed>;
+template class tOrientation<2, float, si_units::tNoUnit, math::angle::Signed>;
+template class tOrientation<2, double, si_units::tHertz, math::angle::NoWrap>;
+template class tOrientation<2, float, si_units::tHertz, math::angle::NoWrap>;
 
-template class tOrientation<3, double, si_units::tNoUnit>;
-template class tOrientation<3, float, si_units::tNoUnit>;
-template class tOrientation<3, double, si_units::tHertz>;
-template class tOrientation<3, float, si_units::tHertz>;
+template class tOrientation<3, double, si_units::tNoUnit, math::angle::Signed>;
+template class tOrientation<3, float, si_units::tNoUnit, math::angle::Signed>;
+template class tOrientation<3, double, si_units::tHertz, math::angle::NoWrap>;
+template class tOrientation<3, float, si_units::tHertz, math::angle::NoWrap>;
 
 //----------------------------------------------------------------------
 // End of namespace declaration

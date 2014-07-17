@@ -68,25 +68,25 @@ namespace localization
 //----------------------------------------------------------------------
 // tUncertainPose3D constructors
 //----------------------------------------------------------------------
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPose()
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tUncertainPose()
 {}
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TX, typename TY, typename TZ, typename TCovarianceElement>
-tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPose(TX x, TY y, TZ z, const tCovarianceMatrix<TCovarianceElement> &covariance) :
+tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tUncertainPose(TX x, TY y, TZ z, const tCovarianceMatrix<TCovarianceElement> &covariance) :
   tPoseBase(tPose3D<>(x, y, z), covariance)
 {}
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename T1, typename T2, typename T3, typename T4, typename TCovarianceElement>
-tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPose(T1 arg_1, T2 arg_2, T3 arg_3, T4 arg_4, const tCovarianceMatrix<TCovarianceElement> &covariance) :
+tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tUncertainPose(T1 arg_1, T2 arg_2, T3 arg_3, T4 arg_4, const tCovarianceMatrix<TCovarianceElement> &covariance) :
   tPoseBase(tPose3D<>(arg_1, arg_2, arg_3, arg_4), covariance)
 {}
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TX, typename TY, typename TZ, typename TRoll, typename TPitch, typename TYaw, typename TCovarianceElement>
-tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPose(TX x, TY y, TZ z, TRoll roll, TPitch pitch, TYaw yaw, const tCovarianceMatrix<TCovarianceElement> &covariance) :
+tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tUncertainPose(TX x, TY y, TZ z, TRoll roll, TPitch pitch, TYaw yaw, const tCovarianceMatrix<TCovarianceElement> &covariance) :
   tPoseBase(tPose3D<>(x, y, z, roll, pitch, yaw), covariance)
 {}
 

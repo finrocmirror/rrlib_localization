@@ -61,8 +61,8 @@ namespace orientation
 //----------------------------------------------------------------------
 // Const values
 //----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
-const unsigned int tOrientationBase<Tdimension, TElement, TSIUnit>::cDIMENSION = Tdimension;
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+const unsigned int tOrientationBase<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::cDIMENSION = Tdimension;
 
 //----------------------------------------------------------------------
 // Implementation
@@ -71,51 +71,51 @@ const unsigned int tOrientationBase<Tdimension, TElement, TSIUnit>::cDIMENSION =
 //----------------------------------------------------------------------
 // tOrientationBase Reset
 //----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
-void tOrientationBase<Tdimension, TElement, TSIUnit>::Reset()
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+void tOrientationBase<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::Reset()
 {
-  std::memset(this, 0, sizeof(tOrientation<Tdimension, TElement, TSIUnit>));
+  std::memset(this, 0, sizeof(tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>));
 }
 
 //----------------------------------------------------------------------
 // tOrientationBase GetMatrix
 //----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TMatrixElement>
-void tOrientationBase<Tdimension, TElement, TSIUnit>::GetMatrix(math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix) const
+void tOrientationBase<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::GetMatrix(math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix) const
 {
-  matrix = reinterpret_cast<tOrientation<Tdimension, TElement, TSIUnit> *>(this)->GetMatrix();
+  matrix = reinterpret_cast<tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> *>(this)->GetMatrix();
 }
 
 //----------------------------------------------------------------------
 // tOrientationBase GetHomogeneousTransformationMatrix
 //----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TMatrixElement>
-void tOrientationBase<Tdimension, TElement, TSIUnit>::GetHomogeneousTransformationMatrix(math::tMatrix < Tdimension + 1, Tdimension + 1, TMatrixElement > &matrix) const
+void tOrientationBase<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::GetHomogeneousTransformationMatrix(math::tMatrix < Tdimension + 1, Tdimension + 1, TMatrixElement > &matrix) const
 {
-  matrix = reinterpret_cast<tOrientation<Tdimension, TElement, TSIUnit> *>(this)->GetHomogeneousTransformationMatrix();
+  matrix = reinterpret_cast<tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> *>(this)->GetHomogeneousTransformationMatrix();
 }
 
 //----------------------------------------------------------------------
 // tOrientationBase Rotate
 //----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TMatrixElement>
-void tOrientationBase<Tdimension, TElement, TSIUnit>::Rotate(const math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix)
+void tOrientationBase<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::Rotate(const math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix)
 {
-  this->Set(matrix * reinterpret_cast<tOrientation<Tdimension, TElement, TSIUnit> *>(this)->GetMatrix());
+  this->Set(matrix * reinterpret_cast<tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> *>(this)->GetMatrix());
   return *this;
 }
 
 //----------------------------------------------------------------------
 // tOrientationBase Rotated
 //----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TMatrixElement>
-tOrientation<Tdimension, TElement, TSIUnit> tOrientationBase<Tdimension, TElement, TSIUnit>::Rotated(const math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix) const
+tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> tOrientationBase<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::Rotated(const math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix) const
 {
-  tOrientation<Tdimension, TElement, TSIUnit> temp(*this);
+  tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> temp(*this);
   temp.Rotate(matrix);
   return temp;
 }
@@ -123,28 +123,28 @@ tOrientation<Tdimension, TElement, TSIUnit> tOrientationBase<Tdimension, TElemen
 //----------------------------------------------------------------------
 // tOrientationBase IsZero
 //----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
-bool tOrientationBase<Tdimension, TElement, TSIUnit>::IsZero(double epsilon) const
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+bool tOrientationBase<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::IsZero(double epsilon) const
 {
-  return IsEqual(*this, tOrientation<Tdimension, TElement, TSIUnit>::Zero(), epsilon);
+  return IsEqual(*this, tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::Zero(), epsilon);
 }
 
 //----------------------------------------------------------------------
 // Unary minus
 //----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
-tOrientation<Tdimension, TElement, TSIUnit> operator - (const tOrientation<Tdimension, TElement, TSIUnit> &orientation)
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> operator - (const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &orientation)
 {
-  return tOrientation<Tdimension, TElement, TSIUnit>::Zero() - orientation;
+  return tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::Zero() - orientation;
 }
 
 //----------------------------------------------------------------------
 // Addition
 //----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TLeftElement, typename TRightElement, typename TSIUnit>
-tOrientation < Tdimension, decltype(TLeftElement() + TRightElement()), TSIUnit > operator + (const tOrientation<Tdimension, TLeftElement, TSIUnit> &left, const tOrientation<Tdimension, TRightElement, TSIUnit> &right)
+template <unsigned int Tdimension, typename TLeftElement, typename TRightElement, typename TSIUnit, typename TLeftAutoWrapPolicy, typename TRightAutoWrapPolicy>
+tOrientation < Tdimension, decltype(TLeftElement() + TRightElement()), TSIUnit, typename math::angle::AutoWrapPolicy<TLeftAutoWrapPolicy, TRightAutoWrapPolicy>::tType > operator + (const tOrientation<Tdimension, TLeftElement, TSIUnit, TLeftAutoWrapPolicy> &left, const tOrientation<Tdimension, TRightElement, TSIUnit, TRightAutoWrapPolicy> &right)
 {
-  tOrientation < Tdimension, decltype(TLeftElement() + TRightElement()), TSIUnit > temp(left);
+  tOrientation < Tdimension, decltype(TLeftElement() + TRightElement()), TSIUnit, typename math::angle::AutoWrapPolicy<TLeftAutoWrapPolicy, TRightAutoWrapPolicy>::tType > temp(left);
   temp += right;
   return temp;
 }
@@ -152,10 +152,10 @@ tOrientation < Tdimension, decltype(TLeftElement() + TRightElement()), TSIUnit >
 //----------------------------------------------------------------------
 // Subtraction
 //----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TLeftElement, typename TRightElement, typename TSIUnit>
-tOrientation < Tdimension, decltype(TLeftElement() - TRightElement()), TSIUnit > operator - (const tOrientation<Tdimension, TLeftElement, TSIUnit> &left, const tOrientation<Tdimension, TRightElement, TSIUnit> &right)
+template <unsigned int Tdimension, typename TLeftElement, typename TRightElement, typename TSIUnit, typename TLeftAutoWrapPolicy, typename TRightAutoWrapPolicy>
+tOrientation < Tdimension, decltype(TLeftElement() - TRightElement()), TSIUnit, typename math::angle::AutoWrapPolicy<TLeftAutoWrapPolicy, TRightAutoWrapPolicy>::tType > operator - (const tOrientation<Tdimension, TLeftElement, TSIUnit, TLeftAutoWrapPolicy> &left, const tOrientation<Tdimension, TRightElement, TSIUnit, TRightAutoWrapPolicy> &right)
 {
-  tOrientation < Tdimension, decltype(TLeftElement() - TRightElement()), TSIUnit > temp(left);
+  tOrientation < Tdimension, decltype(TLeftElement() - TRightElement()), TSIUnit, typename math::angle::AutoWrapPolicy<TLeftAutoWrapPolicy, TRightAutoWrapPolicy>::tType > temp(left);
   temp -= right;
   return temp;
 }
@@ -163,16 +163,16 @@ tOrientation < Tdimension, decltype(TLeftElement() - TRightElement()), TSIUnit >
 //----------------------------------------------------------------------
 // Comparison
 //----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
-const bool operator != (const tOrientation<Tdimension, TElement, TSIUnit> &left, const tOrientation<Tdimension, TElement, TSIUnit> &right)
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+const bool operator != (const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &right)
 {
   return !(left == right);
 }
 
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
 
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
-serialization::tStringOutputStream &operator << (serialization::tStringOutputStream &stream, const tOrientation<Tdimension, TElement, TSIUnit> &orientation)
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+serialization::tStringOutputStream &operator << (serialization::tStringOutputStream &stream, const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &orientation)
 {
   std::stringstream s;
   s << orientation;
@@ -180,8 +180,8 @@ serialization::tStringOutputStream &operator << (serialization::tStringOutputStr
   return stream;
 }
 
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
-serialization::tStringInputStream &operator >> (serialization::tStringInputStream &stream, tOrientation<Tdimension, TElement, TSIUnit> &orientation)
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+serialization::tStringInputStream &operator >> (serialization::tStringInputStream &stream, tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &orientation)
 {
   stream.GetWrappedStringStream() >> orientation;
   return stream;

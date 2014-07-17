@@ -72,10 +72,10 @@ namespace localization
 /*!
  *
  */
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-class tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit> : public pose::tPoseBase<3, TElement, TPositionSIUnit, TOrientationSIUnit>
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+class tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> : public pose::tPoseBase<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>
 {
-  typedef pose::tPoseBase<3, TElement, TPositionSIUnit, TOrientationSIUnit> tPoseBase;
+  typedef pose::tPoseBase<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPoseBase;
 
 //----------------------------------------------------------------------
 // Public methods and typedefs
@@ -88,18 +88,18 @@ public:
   template <typename TPositionElement = TElement>
   using tPositionComponent = si_units::tQuantity<TPositionSIUnit, TPositionElement>;
 
-  template <typename TOrientationElement = TElement>
-  using tOrientation = typename tPoseBase::template tOrientation<TOrientationElement>;
+  template <typename TOrientationElement = TElement, typename TOrientationAutoWrapPolicy = TAutoWrapPolicy>
+  using tOrientation = typename tPoseBase::template tOrientation<TOrientationElement, TOrientationAutoWrapPolicy>;
 
-  template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = math::angle::NoWrap>
+  template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = TAutoWrapPolicy>
   using tOrientationComponent = typename tPoseBase::template tOrientationComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy>;
 
   using tPoseBase::tPoseBase;
 
   tPose();
 
-  template <typename TX, typename TY, typename TZ, typename TOrientationElement = TElement>
-  tPose(TX x, TY y, TZ z, const tOrientation<TOrientationElement> &orientation = tOrientation<TElement>::Zero());
+  template <typename TX, typename TY, typename TZ, typename TOrientationElement = TElement, typename TOrientationAutoWrapPolicy = TAutoWrapPolicy>
+  tPose(TX x, TY y, TZ z, const tOrientation<TOrientationElement, TOrientationAutoWrapPolicy> &orientation = tOrientation<TElement, TOrientationAutoWrapPolicy>::Zero());
 
   template <typename TX, typename TY, typename TZ, typename TRoll, typename TPitch, typename TYaw>
   tPose(TX x, TY y, TZ z, TRoll roll, TPitch pitch, TYaw yaw);
@@ -190,19 +190,19 @@ private:
 };
 
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-std::ostream &operator << (std::ostream &stream, const tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit> &pose);
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+std::ostream &operator << (std::ostream &stream, const tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose);
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-std::istream &operator >> (std::istream &stream, tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit> &pose);
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+std::istream &operator >> (std::istream &stream, tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose);
 
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-serialization::tOutputStream &operator << (serialization::tOutputStream &stream, const tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit> &pose);
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+serialization::tOutputStream &operator << (serialization::tOutputStream &stream, const tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose);
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-serialization::tInputStream &operator >> (serialization::tInputStream &stream, tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit> &pose);
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+serialization::tInputStream &operator >> (serialization::tInputStream &stream, tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose);
 
 #endif
 

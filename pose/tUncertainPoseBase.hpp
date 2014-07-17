@@ -70,20 +70,20 @@ namespace pose
 //----------------------------------------------------------------------
 // tUncertainPoseBase constructors
 //----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-tUncertainPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPoseBase()
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+tUncertainPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tUncertainPoseBase()
 {}
 
-template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TPose, typename TCovarianceElement>
-tUncertainPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPoseBase(const TPose &pose, const tCovarianceMatrix<TCovarianceElement> &covariance) :
+tUncertainPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tUncertainPoseBase(const TPose &pose, const tCovarianceMatrix<TCovarianceElement> &covariance) :
   tPose<>(pose),
   covariance(covariance)
 {}
 
-template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TPosition, typename TOrientation, typename TCovarianceElement>
-tUncertainPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit>::tUncertainPoseBase(const TPosition &position, const TOrientation &orientation, const tCovarianceMatrix<TCovarianceElement> &covariance) :
+tUncertainPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tUncertainPoseBase(const TPosition &position, const TOrientation &orientation, const tCovarianceMatrix<TCovarianceElement> &covariance) :
   tPose<>(position, orientation),
   covariance(covariance)
 {}
@@ -91,42 +91,42 @@ tUncertainPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit>::t
 //----------------------------------------------------------------------
 // Streaming
 //----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-std::ostream &operator << (std::ostream &stream, const tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+std::ostream &operator << (std::ostream &stream, const tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
 {
-  return stream << static_cast<const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &>(pose) << pose.Covariance();
+  return stream << static_cast<const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &>(pose) << pose.Covariance();
 }
 
-template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-std::istream &operator >> (std::istream &stream, tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+std::istream &operator >> (std::istream &stream, tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
 {
-  return stream >> static_cast<tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &>(pose) >> pose.Covariance();
+  return stream >> static_cast<tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &>(pose) >> pose.Covariance();
 }
 
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
 
-template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-serialization::tOutputStream &operator << (serialization::tOutputStream &stream, const tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+serialization::tOutputStream &operator << (serialization::tOutputStream &stream, const tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
 {
-  return stream << static_cast<const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &>(pose) << pose.Covariance();
+  return stream << static_cast<const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &>(pose) << pose.Covariance();
 }
 
-template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-serialization::tInputStream &operator >> (serialization::tInputStream &stream, tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+serialization::tInputStream &operator >> (serialization::tInputStream &stream, tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
 {
-  return stream >> static_cast<tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &>(pose) >> pose.Covariance();
+  return stream >> static_cast<tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &>(pose) >> pose.Covariance();
 }
 
-template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-serialization::tStringOutputStream &operator << (serialization::tStringOutputStream &stream, const tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+serialization::tStringOutputStream &operator << (serialization::tStringOutputStream &stream, const tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
 {
   std::stringstream s;
   s << pose;
   return stream << s.str();
 }
 
-template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-serialization::tStringInputStream &operator >> (serialization::tStringInputStream &stream, tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+serialization::tStringInputStream &operator >> (serialization::tStringInputStream &stream, tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
 {
   stream.GetWrappedStringStream() >> pose;
   return stream;

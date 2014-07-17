@@ -70,10 +70,10 @@ namespace localization
 /*!
  * 3D pose with additional uncertainty (covariance matrix)
  */
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-class tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit> : public pose::tUncertainPoseBase<3, TElement, TPositionSIUnit, TOrientationSIUnit>
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+class tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> : public pose::tUncertainPoseBase<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>
 {
-  typedef pose::tUncertainPoseBase<3, TElement, TPositionSIUnit, TOrientationSIUnit> tPoseBase;
+  typedef pose::tUncertainPoseBase<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPoseBase;
 
 //----------------------------------------------------------------------
 // Public methods and typedefs
@@ -86,10 +86,10 @@ public:
   template <typename TPositionElement = TElement>
   using tPositionComponent = typename tPoseBase::template tPositionComponent<TPositionElement>;
 
-  template <typename TOrientationElement = TElement>
-  using tOrientation = typename tPoseBase::template tOrientation<TOrientationElement>;
+  template <typename TOrientationElement = TElement, typename TOrientationAutoWrapPolicy = TAutoWrapPolicy>
+  using tOrientation = typename tPoseBase::template tOrientation<TOrientationElement, TOrientationAutoWrapPolicy>;
 
-  template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = math::angle::NoWrap>
+  template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = TAutoWrapPolicy>
   using tOrientationComponent = typename tPoseBase::template tOrientationComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy>;
 
   template <typename TCovarianceElement = TElement>

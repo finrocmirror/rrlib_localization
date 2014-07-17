@@ -213,7 +213,7 @@ private:
     pose_2d = tPose2D<double>(1, 2, tAngle2D(2));
     RRLIB_UNIT_TESTS_EQUALITY(tPose2D<double>(1, 2, tAngle2D(2)), pose_2d);
     pose_2d = tPose2D<float>(2, 3, tAngle2D(4));
-    RRLIB_UNIT_TESTS_EQUALITY(tPose2D<double>(2, 3, tAngle2D(4)), pose_2d);
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(tPose2D<double>(2, 3, tAngle2D(4)), pose_2d, 0));
     pose_2d.Set(3, 4, tAngle2D(5));
     RRLIB_UNIT_TESTS_EQUALITY(tPose2D<double>(3, 4, tAngle2D(5)), pose_2d);
 
@@ -222,7 +222,7 @@ private:
     pose_3d = tPose3D<double>(1, 2, 3, tAngle3D(4), tAngle3D(5), tAngle3D(6));
     RRLIB_UNIT_TESTS_EQUALITY(tPose3D<double>(1, 2, 3, tAngle3D(4), tAngle3D(5), tAngle3D(6)), pose_3d);
     pose_3d = tPose3D<float>(2, 3, 4, tAngle3D(5), tAngle3D(6), tAngle3D(7));
-    RRLIB_UNIT_TESTS_EQUALITY(tPose3D<double>(2, 3, 4, tAngle3D(5), tAngle3D(6), tAngle3D(7)), pose_3d);
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(tPose3D<double>(2, 3, 4, tAngle3D(5), tAngle3D(6), tAngle3D(7)), pose_3d, 0));
     pose_3d.Set(3, 4, 5, tAngle3D(6), tAngle3D(7), tAngle3D(8));
     RRLIB_UNIT_TESTS_EQUALITY(tPose3D<double>(3, 4, 5, tAngle3D(6), tAngle3D(7), tAngle3D(8)), pose_3d);
   }
@@ -336,18 +336,18 @@ private:
     tPose2D<> pose_2d(10, 20, tPose2D<>::tOrientationComponent<>(2));
     tPoseChange2D<> pose_change_2d(1, 2, tTwist2D<>::tOrientationComponent<>(0.2));
 
-    RRLIB_UNIT_TESTS_EQUALITY(pose_2d, pose_change_2d * si_units::tTime<float>(10));
-    RRLIB_UNIT_TESTS_EQUALITY(pose_2d, si_units::tTime<float>(10) * pose_change_2d);
+    RRLIB_UNIT_TESTS_EQUALITY(pose_2d, tPose2D<>(pose_change_2d * si_units::tTime<float>(10)));
+    RRLIB_UNIT_TESTS_EQUALITY(pose_2d, tPose2D<>(si_units::tTime<float>(10) * pose_change_2d));
 
-    RRLIB_UNIT_TESTS_EQUALITY(pose_change_2d, pose_2d / si_units::tTime<float>(10));
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(pose_change_2d, pose_2d / si_units::tTime<float>(10), 0));
 
     tPose3D<> pose_3d(10, 20, 30, tPose3D<>::tOrientationComponent<>(2), tPose3D<>::tOrientationComponent<>(1), tPose3D<>::tOrientationComponent<>(1.6));
     tPoseChange3D<> pose_change_3d(1, 2, 3, tTwist3D<>::tOrientationComponent<>(0.2), tTwist3D<>::tOrientationComponent<>(0.1), tTwist3D<>::tOrientationComponent<>(0.16));
 
-    RRLIB_UNIT_TESTS_EQUALITY(pose_3d, pose_change_3d * si_units::tTime<float>(10));
-    RRLIB_UNIT_TESTS_EQUALITY(pose_3d, si_units::tTime<float>(10) * pose_change_3d);
+    RRLIB_UNIT_TESTS_EQUALITY(pose_3d, tPose3D<>(pose_change_3d * si_units::tTime<float>(10)));
+    RRLIB_UNIT_TESTS_EQUALITY(pose_3d, tPose3D<>(si_units::tTime<float>(10) * pose_change_3d));
 
-    RRLIB_UNIT_TESTS_EQUALITY(pose_change_3d, pose_3d / si_units::tTime<float>(10));
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(pose_change_3d, pose_3d / si_units::tTime<float>(10), 0));
   }
 
   void Uncertainty()

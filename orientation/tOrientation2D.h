@@ -72,10 +72,10 @@ namespace localization
 /*!
  *
  */
-template <typename TElement, typename TSIUnit>
-class tOrientation<2, TElement, TSIUnit> : public orientation::tOrientationBase<2, TElement, TSIUnit>
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+class tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> : public orientation::tOrientationBase<2, TElement, TSIUnit, TAutoWrapPolicy>
 {
-  typedef orientation::tOrientationBase<2, TElement, TSIUnit> tOrientationBase;
+  typedef orientation::tOrientationBase<2, TElement, TSIUnit, TAutoWrapPolicy> tOrientationBase;
 
 //----------------------------------------------------------------------
 // Public methods and typedefs
@@ -84,7 +84,7 @@ public:
 
   static const size_t cSIZE;
 
-  template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = math::angle::NoWrap>
+  template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = TAutoWrapPolicy>
   using tComponent = typename tOrientationBase::template tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy>;
 
   tOrientation();
@@ -98,8 +98,8 @@ public:
   template <typename TMatrixElement>
   tOrientation(const math::tMatrix<2, 2, TMatrixElement> &matrix, double max_error = 1E-6);
 
-  template <typename TOtherElement>
-  tOrientation(const tOrientation<2, TOtherElement, TSIUnit> &other);
+  template <typename TOtherElement, typename TOtherAutoWrapPolicy>
+  tOrientation(const tOrientation<2, TOtherElement, TSIUnit, TOtherAutoWrapPolicy> &other);
 
   inline const tComponent<> &Yaw() const
   {
@@ -119,11 +119,11 @@ public:
   template <typename TMatrixElement>
   void Set(const math::tMatrix<2, 2, TMatrixElement> &matrix, double max_error = 1E-6);
 
-  template <typename TOtherElement>
-  tOrientation &operator += (const tOrientation<2, TOtherElement, TSIUnit> &other);
+  template <typename TOtherElement, typename TOtherAutoWrapPolicy>
+  tOrientation &operator += (const tOrientation<2, TOtherElement, TSIUnit, TOtherAutoWrapPolicy> &other);
 
-  template <typename TOtherElement>
-  tOrientation &operator -= (const tOrientation<2, TOtherElement, TSIUnit> &other);
+  template <typename TOtherElement, typename TOtherAutoWrapPolicy>
+  tOrientation &operator -= (const tOrientation<2, TOtherElement, TSIUnit, TOtherAutoWrapPolicy> &other);
 
   math::tMatrix<2, 2, TElement> GetMatrix() const;
 
@@ -152,28 +152,28 @@ private:
 
 };
 
-template <typename TElement, typename TSIUnit>
-bool IsEqual(const tOrientation<2, TElement, TSIUnit> &left, const tOrientation<2, TElement, TSIUnit> &right, float max_error = 1E-6, math::tFloatComparisonMethod method = math::eFCM_ABSOLUTE_ERROR);
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+bool IsEqual(const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &right, float max_error = 1E-6, math::tFloatComparisonMethod method = math::eFCM_ABSOLUTE_ERROR);
 
-template <typename TElement, typename TSIUnit>
-const bool operator == (const tOrientation<2, TElement, TSIUnit> &left, const tOrientation<2, TElement, TSIUnit> &right);
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+const bool operator == (const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &right);
 
-template <typename TElement, typename TSIUnit>
-const bool operator < (const tOrientation<2, TElement, TSIUnit> &left, const tOrientation<2, TElement, TSIUnit> &right);
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+const bool operator < (const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &right);
 
-template <typename TElement, typename TSIUnit>
-std::ostream &operator << (std::ostream &stream, const tOrientation<2, TElement, TSIUnit> &orientation);
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+std::ostream &operator << (std::ostream &stream, const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &orientation);
 
-template <typename TElement, typename TSIUnit>
-std::istream &operator >> (std::istream &stream, tOrientation<2, TElement, TSIUnit> &orientation);
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+std::istream &operator >> (std::istream &stream, tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &orientation);
 
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
 
-template <typename TElement, typename TSIUnit>
-serialization::tOutputStream &operator << (serialization::tOutputStream &stream, const tOrientation<2, TElement, TSIUnit> &orientation);
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+serialization::tOutputStream &operator << (serialization::tOutputStream &stream, const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &orientation);
 
-template <typename TElement, typename TSIUnit>
-serialization::tInputStream &operator >> (serialization::tInputStream &stream, tOrientation<2, TElement, TSIUnit> &orientation);
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+serialization::tInputStream &operator >> (serialization::tInputStream &stream, tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &orientation);
 
 #endif
 

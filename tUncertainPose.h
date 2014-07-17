@@ -67,33 +67,33 @@ namespace localization
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
-template <typename TElement = double>
-using tUncertainPose2D = tUncertainPose<2, TElement, si_units::tMeter, si_units::tNoUnit>;
-template <typename TElement = double>
-using tUncertainPoseChange2D = tUncertainPose < 2, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-template <typename TElement = double>
-using tUncertainTwist2D = tUncertainPoseChange2D<TElement>;
+template <typename TElement = double, typename TAutoWrapPolicy = math::angle::Signed>
+using tUncertainPose2D = tUncertainPose<2, TElement, si_units::tMeter, si_units::tNoUnit, TAutoWrapPolicy>;
+template <typename TElement = double, typename TAutoWrapPolicy = math::angle::NoWrap>
+using tUncertainPoseChange2D = tUncertainPose < 2, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy >;
+template <typename TElement = double, typename TAutoWrapPolicy = math::angle::NoWrap>
+using tUncertainTwist2D = tUncertainPoseChange2D<TElement, TAutoWrapPolicy>;
 
-template <typename TElement = double>
-using tUncertainPose3D = tUncertainPose<3, TElement, si_units::tMeter, si_units::tNoUnit>;
-template <typename TElement = double>
-using tUncertainPoseChange3D = tUncertainPose < 3, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-template <typename TElement = double>
-using tUncertainTwist3D = tUncertainPoseChange3D<TElement>;
+template <typename TElement = double, typename TAutoWrapPolicy = math::angle::Signed>
+using tUncertainPose3D = tUncertainPose<3, TElement, si_units::tMeter, si_units::tNoUnit, TAutoWrapPolicy>;
+template <typename TElement = double, typename TAutoWrapPolicy = math::angle::NoWrap>
+using tUncertainPoseChange3D = tUncertainPose < 3, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy >;
+template <typename TElement = double, typename TAutoWrapPolicy = math::angle::NoWrap>
+using tUncertainTwist3D = tUncertainPoseChange3D<TElement, TAutoWrapPolicy>;
 
 //----------------------------------------------------------------------
 // Explicit template instantiation
 //----------------------------------------------------------------------
 
-extern template class tUncertainPose<2, double, si_units::tMeter, si_units::tNoUnit>;
-extern template class tUncertainPose<2, float, si_units::tMeter, si_units::tNoUnit>;
-extern template class tUncertainPose < 2, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-extern template class tUncertainPose < 2, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+extern template class tUncertainPose<2, double, si_units::tMeter, si_units::tNoUnit, math::angle::Signed>;
+extern template class tUncertainPose<2, float, si_units::tMeter, si_units::tNoUnit, math::angle::Signed>;
+extern template class tUncertainPose < 2, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, math::angle::NoWrap >;
+extern template class tUncertainPose < 2, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, math::angle::NoWrap >;
 
-extern template class tUncertainPose<3, double, si_units::tMeter, si_units::tNoUnit>;
-extern template class tUncertainPose<3, float, si_units::tMeter, si_units::tNoUnit>;
-extern template class tUncertainPose < 3, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
-extern template class tUncertainPose < 3, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz >;
+extern template class tUncertainPose<3, double, si_units::tMeter, si_units::tNoUnit, math::angle::Signed>;
+extern template class tUncertainPose<3, float, si_units::tMeter, si_units::tNoUnit, math::angle::Signed>;
+extern template class tUncertainPose < 3, double, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, math::angle::NoWrap >;
+extern template class tUncertainPose < 3, float, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, math::angle::NoWrap >;
 
 //----------------------------------------------------------------------
 // End of namespace declaration

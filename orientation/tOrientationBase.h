@@ -67,7 +67,7 @@ namespace rrlib
 namespace localization
 {
 
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 class tOrientation;
 
 namespace orientation
@@ -84,7 +84,7 @@ namespace orientation
 /*!
  *
  */
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 class tOrientationBase
 {
 
@@ -95,12 +95,12 @@ public:
 
   static const unsigned int cDIMENSION;
 
-  template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = math::angle::NoWrap>
+  template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = TAutoWrapPolicy>
   using tComponent = si_units::tQuantity<TSIUnit, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy>>;
 
-  static const tOrientation<Tdimension, TElement, TSIUnit> &Zero()
+  static const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &Zero()
   {
-    static tOrientation<Tdimension, TElement, TSIUnit> orientation;
+    static tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> orientation;
     return orientation;
   }
 
@@ -110,10 +110,10 @@ public:
   }
   inline tComponent<> &operator[](unsigned int i)
   {
-    if (i > tOrientation<Tdimension, TElement, TSIUnit>::cSIZE - 1)
+    if (i > tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::cSIZE - 1)
     {
       std::stringstream stream;
-      stream << "Component index (" << i << ") out of bounds [0.." << tOrientation<Tdimension, TElement, TSIUnit>::cSIZE - 1 << "].";
+      stream << "Component index (" << i << ") out of bounds [0.." << tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::cSIZE - 1 << "].";
       throw std::logic_error(stream.str());
     }
     return reinterpret_cast<tComponent<> *>(this)[i];
@@ -131,7 +131,7 @@ public:
   void Rotate(const math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix);
 
   template <typename TMatrixElement>
-  tOrientation<Tdimension, TElement, TSIUnit> Rotated(const math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix) const;
+  tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> Rotated(const math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix) const;
 
   bool IsZero(double epsilon) const;
 
@@ -142,25 +142,25 @@ private:
 
 };
 
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
-tOrientation<Tdimension, TElement, TSIUnit> operator - (const tOrientation<Tdimension, TElement, TSIUnit> &orientation);
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> operator - (const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &orientation);
 
-template <unsigned int Tdimension, typename TLeftElement, typename TRightElement, typename TSIUnit>
-tOrientation < Tdimension, decltype(TLeftElement() + TRightElement()), TSIUnit > operator + (const tOrientation<Tdimension, TLeftElement, TSIUnit> &left, const tOrientation<Tdimension, TRightElement, TSIUnit> &right);
+template <unsigned int Tdimension, typename TLeftElement, typename TRightElement, typename TSIUnit, typename TLeftAutoWrapPolicy, typename TRightAutoWrapPolicy>
+tOrientation < Tdimension, decltype(TLeftElement() + TRightElement()), TSIUnit, typename math::angle::AutoWrapPolicy<TLeftAutoWrapPolicy, TRightAutoWrapPolicy>::tType > operator + (const tOrientation<Tdimension, TLeftElement, TSIUnit, TLeftAutoWrapPolicy> &left, const tOrientation<Tdimension, TRightElement, TSIUnit, TRightAutoWrapPolicy> &right);
 
-template <unsigned int Tdimension, typename TLeftElement, typename TRightElement, typename TSIUnit>
-tOrientation < Tdimension, decltype(TLeftElement() - TRightElement()), TSIUnit > operator - (const tOrientation<Tdimension, TLeftElement, TSIUnit> &left, const tOrientation<Tdimension, TRightElement, TSIUnit> &right);
+template <unsigned int Tdimension, typename TLeftElement, typename TRightElement, typename TSIUnit, typename TLeftAutoWrapPolicy, typename TRightAutoWrapPolicy>
+tOrientation < Tdimension, decltype(TLeftElement() - TRightElement()), TSIUnit, typename math::angle::AutoWrapPolicy<TLeftAutoWrapPolicy, TRightAutoWrapPolicy>::tType > operator - (const tOrientation<Tdimension, TLeftElement, TSIUnit, TLeftAutoWrapPolicy> &left, const tOrientation<Tdimension, TRightElement, TSIUnit, TRightAutoWrapPolicy> &right);
 
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
-const bool operator != (const tOrientation<Tdimension, TElement, TSIUnit> &left, const tOrientation<Tdimension, TElement, TSIUnit> &right);
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+const bool operator != (const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &right);
 
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
 
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
-serialization::tStringOutputStream &operator << (serialization::tStringOutputStream &stream, const tOrientation<Tdimension, TElement, TSIUnit> &orientation);
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+serialization::tStringOutputStream &operator << (serialization::tStringOutputStream &stream, const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &orientation);
 
-template <unsigned int Tdimension, typename TElement, typename TSIUnit>
-serialization::tStringInputStream &operator >> (serialization::tStringInputStream &stream, tOrientation<Tdimension, TElement, TSIUnit> &orientation);
+template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
+serialization::tStringInputStream &operator >> (serialization::tStringInputStream &stream, tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &orientation);
 
 #endif
 

@@ -67,28 +67,28 @@ namespace localization
 //----------------------------------------------------------------------
 // tPose2D constructors
 //----------------------------------------------------------------------
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::tPose()
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tPose()
 {}
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-template <typename TX, typename TY, typename TOrientationElement>
-tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::tPose(TX x, TY y, const tOrientation<TOrientationElement> &orientation) :
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+template <typename TX, typename TY, typename TOrientationElement, typename TOrientationAutoWrapPolicy>
+tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tPose(TX x, TY y, const tOrientation<TOrientationElement, TOrientationAutoWrapPolicy> &orientation) :
   tPoseBase(tPosition<>(x, y), orientation)
 {}
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TX, typename TY, typename TYaw>
-tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::tPose(TX x, TY y, TYaw yaw) :
+tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tPose(TX x, TY y, TYaw yaw) :
   tPoseBase(tPosition<>(x, y), tOrientation<>(yaw))
 {}
 
 //----------------------------------------------------------------------
 // tPose2D SetPosition
 //----------------------------------------------------------------------
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TX, typename TY>
-void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::SetPosition(TX x, TY y)
+void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::SetPosition(TX x, TY y)
 {
   this->SetPosition(tPosition<>(x, y));
 }
@@ -96,9 +96,9 @@ void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::SetPosition(TX x, 
 //----------------------------------------------------------------------
 // tPose2D SetOrientation
 //----------------------------------------------------------------------
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TYaw>
-void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::SetOrientation(TYaw yaw)
+void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::SetOrientation(TYaw yaw)
 {
   this->SetOrientation(tOrientation<>(yaw));
 }
@@ -106,17 +106,17 @@ void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::SetOrientation(TYa
 //----------------------------------------------------------------------
 // tPose2D Set
 //----------------------------------------------------------------------
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TX, typename TY, typename TYaw>
-void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::Set(TX x, TY y, TYaw yaw)
+void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Set(TX x, TY y, TYaw yaw)
 {
   this->SetPosition(x, y);
   this->SetOrientation(yaw);
 }
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TMatrixElement>
-void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::Set(const math::tMatrix<3, 3, TMatrixElement> &matrix, double max_error)
+void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Set(const math::tMatrix<3, 3, TMatrixElement> &matrix, double max_error)
 {
   assert(math::IsEqual(matrix.Determinant(), 1.0, max_error));
   this->SetOrientation(math::tMatrix<2, 2, TElement>(matrix[0][0], matrix[0][1], matrix[1][0], matrix[1][1]), max_error);
@@ -126,9 +126,9 @@ void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::Set(const math::tM
 //----------------------------------------------------------------------
 // tPose2D Rotate
 //----------------------------------------------------------------------
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TYaw>
-void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::Rotate(TYaw yaw)
+void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Rotate(TYaw yaw)
 {
   this->Orientation().Rotate(yaw);
 }
@@ -136,9 +136,9 @@ void tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::Rotate(TYaw yaw)
 //----------------------------------------------------------------------
 // tPose2D Rotated
 //----------------------------------------------------------------------
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TYaw>
-tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit> tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::Rotated(TYaw yaw) const
+tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Rotated(TYaw yaw) const
 {
   tPose temp(*this);
   temp.Orientation().Rotate(yaw);
@@ -148,8 +148,8 @@ tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit> tPose<2, TElement, TPosi
 //----------------------------------------------------------------------
 // tPose2D GetEuclideanNorm
 //----------------------------------------------------------------------
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-const TElement tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::GetEuclideanNorm() const
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+const TElement tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::GetEuclideanNorm() const
 {
   return math::tVector<3, TElement>(this->X().Value(), this->Y().Value(), this->Yaw().Value().Value()).Length();
 }
@@ -157,15 +157,15 @@ const TElement tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit>::GetEucli
 //----------------------------------------------------------------------
 // Streaming
 //----------------------------------------------------------------------
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-std::ostream &operator << (std::ostream &stream, const tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+std::ostream &operator << (std::ostream &stream, const tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
 {
   typedef math::tAngle<TElement, math::angle::Degree, math::angle::Signed> tDegreeSigned;
   return stream << "(" << pose.X().Value() << ", " << pose.Y().Value() << ", " << tDegreeSigned(pose.Yaw().Value()) << ")";
 }
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-std::istream &operator >> (std::istream &stream, tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+std::istream &operator >> (std::istream &stream, tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
 {
   std::istream::sentry stream_ok(stream, true);
   if (!stream_ok || stream.peek() == std::char_traits<char>::eof())
@@ -188,14 +188,14 @@ std::istream &operator >> (std::istream &stream, tPose<2, TElement, TPositionSIU
 
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-serialization::tOutputStream &operator << (serialization::tOutputStream &stream, const tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+serialization::tOutputStream &operator << (serialization::tOutputStream &stream, const tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
 {
   return stream << pose.X() << pose.Y() << pose.Yaw();
 }
 
-template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit>
-serialization::tInputStream &operator >> (serialization::tInputStream &stream, tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit> &pose)
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+serialization::tInputStream &operator >> (serialization::tInputStream &stream, tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
 {
   return stream >> pose.X() >> pose.Y() >> pose.Yaw();
 }
