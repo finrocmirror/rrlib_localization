@@ -368,6 +368,23 @@ private:
     tUncertainPose2D<> pose_3(3, 4, math::tAngleDeg(5), math::tMatrix<3, 3, double>(1, 2, 3, 2, 4, 5, 3, 5, 6));
     RRLIB_UNIT_TESTS_EQUALITY(tPose2D<>(3, 4, math::tAngleDeg(5)), static_cast<const tPose2D<> &>(pose_3));
     RRLIB_UNIT_TESTS_EQUALITY((math::tMatrix<3, 3, double>(1, 2, 3, 2, 4, 5, 3, 5, 6)), pose_3.Covariance());
+
+    RRLIB_UNIT_TESTS_EQUALITY(tPose3D<>(), static_cast<const tPose3D<> &>(tUncertainPose3D<>()));
+    RRLIB_UNIT_TESTS_EQUALITY(tPose3D<>(1, 2, 3, math::tAngleDeg(4), math::tAngleDeg(5), math::tAngleDeg(6)), static_cast<const tPose3D<> &>(tUncertainPose3D<>(1, 2, 3, math::tAngleDeg(4), math::tAngleDeg(5), math::tAngleDeg(6))));
+    RRLIB_UNIT_TESTS_EQUALITY(tPose3D<>(2, 3, 4, math::tAngleDeg(5), math::tAngleDeg(6), math::tAngleDeg(7)), static_cast<const tPose3D<> &>(tUncertainPose3D<>(tPosition3D<>(2, 3, 4), tOrientation3D<>(math::tAngleDeg(5), math::tAngleDeg(6), math::tAngleDeg(7)))));
+    RRLIB_UNIT_TESTS_EQUALITY(tPose3D<>(3, 4, 5, math::tAngleDeg(6), math::tAngleDeg(7), math::tAngleDeg(8)), static_cast<const tPose3D<> &>(tUncertainPose3D<>(tPose3D<>(3, 4, 5, math::tAngleDeg(6), math::tAngleDeg(7), math::tAngleDeg(8)))));
+
+    tUncertainPose3D<> pose_4(tPose3D<>(1, 2, 3, math::tAngleDeg(4), math::tAngleDeg(5), math::tAngleDeg(6)), tUncertainPose3D<>::tCovarianceMatrix<>(1, 2, 3, 4, 5, 6, 2, 4, 5, 6, 7, 8, 3, 5, 7, 8, 9, 10, 4, 6, 8, 10, 11, 12, 5, 7, 9, 11, 13, 14, 6, 8, 10, 12, 14, 16));
+    RRLIB_UNIT_TESTS_EQUALITY(tPose3D<>(1, 2, 3, math::tAngleDeg(4), math::tAngleDeg(5), math::tAngleDeg(6)), static_cast<const tPose3D<> &>(pose_4));
+    RRLIB_UNIT_TESTS_EQUALITY((math::tMatrix<6, 6, double>(1, 2, 3, 4, 5, 6, 2, 4, 5, 6, 7, 8, 3, 5, 7, 8, 9, 10, 4, 6, 8, 10, 11, 12, 5, 7, 9, 11, 13, 14, 6, 8, 10, 12, 14, 16)), pose_4.Covariance());
+
+    tUncertainPose3D<> pose_5(2, 3, 4, math::tMatrix<6, 6, double>(1, 2, 3, 4, 5, 6, 2, 4, 5, 6, 7, 8, 3, 5, 7, 8, 9, 10, 4, 6, 8, 10, 11, 12, 5, 7, 9, 11, 13, 14, 6, 8, 10, 12, 14, 16));
+    RRLIB_UNIT_TESTS_EQUALITY(tPose3D<>(2, 3, 4), static_cast<const tPose3D<> &>(pose_5));
+    RRLIB_UNIT_TESTS_EQUALITY((math::tMatrix<6, 6, double>(1, 2, 3, 4, 5, 6, 2, 4, 5, 6, 7, 8, 3, 5, 7, 8, 9, 10, 4, 6, 8, 10, 11, 12, 5, 7, 9, 11, 13, 14, 6, 8, 10, 12, 14, 16)), pose_5.Covariance());
+
+    tUncertainPose3D<> pose_6(3, 4, 5, math::tAngleDeg(6), math::tAngleDeg(7), math::tAngleDeg(8), math::tMatrix<6, 6, double>(1, 2, 3, 4, 5, 6, 2, 4, 5, 6, 7, 8, 3, 5, 7, 8, 9, 10, 4, 6, 8, 10, 11, 12, 5, 7, 9, 11, 13, 14, 6, 8, 10, 12, 14, 16));
+    RRLIB_UNIT_TESTS_EQUALITY(tPose3D<>(3, 4, 5, math::tAngleDeg(6), math::tAngleDeg(7), math::tAngleDeg(8)), static_cast<const tPose3D<> &>(pose_6));
+    RRLIB_UNIT_TESTS_EQUALITY((math::tMatrix<6, 6, double>(1, 2, 3, 4, 5, 6, 2, 4, 5, 6, 7, 8, 3, 5, 7, 8, 9, 10, 4, 6, 8, 10, 11, 12, 5, 7, 9, 11, 13, 14, 6, 8, 10, 12, 14, 16)), pose_6.Covariance());
   }
 };
 

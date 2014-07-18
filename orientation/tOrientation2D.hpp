@@ -60,7 +60,7 @@ namespace localization
 // Const values
 //----------------------------------------------------------------------
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
-const size_t tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy>::cSIZE = 1;
+const size_t tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy>::cSIZE;
 
 //----------------------------------------------------------------------
 // Implementation
