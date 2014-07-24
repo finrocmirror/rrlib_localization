@@ -140,7 +140,7 @@ void tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoW
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 void tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Reset()
 {
-  this->position.Reset();
+  this->position = tPosition<>();
   this->orientation.Reset();
 }
 
