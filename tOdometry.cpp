@@ -174,7 +174,7 @@ bool tOdometry::UpdatePose(double vel_veh, double av_z_veh, double side_slip_ang
       this->velocity_conversion.Reset();
 
       //pose containing the angular offset due to the side slip angle:
-      this->local_side_slip_rotation.SetOrientation(0.0, 0.0, side_slip_angle);
+      this->local_side_slip_rotation.SetOrientation(math::tAngleRad(0.0), math::tAngleRad(0.0), math::tAngleRad(side_slip_angle));
 
       //calculate local pose change and velocity vector
       if (av_z_veh != 0.)
@@ -203,7 +203,7 @@ bool tOdometry::UpdatePose(double vel_veh, double av_z_veh, double side_slip_ang
       this->delta_pose_lcs.SetOrientation(
         delta_pose_lcs.Roll(),
         delta_pose_lcs.Pitch(),
-        av_z_veh * elapsed_time);
+        math::tAngleRad(av_z_veh * elapsed_time));
 
       //velocity conversion vector: only rotation
       velocity_conversion = current_pose_wcs;
