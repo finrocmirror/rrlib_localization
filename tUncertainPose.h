@@ -82,6 +82,23 @@ template <typename TElement = double, typename TAutoWrapPolicy = math::angle::No
 using tUncertainTwist3D = tUncertainPoseChange3D<TElement, TAutoWrapPolicy>;
 
 //----------------------------------------------------------------------
+// Arithmetic operators
+//----------------------------------------------------------------------
+// Multiplication is defined for the first derivatives so that velocities can be multiplied with a factor
+template <unsigned int Tdimension, typename TElement, typename TAutoWrapPolicy, typename TFactor>
+tUncertainPose < Tdimension, decltype(TElement() * TFactor()), si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > operator * (const tUncertainPose < Tdimension, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > &pose, TFactor factor)
+{
+  // TODO: transform the uncertainties
+  return tUncertainPose < Tdimension, decltype(TElement() * TFactor()), si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > (pose.Position() * factor, pose.Orientation() * factor);
+}
+
+template <unsigned int Tdimension, typename TElement, typename TAutoWrapPolicy, typename TFactor>
+tUncertainPose < Tdimension, decltype(TElement() * TFactor()), si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > operator * (TFactor factor, const tUncertainPose < Tdimension, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > &pose)
+{
+  return pose * factor;
+}
+
+//----------------------------------------------------------------------
 // Explicit template instantiation
 //----------------------------------------------------------------------
 
