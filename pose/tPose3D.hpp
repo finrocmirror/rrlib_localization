@@ -175,7 +175,7 @@ std::istream &operator >> (std::istream &stream, tPose<3, TElement, TPositionSIU
   }
   char a, b, c, d, e, f, g;
   TElement x, y, z;
-  math::tAngle<TElement, math::angle::Degree, math::angle::Signed> roll, pitch, yaw;
+  math::tAngle<TElement, math::angle::Degree, TAutoWrapPolicy> roll, pitch, yaw;
   stream >> a >> x >> b >> y >> c >> z >> d >> roll >> e >> pitch >> f >> yaw >> g;
   if (a != '(' || b != ',' || c != ',' || d != ',' || e != ',' || f != ',' || g != ')')
   {
