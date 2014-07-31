@@ -217,11 +217,7 @@ tPose < Tdimension, decltype(TLeftElement() + TRightElement()), TPositionSIUnit,
 template <unsigned int Tdimension, typename TLeftElement, typename TRightElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TLeftAutoWrapPolicy, typename TRightAutoWrapPolicy>
 tPose < Tdimension, decltype(TLeftElement() - TRightElement()), TPositionSIUnit, TOrientationSIUnit, typename math::angle::AutoWrapPolicy<TLeftAutoWrapPolicy, TRightAutoWrapPolicy>::tType > operator - (const tPose<Tdimension, TLeftElement, TPositionSIUnit, TOrientationSIUnit, TLeftAutoWrapPolicy> &left, const tPose<Tdimension, TRightElement, TPositionSIUnit, TOrientationSIUnit, TRightAutoWrapPolicy> &right);
 
-template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy, typename TFactor>
-tPose<Tdimension, decltype(TElement() * TFactor()), TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> operator * (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose, TFactor factor);
-
-template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy, typename TFactor>
-tPose<Tdimension, decltype(TElement() * TFactor()), TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> operator * (TFactor factor, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose);
+// Note: there is no operator * here on purpose, as this operation is hard to define generally. If you need this operator, implement it for your specific pose.
 
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 const bool operator == (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &left, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &right);

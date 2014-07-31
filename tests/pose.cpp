@@ -234,16 +234,12 @@ private:
     RRLIB_UNIT_TESTS_EQUALITY(tPose2D(-1, -2, -tAngle2D(3)), -tPose2D(1, 2, tAngle2D(3)));
     RRLIB_UNIT_TESTS_EQUALITY(tPose2D(1 + 2, 2 + 3, tAngle2D(3) + tAngle2D(4)), tPose2D(1, 2, tAngle2D(3)) + tPose2D(2, 3, tAngle2D(4)));
     RRLIB_UNIT_TESTS_EQUALITY(tPose2D(1 - 2, 2 - 3, tAngle2D(3) - tAngle2D(4)), tPose2D(1, 2, tAngle2D(3)) - tPose2D(2, 3, tAngle2D(4)));
-    RRLIB_UNIT_TESTS_EQUALITY(tPose2D(1 * 2, 2 * 2, tAngle2D(3)), tPose2D(1, 2, tAngle2D(3)) * 2.0);
-    RRLIB_UNIT_TESTS_EQUALITY(tPose2D(1, 2, tAngle2D(3)) * 2.0, 2.0 * tPose2D(1, 2, tAngle2D(3)));
 
     typedef localization::tPose3D<double> tPose3D;
     typedef tPose3D::tOrientationComponent<> tAngle3D;
     RRLIB_UNIT_TESTS_EQUALITY(tPose3D(-1, -2, -3, -tAngle3D(4), -tAngle3D(5), -tAngle3D(6)), -tPose3D(1, 2, 3, tAngle3D(4), tAngle3D(5), tAngle3D(6)));
     RRLIB_UNIT_TESTS_EQUALITY(tPose3D(1 + 2, 2 + 3, 3 + 4, tAngle3D(4 + 5), tAngle3D(5 + 6), tAngle3D(6 + 7)), tPose3D(1, 2, 3, tAngle3D(4), tAngle3D(5), tAngle3D(6)) + tPose3D(2, 3, 4, tAngle3D(5), tAngle3D(6), tAngle3D(7)));
     RRLIB_UNIT_TESTS_EQUALITY(tPose3D(1 - 2, 2 - 3, 3 - 4, tAngle3D(4 - 5), tAngle3D(5 - 6), tAngle3D(6 - 7)), tPose3D(1, 2, 3, tAngle3D(4), tAngle3D(5), tAngle3D(6)) - tPose3D(2, 3, 4, tAngle3D(5), tAngle3D(6), tAngle3D(7)));
-    RRLIB_UNIT_TESTS_EQUALITY(tPose3D(1 * 2, 2 * 2, 3 * 2, tAngle3D(4), tAngle3D(5), tAngle3D(6)), tPose3D(1, 2, 3, tAngle3D(4), tAngle3D(5), tAngle3D(6)) * 2.0);
-    RRLIB_UNIT_TESTS_EQUALITY(tPose3D(1, 2, 3, tAngle3D(4), tAngle3D(5), tAngle3D(6)) * 2.0, 2.0 * tPose3D(1, 2, 3, tAngle3D(4), tAngle3D(5), tAngle3D(6)));
   }
 
   void Streaming()

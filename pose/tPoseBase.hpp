@@ -326,21 +326,6 @@ tPose < Tdimension, decltype(TLeftElement() - TRightElement()), TPositionSIUnit,
 }
 
 //----------------------------------------------------------------------
-// Multiplication
-//----------------------------------------------------------------------
-template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy, typename TFactor>
-tPose<Tdimension, decltype(TElement() * TFactor()), TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> operator * (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose, TFactor factor)
-{
-  return tPose<Tdimension, decltype(TElement() * TFactor()), TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>(pose.Position() * factor, pose.Orientation());
-}
-
-template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy, typename TFactor>
-tPose<Tdimension, decltype(TElement() * TFactor()), TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> operator * (TFactor factor, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
-{
-  return pose * factor;
-}
-
-//----------------------------------------------------------------------
 // Comparison
 //----------------------------------------------------------------------
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
