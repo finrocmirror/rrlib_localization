@@ -5,5 +5,6 @@
   <program name="orientation" sources="orientation.cpp" />
   <program name="pose" sources="pose.cpp" />
   <program name="position" sources="position.cpp" />
+  <program name="dead_reckoning" sources="dead_reckoning.cpp" />
 
 </targets>

@@ -20,4 +20,10 @@
     </sources>
   </rrlib>
 
+  <rrlib name="dead_reckoning">
+    <sources>
+      tDeadReckoning.*
+    </sources>
+  </rrlib>
+
 </targets>
