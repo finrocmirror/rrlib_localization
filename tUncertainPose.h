@@ -84,6 +84,46 @@ using tUncertainTwist3D = tUncertainPoseChange3D<TElement, TAutoWrapPolicy>;
 //----------------------------------------------------------------------
 // Arithmetic operators
 //----------------------------------------------------------------------
+template <typename TElement, typename TAutoWrapPolicy, typename TValue>
+tUncertainPose2D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (const tUncertainPoseChange2D<TElement, TAutoWrapPolicy> &pose_change, si_units::tTime<TValue> time)
+{
+  // TODO: transform the uncertainties
+  return tUncertainPose2D<decltype(TElement() * TValue()), math::angle::NoWrap>(pose_change.Position() * time, pose_change.Orientation() * time);
+}
+template <typename TElement, typename TAutoWrapPolicy, typename TValue>
+tUncertainPose2D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tUncertainPoseChange2D<TElement, TAutoWrapPolicy> &pose_change)
+{
+  // TODO: transform the uncertainties
+  return pose_change * time;
+}
+
+template <typename TElement, typename TAutoWrapPolicy, typename TValue>
+tUncertainPose3D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (const tUncertainPoseChange3D<TElement, TAutoWrapPolicy> &pose_change, si_units::tTime<TValue> time)
+{
+  // TODO: transform the uncertainties
+  return tUncertainPose3D<decltype(TElement() * TValue()), math::angle::NoWrap>(pose_change.Position() * time, pose_change.Orientation() * time);
+}
+template <typename TElement, typename TAutoWrapPolicy, typename TValue>
+tUncertainPose3D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tUncertainPoseChange3D<TElement, TAutoWrapPolicy> &pose_change)
+{
+  // TODO: transform the uncertainties
+  return pose_change * time;
+}
+
+template <typename TElement, typename TAutoWrapPolicy, typename TValue>
+tUncertainPoseChange2D < decltype(TElement() / TValue()) > operator / (const tUncertainPose2D<TElement, TAutoWrapPolicy> &pose, si_units::tTime<TValue> time)
+{
+  // TODO: transform the uncertainties
+  return tUncertainPoseChange2D < decltype(TElement() / TValue()), math::angle::NoWrap > (pose.Position() / time, pose.Orientation() / time);
+}
+
+template <typename TElement, typename TAutoWrapPolicy, typename TValue>
+tUncertainPoseChange3D < decltype(TElement() / TValue()) > operator / (const tUncertainPose3D<TElement, TAutoWrapPolicy> &pose, si_units::tTime<TValue> time)
+{
+  // TODO: transform the uncertainties
+  return tUncertainPoseChange3D < decltype(TElement() / TValue()), math::angle::NoWrap > (pose.Position() / time, pose.Orientation() / time);
+}
+
 // Multiplication is defined for the first derivatives so that velocities can be multiplied with a factor
 template <unsigned int Tdimension, typename TElement, typename TAutoWrapPolicy, typename TFactor>
 tUncertainPose < Tdimension, decltype(TElement() * TFactor()), si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > operator * (const tUncertainPose < Tdimension, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > &pose, TFactor factor)
