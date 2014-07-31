@@ -81,38 +81,38 @@ using tTwist3D = tPoseChange3D<TElement, TAutoWrapPolicy>;
 //----------------------------------------------------------------------
 // Arithmetic operators
 //----------------------------------------------------------------------
-template <typename TElement, typename TValue>
-tPose2D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (const tPoseChange2D<TElement> &pose_change, si_units::tTime<TValue> time)
+template <typename TElement, typename TAutoWrapPolicy, typename TValue>
+tPose2D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (const tPoseChange2D<TElement, TAutoWrapPolicy> &pose_change, si_units::tTime<TValue> time)
 {
   return tPose2D<decltype(TElement() * TValue()), math::angle::NoWrap>(pose_change.Position() * time, pose_change.Orientation() * time);
 }
-template <typename TElement, typename TValue>
-tPose2D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tPoseChange2D<TElement> &pose_change)
+template <typename TElement, typename TAutoWrapPolicy, typename TValue>
+tPose2D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tPoseChange2D<TElement, TAutoWrapPolicy> &pose_change)
 {
   return pose_change * time;
 }
 
-template <typename TElement, typename TValue>
-tPose3D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (const tPoseChange3D<TElement> &pose_change, si_units::tTime<TValue> time)
+template <typename TElement, typename TAutoWrapPolicy, typename TValue>
+tPose3D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (const tPoseChange3D<TElement, TAutoWrapPolicy> &pose_change, si_units::tTime<TValue> time)
 {
   return tPose3D<decltype(TElement() * TValue()), math::angle::NoWrap>(pose_change.Position() * time, pose_change.Orientation() * time);
 }
-template <typename TElement, typename TValue>
-tPose3D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tPoseChange3D<TElement> &pose_change)
+template <typename TElement, typename TAutoWrapPolicy, typename TValue>
+tPose3D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tPoseChange3D<TElement, TAutoWrapPolicy> &pose_change)
 {
   return pose_change * time;
 }
 
-template <typename TElement, typename TValue>
-tPoseChange2D < decltype(TElement() / TValue()) > operator / (const tPose2D<TElement> &pose, si_units::tTime<TValue> time)
+template <typename TElement, typename TAutoWrapPolicy, typename TValue>
+tPoseChange2D < decltype(TElement() / TValue()) > operator / (const tPose2D<TElement, TAutoWrapPolicy> &pose, si_units::tTime<TValue> time)
 {
-  return tPoseChange2D < decltype(TElement() / TValue()) > (pose.Position() / time, pose.Orientation() / time);
+  return tPoseChange2D < decltype(TElement() / TValue()), math::angle::NoWrap > (pose.Position() / time, pose.Orientation() / time);
 }
 
-template <typename TElement, typename TValue>
-tPoseChange3D < decltype(TElement() / TValue()) > operator / (const tPose3D<TElement> &pose, si_units::tTime<TValue> time)
+template <typename TElement, typename TAutoWrapPolicy, typename TValue>
+tPoseChange3D < decltype(TElement() / TValue()) > operator / (const tPose3D<TElement, TAutoWrapPolicy> &pose, si_units::tTime<TValue> time)
 {
-  return tPoseChange3D < decltype(TElement() / TValue()) > (pose.Position() / time, pose.Orientation() / time);
+  return tPoseChange3D < decltype(TElement() / TValue()), math::angle::NoWrap > (pose.Position() / time, pose.Orientation() / time);
 }
 
 //----------------------------------------------------------------------
