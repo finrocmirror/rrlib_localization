@@ -83,6 +83,7 @@ class TestPose : public util::tUnitTestSuite
   RRLIB_UNIT_TESTS_ADD_TEST(Streaming);
   RRLIB_UNIT_TESTS_ADD_TEST(UnitChanges);
   RRLIB_UNIT_TESTS_ADD_TEST(Uncertainty);
+  RRLIB_UNIT_TESTS_ADD_TEST(MultiplyVelocityWithFactor);
   RRLIB_UNIT_TESTS_END_SUITE;
 
 private:
@@ -344,6 +345,18 @@ private:
     RRLIB_UNIT_TESTS_EQUALITY(pose_3d, tPose3D<>(si_units::tTime<float>(10) * pose_change_3d));
 
     RRLIB_UNIT_TESTS_ASSERT(IsEqual(pose_change_3d, pose_3d / si_units::tTime<float>(10), 0));
+  }
+
+  void MultiplyVelocityWithFactor()
+  {
+    tPoseChange2D<> pose_change_2d(1, 2, tTwist2D<>::tOrientationComponent<>(0.2));
+    RRLIB_UNIT_TESTS_EQUALITY(tPoseChange2D<>(1 * 3.3, 2 * 3.3, tTwist2D<>::tOrientationComponent<>(0.2 * 3.3)), pose_change_2d * 3.3);
+    RRLIB_UNIT_TESTS_EQUALITY(tPoseChange2D<>(1 * 3.3, 2 * 3.3, tTwist2D<>::tOrientationComponent<>(0.2 * 3.3)), 3.3 * pose_change_2d);
+
+    tPoseChange3D<> pose_change_3d(1, 2, 3, tTwist3D<>::tOrientationComponent<>(0.2), tTwist3D<>::tOrientationComponent<>(0.4), tTwist3D<>::tOrientationComponent<>(0.6));
+    RRLIB_UNIT_TESTS_EQUALITY(tPoseChange3D<>(1 * 3.3, 2 * 3.3, 3 * 3.3, tTwist3D<>::tOrientationComponent<>(0.2 * 3.3), tTwist3D<>::tOrientationComponent<>(0.4 * 3.3), tTwist3D<>::tOrientationComponent<>(0.6 * 3.3)), pose_change_3d * 3.3);
+    RRLIB_UNIT_TESTS_EQUALITY(tPoseChange3D<>(1 * 3.3, 2 * 3.3, 3 * 3.3, tTwist3D<>::tOrientationComponent<>(0.2 * 3.3), tTwist3D<>::tOrientationComponent<>(0.4 * 3.3), tTwist3D<>::tOrientationComponent<>(0.6 * 3.3)), 3.3 * pose_change_3d);
+
   }
 
   void Uncertainty()

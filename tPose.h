@@ -115,6 +115,19 @@ tPoseChange3D < decltype(TElement() / TValue()) > operator / (const tPose3D<TEle
   return tPoseChange3D < decltype(TElement() / TValue()), math::angle::NoWrap > (pose.Position() / time, pose.Orientation() / time);
 }
 
+// Multiplication is defined for the first derivatives so that velocities can be multiplied with a factor
+template <unsigned int Tdimension, typename TElement, typename TAutoWrapPolicy, typename TFactor>
+tPose < Tdimension, decltype(TElement() * TFactor()), si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > operator * (const tPose < Tdimension, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > &pose, TFactor factor)
+{
+  return tPose < Tdimension, decltype(TElement() * TFactor()), si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > (pose.Position() * factor, pose.Orientation() * factor);
+}
+
+template <unsigned int Tdimension, typename TElement, typename TAutoWrapPolicy, typename TFactor>
+tPose < Tdimension, decltype(TElement() * TFactor()), si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > operator * (TFactor factor, const tPose < Tdimension, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > &pose)
+{
+  return pose * factor;
+}
+
 //----------------------------------------------------------------------
 // Explicit template instantiation
 //----------------------------------------------------------------------
