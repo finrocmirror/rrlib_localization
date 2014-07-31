@@ -230,7 +230,7 @@ private:
     RRLIB_UNIT_TESTS_EQUALITY(tOrientation2D(tAngle2D(1 + 2)), tOrientation2D(tAngle2D(1)) + tOrientation2D(tAngle2D(2)));
     RRLIB_UNIT_TESTS_EQUALITY(tOrientation2D(tAngle2D(1 - 2)), tOrientation2D(tAngle2D(1)) - tOrientation2D(tAngle2D(2)));
     RRLIB_UNIT_TESTS_EQUALITY(tOrientation2D(tAngle2D(2 * 3)), tOrientation2D(tAngle2D(2)) * 3);
-    RRLIB_UNIT_TESTS_EQUALITY(tOrientation2D(tAngle2D(2 * 3)), tOrientation2D(3 * tOrientation2D(tAngle2D(2))));
+    RRLIB_UNIT_TESTS_EQUALITY(tOrientation2D(tAngle2D(2 * 3)), 3 * tOrientation2D(tAngle2D(2)));
 
     typedef localization::tOrientation3D<double> tOrientation3D;
     typedef tOrientation3D::tComponent<> tAngle3D;
