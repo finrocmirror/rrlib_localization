@@ -89,6 +89,61 @@ tUncertainPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TA
 {}
 
 //----------------------------------------------------------------------
+// tPoseBase Addition assignment
+//----------------------------------------------------------------------
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+template <typename TOtherElement, typename TOtherAutoWrapPolicy>
+tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &tUncertainPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::operator += (const tUncertainPose<Tdimension, TOtherElement, TPositionSIUnit, TOrientationSIUnit, TOtherAutoWrapPolicy> &other)
+{
+  this->Position() += other.Position();
+  this->Orientation() += other.Orientation();
+  return reinterpret_cast<tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &>(*this);
+}
+
+//----------------------------------------------------------------------
+// tPoseBase Subtraction assignment
+//----------------------------------------------------------------------
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+template <typename TOtherElement, typename TOtherAutoWrapPolicy>
+tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &tUncertainPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::operator -= (const tUncertainPose<Tdimension, TOtherElement, TPositionSIUnit, TOrientationSIUnit, TOtherAutoWrapPolicy> &other)
+{
+  this->Position() -= other.Position();
+  this->Orientation() -= other.Orientation();
+  return reinterpret_cast<tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &>(*this);
+}
+
+//----------------------------------------------------------------------
+// Unary minus
+//----------------------------------------------------------------------
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> operator - (const tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
+{
+  return tUncertainPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Zero() - pose;
+}
+
+//----------------------------------------------------------------------
+// Addition
+//----------------------------------------------------------------------
+template <unsigned int Tdimension, typename TLeftElement, typename TRightElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TLeftAutoWrapPolicy, typename TRightAutoWrapPolicy>
+tUncertainPose < Tdimension, decltype(TLeftElement() + TRightElement()), TPositionSIUnit, TOrientationSIUnit, typename math::angle::AutoWrapPolicy<TLeftAutoWrapPolicy, TRightAutoWrapPolicy>::tType > operator + (const tUncertainPose<Tdimension, TLeftElement, TPositionSIUnit, TOrientationSIUnit, TLeftAutoWrapPolicy> &left, const tUncertainPose<Tdimension, TRightElement, TPositionSIUnit, TOrientationSIUnit, TRightAutoWrapPolicy> &right)
+{
+  tUncertainPose < Tdimension, decltype(TLeftElement() + TRightElement()), TPositionSIUnit, TOrientationSIUnit, typename math::angle::AutoWrapPolicy<TLeftAutoWrapPolicy, TRightAutoWrapPolicy>::tType > temp(left);
+  temp += right;
+  return temp;
+}
+
+//----------------------------------------------------------------------
+// Subtraction
+//----------------------------------------------------------------------
+template <unsigned int Tdimension, typename TLeftElement, typename TRightElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TLeftAutoWrapPolicy, typename TRightAutoWrapPolicy>
+tUncertainPose < Tdimension, decltype(TLeftElement() - TRightElement()), TPositionSIUnit, TOrientationSIUnit, typename math::angle::AutoWrapPolicy<TLeftAutoWrapPolicy, TRightAutoWrapPolicy>::tType > operator - (const tUncertainPose<Tdimension, TLeftElement, TPositionSIUnit, TOrientationSIUnit, TLeftAutoWrapPolicy> &left, const tUncertainPose<Tdimension, TRightElement, TPositionSIUnit, TOrientationSIUnit, TRightAutoWrapPolicy> &right)
+{
+  tUncertainPose < Tdimension, decltype(TLeftElement() - TRightElement()), TPositionSIUnit, TOrientationSIUnit, typename math::angle::AutoWrapPolicy<TLeftAutoWrapPolicy, TRightAutoWrapPolicy>::tType > temp(left);
+  temp -= right;
+  return temp;
+}
+
+//----------------------------------------------------------------------
 // Streaming
 //----------------------------------------------------------------------
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
