@@ -220,6 +220,23 @@ bool IsEqual(const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &left, co
 }
 
 //----------------------------------------------------------------------
+// Multiplication
+//----------------------------------------------------------------------
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy, typename TFactor>
+tOrientation <2, decltype(TElement() * TFactor()), TSIUnit, TAutoWrapPolicy> operator * (const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &orientation, TFactor factor)
+{
+  tOrientation <2, decltype(TElement() * TFactor()), TSIUnit, TAutoWrapPolicy> temp(orientation);
+  temp.Yaw() = orientation.Yaw() * factor;
+  return temp;
+}
+
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy, typename TFactor>
+tOrientation <2, decltype(TElement() * TFactor()), TSIUnit, TAutoWrapPolicy> operator * (TFactor factor, const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &orientation)
+{
+  return orientation * factor;
+}
+
+//----------------------------------------------------------------------
 // Equality
 //----------------------------------------------------------------------
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>

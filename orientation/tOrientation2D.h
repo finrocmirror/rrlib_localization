@@ -155,6 +155,12 @@ private:
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 bool IsEqual(const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &right, float max_error = 1E-6, math::tFloatComparisonMethod method = math::eFCM_ABSOLUTE_ERROR);
 
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy, typename TFactor>
+tOrientation <2, decltype(TElement() * TFactor()), TSIUnit, TAutoWrapPolicy> operator * (const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &orientation, TFactor factor);
+
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy, typename TFactor>
+tOrientation <2, decltype(TElement() * TFactor()), TSIUnit, TAutoWrapPolicy> operator * (TFactor factor, const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &orientation);
+
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 const bool operator == (const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &right);
 
