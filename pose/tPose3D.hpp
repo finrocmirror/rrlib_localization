@@ -160,8 +160,8 @@ const TElement tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrap
 template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 std::ostream &operator << (std::ostream &stream, const tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
 {
-  typedef math::tAngle<TElement, math::angle::Degree, math::angle::Signed> tDegreeSigned;
-  return stream << "(" << pose.X().Value() << ", " << pose.Y().Value() << ", " << pose.Z().Value() << ", " << tDegreeSigned(pose.Roll().Value()) << ", " << tDegreeSigned(pose.Pitch().Value()) << ", " << tDegreeSigned(pose.Yaw().Value()) << ")";
+  typedef math::tAngle<TElement, math::angle::Degree, TAutoWrapPolicy> tDegree;
+  return stream << "(" << pose.X().Value() << ", " << pose.Y().Value() << ", " << pose.Z().Value() << ", " << tDegree(pose.Roll().Value()) << ", " << tDegree(pose.Pitch().Value()) << ", " << tDegree(pose.Yaw().Value()) << ")";
 }
 
 template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
