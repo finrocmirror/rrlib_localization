@@ -19,11 +19,11 @@
 // Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 //
 //----------------------------------------------------------------------
-/*!\file    unit_test_twist.cpp
+/*!\file    rrlib/localization/tests/dead_reckoning.cpp
  *
  * \author  Michael Arndt
  *
- * \date    2014-06-05
+ * \date    2014-07-31
  *
  */
 //----------------------------------------------------------------------
@@ -31,15 +31,13 @@
 //----------------------------------------------------------------------
 // External includes (system with <>, local with "")
 //----------------------------------------------------------------------
-#include <cstdlib>
-#include <iostream>
-
 #include "rrlib/util/tUnitTestSuite.h"
+
+#include "rrlib/localization/tDeadReckoning.h"
 
 //----------------------------------------------------------------------
 // Internal includes with ""
 //----------------------------------------------------------------------
-#include "rrlib/localization/tDeadReckoning.h"
 
 //----------------------------------------------------------------------
 // Debugging
@@ -49,7 +47,14 @@
 //----------------------------------------------------------------------
 // Namespace usage
 //----------------------------------------------------------------------
-using namespace rrlib::localization;
+
+//----------------------------------------------------------------------
+// Namespace declaration
+//----------------------------------------------------------------------
+namespace rrlib
+{
+namespace localization
+{
 
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
@@ -63,9 +68,9 @@ using namespace rrlib::localization;
 // Implementation
 //----------------------------------------------------------------------
 
-class tTestDeadReckoning : public rrlib::util::tUnitTestSuite
+class TestDeadReckoning : public util::tUnitTestSuite
 {
-  RRLIB_UNIT_TESTS_BEGIN_SUITE(tTestDeadReckoning);
+  RRLIB_UNIT_TESTS_BEGIN_SUITE(TestDeadReckoning);
   RRLIB_UNIT_TESTS_ADD_TEST(TestLinear);
   RRLIB_UNIT_TESTS_ADD_TEST(TestAngular);
   RRLIB_UNIT_TESTS_ADD_TEST(TestCombined);
@@ -73,12 +78,6 @@ class tTestDeadReckoning : public rrlib::util::tUnitTestSuite
   RRLIB_UNIT_TESTS_END_SUITE;
 
 private:
-
-  virtual void InitializeTests()
-  {
-
-  }
-  virtual void CleanUp() {}
 
   void TestLinear()
   {
@@ -136,7 +135,7 @@ private:
 
     tPose p;
     tTwist t;
-    rrlib::time::tDuration time_delta;
+    time::tDuration time_delta;
 
     // turn with Yaw = 1 rad/s for 0 s
     time_delta = std::chrono::milliseconds(0);
@@ -185,7 +184,7 @@ private:
 
     tPose p;
     tTwist t;
-    rrlib::time::tDuration time_delta;
+    time::tDuration time_delta;
 
     // move with X = 1 m/s, Yaw = pi rad/s for 1 s
     p.Reset();
@@ -317,14 +316,17 @@ private:
     RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 1 / M_PI, static_cast<double>(obj.GetPose().X()), 1E-3);
     RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 1 / M_PI, static_cast<double>(obj.GetPose().Y()), 1E-3);
     RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 0 , static_cast<double>(obj.GetPose().Z()), 1E-3);
-    RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 0 , static_cast<double>(rrlib::math::tAngleRad(obj.GetPose().Roll())), 1E-3);
-    RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 0 , static_cast<double>(rrlib::math::tAngleRad(obj.GetPose().Pitch())), 1E-3);
-    RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 0.5 * M_PI, static_cast<double>(rrlib::math::tAngleRad(obj.GetPose().Yaw())), 1E-3);
-
-
+    RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 0 , static_cast<double>(math::tAngleRad(obj.GetPose().Roll())), 1E-3);
+    RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 0 , static_cast<double>(math::tAngleRad(obj.GetPose().Pitch())), 1E-3);
+    RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 0.5 * M_PI, static_cast<double>(math::tAngleRad(obj.GetPose().Yaw())), 1E-3);
   }
-
 
 };
 
-RRLIB_UNIT_TESTS_REGISTER_SUITE(tTestDeadReckoning);
+RRLIB_UNIT_TESTS_REGISTER_SUITE(TestDeadReckoning);
+
+//----------------------------------------------------------------------
+// End of namespace declaration
+//----------------------------------------------------------------------
+}
+}
