@@ -104,6 +104,9 @@ public:
   template <typename TX, typename TY, typename TZ, typename TRoll, typename TPitch, typename TYaw>
   tPose(TX x, TY y, TZ z, TRoll roll, TPitch pitch, TYaw yaw);
 
+  template <typename TOtherElement, typename TOtherAutoWrapPolicy>
+  explicit tPose(const tPose<2, TOtherElement, TPositionSIUnit, TOrientationSIUnit, TOtherAutoWrapPolicy> &other);
+
   inline const tPositionComponent<> &X() const
   {
     return this->Position().X();
@@ -174,8 +177,12 @@ public:
   template <typename TMatrixElement>
   void Set(const math::tMatrix<4, 4, TMatrixElement> &matrix, double max_error = 1E-6);
 
+  using tPoseBase::Rotate;
+
   template <typename TRoll, typename TPitch, typename TYaw>
   void Rotate(TRoll roll, TPitch pitch, TYaw yaw);
+
+  using tPoseBase::Rotated;
 
   template <typename TRoll, typename TPitch, typename TYaw>
   tPose Rotated(TRoll roll, TPitch pitch, TYaw yaw) const;

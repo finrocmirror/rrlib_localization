@@ -70,8 +70,7 @@ const size_t tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy>::cSIZE;
 // tOrientation2D constructors
 //----------------------------------------------------------------------
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
-tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy>::tOrientation() :
-  yaw(0)
+tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy>::tOrientation()
 {}
 
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>

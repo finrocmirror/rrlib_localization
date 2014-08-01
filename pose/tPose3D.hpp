@@ -83,6 +83,12 @@ tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tPose(
   tPoseBase(tPosition<>(x, y, z), tOrientation<>(roll, pitch, yaw))
 {}
 
+template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
+template <typename TOtherElement, typename TOtherAutoWrapPolicy>
+tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::tPose(const tPose<2, TOtherElement, TPositionSIUnit, TOrientationSIUnit, TOtherAutoWrapPolicy> &other) :
+  tPoseBase(tPosition<>(other.X(), other.Y(), tPositionComponent<>()), tOrientation<>(tOrientationComponent<>(), tOrientationComponent<>(), other.Yaw()))
+{}
+
 //----------------------------------------------------------------------
 // tPose3D SetPosition
 //----------------------------------------------------------------------

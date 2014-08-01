@@ -104,6 +104,9 @@ public:
   template <typename TX, typename TY, typename TYaw>
   tPose(TX x, TY y, TYaw yaw);
 
+  template <typename TOtherElement, typename TOtherAutoWrapPolicy>
+  explicit tPose(const tPose<3, TOtherElement, TPositionSIUnit, TOrientationSIUnit, TOtherAutoWrapPolicy> &other);
+
   inline const tPositionComponent<> &X() const
   {
     return this->Position().X();

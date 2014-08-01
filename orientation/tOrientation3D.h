@@ -96,7 +96,7 @@ public:
   tOrientation(math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw);
 
   template <typename TMatrixElement>
-  tOrientation(const math::tMatrix<3, 3, TMatrixElement> &matrix, double max_error = 1E-6);
+  explicit tOrientation(const math::tMatrix<3, 3, TMatrixElement> &matrix, double max_error = 1E-6);
 
   template <typename TOtherElement, typename TOtherAutoWrapPolicy>
   tOrientation(const tOrientation<3, TOtherElement, TSIUnit, TOtherAutoWrapPolicy> &other);
