@@ -125,9 +125,15 @@ public:
   template <typename TOtherElement, typename TOtherAutoWrapPolicy>
   tOrientation &operator -= (const tOrientation<2, TOtherElement, TSIUnit, TOtherAutoWrapPolicy> &other);
 
+  using tOrientationBase::GetMatrix;
+
   math::tMatrix<2, 2, TElement> GetMatrix() const;
 
-  math::tMatrix<3, 3, TElement> GetHomogeneousTransformationMatrix() const;
+  using tOrientationBase::GetTransformationMatrix;
+
+  math::tMatrix<3, 3, TElement> GetTransformationMatrix() const;
+
+  using tOrientationBase::Rotate;
 
   template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
   void Rotate(tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw);

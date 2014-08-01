@@ -125,7 +125,7 @@ public:
   void GetMatrix(math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix) const;
 
   template <typename TMatrixElement>
-  void GetHomogeneousTransformationMatrix(math::tMatrix < Tdimension + 1, Tdimension + 1, TMatrixElement > &matrix) const;
+  void GetTransformationMatrix(math::tMatrix < Tdimension + 1, Tdimension + 1, TMatrixElement > &matrix) const;
 
   template <typename TMatrixElement>
   void Rotate(const math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix);
@@ -152,7 +152,7 @@ template <unsigned int Tdimension, typename TLeftElement, typename TRightElement
 tOrientation < Tdimension, decltype(TLeftElement() - TRightElement()), TSIUnit, typename math::angle::AutoWrapPolicy<TLeftAutoWrapPolicy, TRightAutoWrapPolicy>::tType > operator - (const tOrientation<Tdimension, TLeftElement, TSIUnit, TLeftAutoWrapPolicy> &left, const tOrientation<Tdimension, TRightElement, TSIUnit, TRightAutoWrapPolicy> &right);
 
 template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
-const bool operator != (const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &right);
+bool operator != (const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &right);
 
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
 

@@ -156,10 +156,10 @@ math::tMatrix<2, 2, TElement> tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy
 }
 
 //----------------------------------------------------------------------
-// tOrientation2D GetHomogeneousTransformationMatrix
+// tOrientation2D GetTransformationMatrix
 //----------------------------------------------------------------------
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
-math::tMatrix<3, 3, TElement> tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy>::GetHomogeneousTransformationMatrix() const
+math::tMatrix<3, 3, TElement> tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy>::GetTransformationMatrix() const
 {
   math::tMatrix<2, 2, TElement> rotation = this->GetMatrix();
   return math::tMatrix<3, 3, TElement>(rotation[0][0], rotation[0][1], 0,

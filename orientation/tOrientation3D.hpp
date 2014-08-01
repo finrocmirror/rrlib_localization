@@ -178,10 +178,10 @@ math::tMatrix<3, 3, TElement> tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy
 }
 
 //----------------------------------------------------------------------
-// tOrientation3D GetHomogeneousTransformationMatrix
+// tOrientation3D GetTransformationMatrix
 //----------------------------------------------------------------------
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
-math::tMatrix<4, 4, TElement> tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::GetHomogeneousTransformationMatrix() const
+math::tMatrix<4, 4, TElement> tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::GetTransformationMatrix() const
 {
   math::tMatrix<3, 3, TElement> rotation = this->GetMatrix();
   return math::tMatrix<4, 4, TElement>(rotation[0][0], rotation[0][1], rotation[0][2], 0,

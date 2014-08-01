@@ -88,13 +88,13 @@ void tOrientationBase<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::GetMatrix
 }
 
 //----------------------------------------------------------------------
-// tOrientationBase GetHomogeneousTransformationMatrix
+// tOrientationBase GetTransformationMatrix
 //----------------------------------------------------------------------
 template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TMatrixElement>
-void tOrientationBase<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::GetHomogeneousTransformationMatrix(math::tMatrix < Tdimension + 1, Tdimension + 1, TMatrixElement > &matrix) const
+void tOrientationBase<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::GetTransformationMatrix(math::tMatrix < Tdimension + 1, Tdimension + 1, TMatrixElement > &matrix) const
 {
-  matrix = reinterpret_cast<tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> *>(this)->GetHomogeneousTransformationMatrix();
+  matrix = reinterpret_cast<const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> *>(this)->GetTransformationMatrix();
 }
 
 //----------------------------------------------------------------------

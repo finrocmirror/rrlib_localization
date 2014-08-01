@@ -169,12 +169,12 @@ tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy
 }
 
 //----------------------------------------------------------------------
-// tPoseBase GetHomogeneousTransformationMatrix
+// tPoseBase GetTransformationMatrix
 //----------------------------------------------------------------------
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
-math::tMatrix < Tdimension + 1, Tdimension + 1, TElement > tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::GetHomogeneousTransformationMatrix() const
+math::tMatrix < Tdimension + 1, Tdimension + 1, TElement > tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::GetTransformationMatrix() const
 {
-  math::tMatrix < Tdimension + 1, Tdimension + 1, TElement > matrix = this->Orientation.GetHomogeneousTransformationMatrix();
+  math::tMatrix < Tdimension + 1, Tdimension + 1, TElement > matrix = this->Orientation().GetTransformationMatrix();
   for (size_t i = 0; i < Tdimension; ++i)
   {
     matrix[i][Tdimension] = this->Position()[i];
@@ -183,9 +183,9 @@ math::tMatrix < Tdimension + 1, Tdimension + 1, TElement > tPoseBase<Tdimension,
 
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TMatrixElement>
-void tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::GetHomogeneousTransformationMatrix(math::tMatrix < Tdimension + 1, Tdimension + 1, TMatrixElement > &matrix) const
+void tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::GetTransformationMatrix(math::tMatrix < Tdimension + 1, Tdimension + 1, TMatrixElement > &matrix) const
 {
-  matrix = this->GetHomogeneousTransformationMatrix();
+  matrix = this->GetTransformationMatrix();
 }
 
 //----------------------------------------------------------------------

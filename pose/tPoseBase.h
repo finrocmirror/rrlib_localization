@@ -161,10 +161,10 @@ public:
   template <typename TOtherElement, typename TOtherAutoWrapPolicy>
   tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &operator -= (const tPose<Tdimension, TOtherElement, TPositionSIUnit, TOrientationSIUnit, TOtherAutoWrapPolicy> &other);
 
-  math::tMatrix < Tdimension + 1, Tdimension + 1, TElement > GetHomogeneousTransformationMatrix() const;
+  math::tMatrix < Tdimension + 1, Tdimension + 1, TElement > GetTransformationMatrix() const;
 
   template <typename TMatrixElement>
-  void GetHomogeneousTransformationMatrix(math::tMatrix < Tdimension + 1, Tdimension + 1, TMatrixElement > &matrix) const;
+  void GetTransformationMatrix(math::tMatrix < Tdimension + 1, Tdimension + 1, TMatrixElement > &matrix) const;
 
   template <typename TReferenceElement, typename TReferenceAutoWrapPolicy>
   tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> GetPoseInParentFrame(const tPose<Tdimension, TReferenceElement, TPositionSIUnit, TOrientationSIUnit, TReferenceAutoWrapPolicy> &reference) const;
