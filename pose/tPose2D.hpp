@@ -155,7 +155,7 @@ tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPose<2
 // tPose2D GetEuclideanNorm
 //----------------------------------------------------------------------
 template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
-const TElement tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::GetEuclideanNorm() const
+TElement tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::GetEuclideanNorm() const
 {
   return math::tVector<3, TElement>(this->X().Value(), this->Y().Value(), this->Yaw().Value().Value()).Length();
 }

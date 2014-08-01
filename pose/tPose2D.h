@@ -156,12 +156,7 @@ public:
   template <typename TYaw>
   tPose Rotated(TYaw yaw) const;
 
-  const TElement GetEuclideanNorm() const;
-
-//----------------------------------------------------------------------
-// Private fields and methods
-//----------------------------------------------------------------------
-private:
+  TElement GetEuclideanNorm() const;
 
 };
 

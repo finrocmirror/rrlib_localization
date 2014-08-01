@@ -176,24 +176,24 @@ public:
   void Translate(const math::tVector<Tdimension, TTranslationElement> &translation);
 
   template <typename TTranslationElement>
-  tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &Translated(const math::tVector<Tdimension, TTranslationElement> &translation);
+  tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> Translated(const math::tVector<Tdimension, TTranslationElement> &translation) const;
 
   template <typename TRotationElement>
   void Rotate(const math::tMatrix<Tdimension, Tdimension, TRotationElement> &rotation);
 
   template <typename TRotationElement>
-  tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &Rotated(const math::tMatrix<Tdimension, Tdimension, TRotationElement> &rotation);
+  tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> Rotated(const math::tMatrix<Tdimension, Tdimension, TRotationElement> &rotation) const;
 
   template <typename TFactor>
   void Scale(TFactor factor);
 
   template <typename TFactor>
-  tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &Scaled(TFactor factor) const;
+  tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> Scaled(TFactor factor) const;
 
   template <typename TTransformationElement, typename TTransformationAutoWrapPolicy>
   void ApplyRelativePoseTransformation(const tPose<Tdimension, TTransformationElement, TPositionSIUnit, TOrientationSIUnit, TTransformationAutoWrapPolicy> &relative_transformation);
 
-  bool IsZero(double epsilon) const;
+  bool IsZero(double epsilon = 1E-6) const;
 
 //----------------------------------------------------------------------
 // Private fields and methods
@@ -220,13 +220,13 @@ tPose < Tdimension, decltype(TLeftElement() - TRightElement()), TPositionSIUnit,
 // Note: there is no operator * here on purpose, as this operation is hard to define generally. If you need this operator, implement it for your specific pose.
 
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
-const bool operator == (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &left, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &right);
+bool operator == (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &left, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &right);
 
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
-const bool operator != (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &left, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &right);
+bool operator != (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &left, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &right);
 
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
-const bool operator < (const tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &left, const tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &right);
+bool operator < (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &left, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &right);
 
 #ifdef _LIB_RRLIB_SERIALIZATION_PRESENT_
 

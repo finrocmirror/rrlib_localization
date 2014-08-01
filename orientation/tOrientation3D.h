@@ -163,7 +163,7 @@ public:
   template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
   tOrientation Rotated(math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw) const;
 
-  const TElement GetEuclideanNorm() const;
+  TElement GetEuclideanNorm() const;
 
 //----------------------------------------------------------------------
 // Private fields and methods
@@ -187,10 +187,10 @@ template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy, typenam
 tOrientation <3, decltype(TElement() * TFactor()), TSIUnit, TAutoWrapPolicy> operator * (TFactor factor, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &orientation);
 
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
-const bool operator == (const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &right);
+bool operator == (const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &right);
 
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
-const bool operator < (const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &right);
+bool operator < (const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &right);
 
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 std::ostream &operator << (std::ostream &stream, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &orientation);

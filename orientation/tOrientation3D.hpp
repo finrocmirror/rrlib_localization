@@ -197,14 +197,13 @@ void tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::Rotate(tComponent<TAng
   this->roll += roll;
   this->pitch += pitch;
   this->yaw += yaw;
-  return *this;
 }
 
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
 void tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::Rotate(math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw)
 {
-  return this->Rotate(tComponent<>(roll), tComponent<>(pitch), tComponent<>(yaw));
+  this->Rotate(tComponent<>(roll), tComponent<>(pitch), tComponent<>(yaw));
 }
 
 //----------------------------------------------------------------------
@@ -228,7 +227,7 @@ tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> tOrientation<3, TElement, TS
 // tOrientation3D GetEuclideanNorm
 //----------------------------------------------------------------------
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
-const TElement tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::GetEuclideanNorm() const
+TElement tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::GetEuclideanNorm() const
 {
   return math::tVector<3, TElement>(this->roll.Value().Value(), this->pitch.Value().Value(), this->yaw.Value().Value()).Length();
 }
@@ -265,7 +264,7 @@ tOrientation <3, decltype(TElement() * TFactor()), TSIUnit, TAutoWrapPolicy> ope
 // Equality
 //----------------------------------------------------------------------
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
-const bool operator == (const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &right)
+bool operator == (const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &right)
 {
   return left.Roll() == right.Roll() && left.Pitch() == right.Pitch() && left.Yaw() == right.Yaw();
 }
@@ -274,7 +273,7 @@ const bool operator == (const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy
 // Ordering
 //----------------------------------------------------------------------
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
-const bool operator < (const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &right)
+bool operator < (const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &right)
 {
   return left.Roll() < right.Roll() ||
          ((left.Roll() == right.Roll() && left.Pitch() < right.Pitch())) ||

@@ -177,8 +177,9 @@ math::tMatrix < Tdimension + 1, Tdimension + 1, TElement > tPoseBase<Tdimension,
   math::tMatrix < Tdimension + 1, Tdimension + 1, TElement > matrix = this->Orientation().GetTransformationMatrix();
   for (size_t i = 0; i < Tdimension; ++i)
   {
-    matrix[i][Tdimension] = this->Position()[i];
+    matrix[i][Tdimension] = this->Position()[i].Value();
   }
+  return matrix;
 }
 
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
@@ -195,7 +196,7 @@ template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, 
 template <typename TReferenceElement, typename TReferenceAutoWrapPolicy>
 tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::GetPoseInParentFrame(const tPose<Tdimension, TReferenceElement, TPositionSIUnit, TOrientationSIUnit, TReferenceAutoWrapPolicy> &reference) const
 {
-  return tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>(reference.Position() + this->Position().Rotated(reference.Yaw().Value()), reference.Yaw() + this->Yaw());
+  return tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>(reference.Position() + (reference.Orientation().GetMatrix() * this->Position()), reference.Orientation() + this->Orientation());
 }
 
 //----------------------------------------------------------------------
@@ -205,7 +206,7 @@ template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, 
 template <typename TReferenceElement, typename TReferenceAutoWrapPolicy>
 tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::GetPoseInLocalFrame(const tPose<Tdimension, TReferenceElement, TPositionSIUnit, TOrientationSIUnit, TReferenceAutoWrapPolicy> &reference) const
 {
-  return tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>((this->Position() - reference.Position()).Rotated(-reference.Yaw().Value()), this->Yaw() - reference.Yaw());
+  return tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>(reference.Orientation().GetMatrix().Inverse() * (this->Position() - reference.Position()), this->Orientation() - reference.Orientation());
 }
 
 //----------------------------------------------------------------------
@@ -223,9 +224,10 @@ void tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoW
 //----------------------------------------------------------------------
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TTranslationElement>
-tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Translated(const math::tVector<Tdimension, TTranslationElement> &translation)
+tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Translated(const math::tVector<Tdimension, TTranslationElement> &translation) const
 {
-  tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> temp(*this);
+  typedef tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPose;
+  tPose temp(*reinterpret_cast<const tPose *>(this));
   temp.Translate(translation);
   return temp;
 }
@@ -245,9 +247,10 @@ void tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoW
 //----------------------------------------------------------------------
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TRotationElement>
-tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Rotated(const math::tMatrix<Tdimension, Tdimension, TRotationElement> &rotation)
+tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Rotated(const math::tMatrix<Tdimension, Tdimension, TRotationElement> &rotation) const
 {
-  tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> temp(*this);
+  typedef tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPose;
+  tPose temp(*reinterpret_cast<const tPose *>(this));
   temp.Rotate(rotation);
   return temp;
 }
@@ -267,9 +270,10 @@ void tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoW
 //----------------------------------------------------------------------
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 template <typename TFactor>
-tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Scaled(TFactor factor) const
+tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Scaled(TFactor factor) const
 {
-  tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> temp(*this);
+  typedef tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPose;
+  tPose temp(*reinterpret_cast<const tPose *>(this));
   temp.Scale(factor);
   return temp;
 }
@@ -291,7 +295,7 @@ void tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoW
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 bool tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::IsZero(double epsilon) const
 {
-  return IsEqual(*this, tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Zero(), epsilon);
+  return IsEqual(*reinterpret_cast<const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> *>(this), tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::Zero(), epsilon);
 }
 
 //----------------------------------------------------------------------
@@ -335,21 +339,21 @@ bool IsEqual(const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUn
 }
 
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
-const bool operator == (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &left, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &right)
+bool operator == (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &left, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &right)
 {
   return left.Position() == right.Position() && left.Orientation() == right.Orientation();
 }
 
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
-const bool operator != (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &left, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &right)
+bool operator != (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &left, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &right)
 {
   return !(left == right);
 }
 
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
-const bool operator < (const tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &left, const tPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &right)
+bool operator < (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &left, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &right)
 {
-  return left.Position() < right.Position || (left.Position() == right.Position() && left.Orientation() < right.Orientation());
+  return left.Position() < right.Position() || (left.Position() == right.Position() && left.Orientation() < right.Orientation());
 }
 
 //----------------------------------------------------------------------

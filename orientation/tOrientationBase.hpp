@@ -84,7 +84,7 @@ template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename
 template <typename TMatrixElement>
 void tOrientationBase<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::GetMatrix(math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix) const
 {
-  matrix = reinterpret_cast<tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> *>(this)->GetMatrix();
+  matrix = reinterpret_cast<const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> *>(this)->GetMatrix();
 }
 
 //----------------------------------------------------------------------
@@ -104,8 +104,8 @@ template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename
 template <typename TMatrixElement>
 void tOrientationBase<Tdimension, TElement, TSIUnit, TAutoWrapPolicy>::Rotate(const math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix)
 {
-  this->Set(matrix * reinterpret_cast<tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> *>(this)->GetMatrix());
-  return *this;
+  auto that = reinterpret_cast<tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> *>(this);
+  that->Set(matrix * that->GetMatrix());
 }
 
 //----------------------------------------------------------------------
@@ -164,7 +164,7 @@ tOrientation < Tdimension, decltype(TLeftElement() - TRightElement()), TSIUnit, 
 // Comparison
 //----------------------------------------------------------------------
 template <unsigned int Tdimension, typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
-const bool operator != (const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &right)
+bool operator != (const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &right)
 {
   return !(left == right);
 }

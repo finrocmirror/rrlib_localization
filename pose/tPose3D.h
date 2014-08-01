@@ -187,12 +187,7 @@ public:
   template <typename TRoll, typename TPitch, typename TYaw>
   tPose Rotated(TRoll roll, TPitch pitch, TYaw yaw) const;
 
-  const TElement GetEuclideanNorm() const;
-
-//----------------------------------------------------------------------
-// Private fields and methods
-//----------------------------------------------------------------------
-private:
+  TElement GetEuclideanNorm() const;
 
 };
 

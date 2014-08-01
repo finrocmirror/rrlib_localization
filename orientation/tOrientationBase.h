@@ -133,12 +133,7 @@ public:
   template <typename TMatrixElement>
   tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> Rotated(const math::tMatrix<Tdimension, Tdimension, TMatrixElement> &matrix) const;
 
-  bool IsZero(double epsilon) const;
-
-//----------------------------------------------------------------------
-// Private fields and methods
-//----------------------------------------------------------------------
-private:
+  bool IsZero(double epsilon = 1E-6) const;
 
 };
 
