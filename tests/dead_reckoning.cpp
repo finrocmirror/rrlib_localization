@@ -49,6 +49,27 @@
 //----------------------------------------------------------------------
 
 //----------------------------------------------------------------------
+// CPPUNIT tweaks
+//----------------------------------------------------------------------
+CPPUNIT_NS_BEGIN
+template <>
+struct assertion_traits<rrlib::localization::tUncertainPose3D<>>
+{
+  static bool equal(const rrlib::localization::tUncertainPose3D<>& x, const rrlib::localization::tUncertainPose3D<>& y)
+  {
+    return rrlib::localization::pose::IsEqual(x, y);
+  }
+
+  static std::string toString(const rrlib::localization::tUncertainPose3D<>& x)
+  {
+    std::stringstream ost;
+    ost << x;
+    return ost.str();
+  }
+};
+CPPUNIT_NS_END
+
+//----------------------------------------------------------------------
 // Namespace declaration
 //----------------------------------------------------------------------
 namespace rrlib
@@ -59,6 +80,7 @@ namespace localization
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
+
 
 //----------------------------------------------------------------------
 // Const values
@@ -173,7 +195,6 @@ private:
     tDeadReckoning::UpdatePose(p, t, time_delta);
     RRLIB_UNIT_TESTS_EQUALITY_MESSAGE("After updating, value must be correct", tPose(tPose::tPosition<>::tElement(0), tPose::tPosition<>::tElement(0), tPose::tPosition<>::tElement(0), tPose::tOrientation<>::tComponent<>(0.125), tPose::tOrientation<>::tComponent<>(0.25), tPose::tOrientation<>::tComponent<>(0.5)), p);
 
-
   }
 
   void TestCombined()
@@ -244,7 +265,6 @@ private:
     RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 0 , static_cast<double>(rrlib::math::tAngleRad(p.Roll())), 1E-3);
     RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 0 , static_cast<double>(rrlib::math::tAngleRad(p.Pitch())), 1E-3);
     RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 0.5 * M_PI, static_cast<double>(rrlib::math::tAngleRad(p.Yaw())), 1E-3);
-
 
   }
 
@@ -319,6 +339,7 @@ private:
     RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 0 , static_cast<double>(math::tAngleRad(obj.GetPose().Roll())), 1E-3);
     RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 0 , static_cast<double>(math::tAngleRad(obj.GetPose().Pitch())), 1E-3);
     RRLIB_UNIT_TESTS_EQUALITY_DOUBLE_MESSAGE("After updating, value must be correct", 0.5 * M_PI, static_cast<double>(math::tAngleRad(obj.GetPose().Yaw())), 1E-3);
+
   }
 
 };
