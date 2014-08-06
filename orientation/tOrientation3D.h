@@ -84,7 +84,7 @@ public:
 
   static const size_t cSIZE = 3;
 
-  template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = TAutoWrapPolicy>
+  template <typename TAngleElement = typename tOrientationBase::tElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = TAutoWrapPolicy>
   using tComponent = typename tOrientationBase::template tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy>;
 
   tOrientation();

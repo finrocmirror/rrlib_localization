@@ -82,16 +82,16 @@ class tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> :
 //----------------------------------------------------------------------
 public:
 
-  template <typename TPositionElement = TElement>
+  template <typename TPositionElement = typename tPoseBase::tElement>
   using tPosition = typename tPoseBase::template tPosition<TPositionElement>;
 
-  template <typename TPositionElement = TElement>
+  template <typename TPositionElement = typename tPoseBase::tElement>
   using tPositionComponent = si_units::tQuantity<TPositionSIUnit, TPositionElement>;
 
-  template <typename TOrientationElement = TElement, typename TOrientationAutoWrapPolicy = TAutoWrapPolicy>
+  template <typename TOrientationElement = typename tPoseBase::tElement, typename TOrientationAutoWrapPolicy = TAutoWrapPolicy>
   using tOrientation = typename tPoseBase::template tOrientation<TOrientationElement, TOrientationAutoWrapPolicy>;
 
-  template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = TAutoWrapPolicy>
+  template <typename TAngleElement = typename tPoseBase::tElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = TAutoWrapPolicy>
   using tOrientationComponent = typename tPoseBase::template tOrientationComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy>;
 
   using tPoseBase::tPoseBase;
@@ -99,7 +99,7 @@ public:
   tPose();
 
   template <typename TX, typename TY, typename TZ, typename TOrientationElement = TElement, typename TOrientationAutoWrapPolicy = TAutoWrapPolicy>
-  tPose(TX x, TY y, TZ z, const tOrientation<TOrientationElement, TOrientationAutoWrapPolicy> &orientation = tOrientation<TElement, TOrientationAutoWrapPolicy>::Zero());
+  tPose(TX x, TY y, TZ z, const tOrientation<TOrientationElement, TOrientationAutoWrapPolicy> &orientation = tOrientation<>::Zero());
 
   template <typename TX, typename TY, typename TZ, typename TRoll, typename TPitch, typename TYaw>
   tPose(TX x, TY y, TZ z, TRoll roll, TPitch pitch, TYaw yaw);

@@ -95,7 +95,9 @@ public:
 
   static const unsigned int cDIMENSION;
 
-  template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = TAutoWrapPolicy>
+  typedef TElement tElement;
+
+  template <typename TAngleElement = tElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = TAutoWrapPolicy>
   using tComponent = si_units::tQuantity<TSIUnit, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy>>;
 
   static const tOrientation<Tdimension, TElement, TSIUnit, TAutoWrapPolicy> &Zero()

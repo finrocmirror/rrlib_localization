@@ -97,13 +97,15 @@ public:
 
   static const unsigned int cDIMENSION;
 
-  template <typename TPositionElement = TElement>
+  typedef TElement tElement;
+
+  template <typename TPositionElement = tElement>
   using tPosition = tPosition<Tdimension, TPositionElement, TPositionSIUnit>;
 
-  template <typename TOrientationElement = TElement, typename TOrientationAutoWrapPolicy = TAutoWrapPolicy>
+  template <typename TOrientationElement = tElement, typename TOrientationAutoWrapPolicy = TAutoWrapPolicy>
   using tOrientation = tOrientation<Tdimension, TOrientationElement, TOrientationSIUnit, TOrientationAutoWrapPolicy>;
 
-  template <typename TAngleElement = TElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = TAutoWrapPolicy>
+  template <typename TAngleElement = tElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = TAutoWrapPolicy>
   using tOrientationComponent = typename tOrientation<>::template tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy>;
 
   static inline const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &Zero()
@@ -115,7 +117,7 @@ public:
   tPoseBase();
 
   template <typename TPositionElement, typename TOrientationElement = TElement, typename TOrientationAutoWrapPolicy = TAutoWrapPolicy>
-  explicit tPoseBase(const tPosition<TPositionElement> &position, const tOrientation<TOrientationElement, TOrientationAutoWrapPolicy> &orientation = tOrientation<TElement, TOrientationAutoWrapPolicy>::Zero());
+  explicit tPoseBase(const tPosition<TPositionElement> &position, const tOrientation<TOrientationElement, TOrientationAutoWrapPolicy> &orientation = tOrientation<>::Zero());
 
   template <typename TMatrixElement>
   explicit tPoseBase(const math::tMatrix < Tdimension + 1, Tdimension + 1, TMatrixElement > &matrix, double max_error = 1E-6);
