@@ -19,7 +19,7 @@
 // 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 //
 //----------------------------------------------------------------------
-/*!\file    rrlib/math/rtti.cpp
+/*!\file    rrlib/localization/rtti.cpp
  *
  * \author  Michael Arndt
  *
