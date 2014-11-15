@@ -25,10 +25,6 @@
  *
  * \date    2010-11-28
  *
- * \brief   Contains tPose3D
- *
- * \b tPose3D
- *
  */
 //----------------------------------------------------------------------
 #ifndef __rrlib__localization__pose__include_guard__
@@ -68,13 +64,13 @@ namespace localization
 //----------------------------------------------------------------------
 // Class declaration
 //----------------------------------------------------------------------
-//!
-/*!
- *
+//! Definition of a pose in the three dimensional case.
+/*! The pose is defined by a partial specialization of \ref tPose.
  */
 template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 class tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> : public pose::tPoseBase<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>
 {
+  //! The base class.
   typedef pose::tPoseBase<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPoseBase;
 
 //----------------------------------------------------------------------
@@ -82,15 +78,19 @@ class tPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> :
 //----------------------------------------------------------------------
 public:
 
+  //! The data type used to represent the position.
   template <typename TPositionElement = typename tPoseBase::tElement>
   using tPosition = typename tPoseBase::template tPosition<TPositionElement>;
 
+  //! The data type used to represent a single component of the position.
   template <typename TPositionElement = typename tPoseBase::tElement>
   using tPositionComponent = si_units::tQuantity<TPositionSIUnit, TPositionElement>;
 
+  //! The data type used to represent the orientation.
   template <typename TOrientationElement = typename tPoseBase::tElement, typename TOrientationAutoWrapPolicy = TAutoWrapPolicy>
   using tOrientation = typename tPoseBase::template tOrientation<TOrientationElement, TOrientationAutoWrapPolicy>;
 
+  //! The data type used to represent a single component of the orientation.
   template <typename TAngleElement = typename tPoseBase::tElement, typename TAngleUnitPolicy = math::angle::Radian, typename TAngleAutoWrapPolicy = TAutoWrapPolicy>
   using tOrientationComponent = typename tPoseBase::template tOrientationComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy>;
 
@@ -104,58 +104,74 @@ public:
   template <typename TX, typename TY, typename TZ, typename TRoll, typename TPitch, typename TYaw>
   tPose(TX x, TY y, TZ z, TRoll roll, TPitch pitch, TYaw yaw);
 
+  //! Create a 3D pose out of a 2D pose.
+  /*! The elements only present in the 3D pose will be default constructed.
+   * \param other The 2D pose.
+   */
   template <typename TOtherElement, typename TOtherAutoWrapPolicy>
   explicit tPose(const tPose<2, TOtherElement, TPositionSIUnit, TOrientationSIUnit, TOtherAutoWrapPolicy> &other);
 
+  //! Get the x component of the position.
   inline const tPositionComponent<> &X() const
   {
     return this->Position().X();
   }
+  //! Get/Set the x component of the position.
   inline tPositionComponent<> &X()
   {
     return this->Position().X();
   }
 
+  //! Get the y component of the position.
   inline const tPositionComponent<> &Y() const
   {
     return this->Position().Y();
   }
+  //! Get/Set the y component of the position.
   inline tPositionComponent<> &Y()
   {
     return this->Position().Y();
   }
 
+  //! Get the z component of the position.
   inline const tPositionComponent<> &Z() const
   {
     return this->Position().Z();
   }
+  //! Get/Set the z component of the position.
   inline tPositionComponent<> &Z()
   {
     return this->Position().Z();
   }
 
+  //! Get the roll component of the orientation.
   inline const tOrientationComponent<> &Roll() const
   {
     return this->Orientation().Roll();
   }
+  //! Get/Set the roll component of the orientation.
   inline tOrientationComponent<> &Roll()
   {
     return this->Orientation().Roll();
   }
 
+  //! Get the pitch component of the orientation.
   inline const tOrientationComponent<> &Pitch() const
   {
     return this->Orientation().Pitch();
   }
+  //! Get/Set the pitch component of the orientation.
   inline tOrientationComponent<> &Pitch()
   {
     return this->Orientation().Pitch();
   }
 
+  //! Get the yaw component of the orientation.
   inline const tOrientationComponent<> &Yaw() const
   {
     return this->Orientation().Yaw();
   }
+  //! Get/Set the yaw component of the orientation.
   inline tOrientationComponent<> &Yaw()
   {
     return this->Orientation().Yaw();
@@ -165,14 +181,32 @@ public:
   using tPoseBase::SetOrientation;
   using tPoseBase::Set;
 
+  //! Set the components of the position.
+  /*! \param x The x component.
+   *  \param y The y component.
+   *  \param z The z component.
+   */
   template <typename TX, typename TY, typename TZ>
   void SetPosition(TX x, TY y, TZ z);
 
+  //! Set the components of the orientation.
+  /*! \param roll The roll component.
+   *  \param pitch The pitch component.
+   *  \param yaw The yaw component.
+   */
   template <typename TRoll, typename TPitch, typename TYaw>
   void SetOrientation(TRoll roll, TPitch pitch, TYaw yaw);
 
+  //! Set all components of the pose.
+  /*! \param x The x component.
+   *  \param y The y component.
+   *  \param z The z component.
+   *  \param roll The roll component.
+   *  \param pitch The pitch component.
+   *  \param yaw The yaw component.
+   */
   template <typename TX, typename TY, typename TZ, typename TRoll, typename TPitch, typename TYaw>
-  void Set(TX x, TY y, TZ, TRoll roll, TPitch pitch, TYaw yaw);
+  void Set(TX x, TY y, TZ z, TRoll roll, TPitch pitch, TYaw yaw);
 
   template <typename TMatrixElement>
   void Set(const math::tMatrix<4, 4, TMatrixElement> &matrix, double max_error = 1E-6);

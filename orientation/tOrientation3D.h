@@ -101,26 +101,32 @@ public:
   template <typename TOtherElement, typename TOtherAutoWrapPolicy>
   tOrientation(const tOrientation<3, TOtherElement, TSIUnit, TOtherAutoWrapPolicy> &other);
 
+  //! Get the roll angle of the orientation.
   inline const tComponent<> &Roll() const
   {
     return this->roll;
   }
+  //! Get/Set the roll angle of the orientation.
   inline tComponent<> &Roll()
   {
     return this->roll;
   }
+  //! Get the pitch angle of the orientation.
   inline const tComponent<> &Pitch() const
   {
     return this->pitch;
   }
+  //! Get/Set the pitch angle of the orientation.
   inline tComponent<> &Pitch()
   {
     return this->pitch;
   }
+  //! Get the yaw angle of the orientation.
   inline const tComponent<> &Yaw() const
   {
     return this->yaw;
   }
+  //! Get/Set the yaw angle of the orientation.
   inline tComponent<> &Yaw()
   {
     return this->yaw;
