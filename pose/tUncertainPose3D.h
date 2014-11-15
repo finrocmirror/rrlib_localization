@@ -27,11 +27,6 @@
  * \date    2014-04-21
  *
  * \brief   Contains tUncertainPose3D
- *
- * \b tUncertainPose3D
- *
- * 3D pose with additional uncertainty (covariance matrix)
- *
  */
 //----------------------------------------------------------------------
 #ifndef __rrlib__localization__uncertain_pose__include_guard__
@@ -66,9 +61,8 @@ namespace localization
 //----------------------------------------------------------------------
 // Class declaration
 //----------------------------------------------------------------------
-//! SHORT_DESCRIPTION
-/*!
- * 3D pose with additional uncertainty (covariance matrix)
+//! Definition of an uncertain pose in the three dimensional case.
+/*! The pose is defined by a partial specialization of \ref tUncertainPose
  */
 template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 class tUncertainPose<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> : public pose::tUncertainPoseBase<3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>

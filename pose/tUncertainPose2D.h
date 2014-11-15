@@ -28,10 +28,6 @@
  *
  * \brief   Contains tUncertainPose2D
  *
- * \b tUncertainPose2D
- *
- * 2D pose with additional uncertainty (covariance matrix)
- *
  */
 //----------------------------------------------------------------------
 #ifndef __rrlib__localization__uncertain_pose__include_guard__
@@ -66,9 +62,8 @@ namespace localization
 //----------------------------------------------------------------------
 // Class declaration
 //----------------------------------------------------------------------
-//! SHORT_DESCRIPTION
-/*!
- * 2D pose with additional uncertainty (covariance matrix)
+//! Definition of an uncertain pose in the two dimensional case.
+/*! The pose is defined by a partial specialization of \ref tUncertainPose
  */
 template <typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 class tUncertainPose<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> : public pose::tUncertainPoseBase<2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>

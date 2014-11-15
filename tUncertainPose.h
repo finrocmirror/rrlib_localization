@@ -26,11 +26,7 @@
  *
  * \date    2014-04-17
  *
- * \brief   Contains tUncertainPose
- *
- * \b tUncertainPose
- *
- * Representation of a Pose in Cartesian space with uncertainty (attached covariance matrix)
+ * \brief   Contains definitions of common poses in Cartesian space with uncertainty (attached covariance matrix)
  *
  */
 //----------------------------------------------------------------------
@@ -67,17 +63,32 @@ namespace localization
 //----------------------------------------------------------------------
 // Forward declarations / typedefs / enums
 //----------------------------------------------------------------------
+
+//! The standard uncertain pose for the two dimensional case.
+/*! For further documentation, see \ref rrlib::localization::tUncertainPose< 2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy >
+ */
 template <typename TElement = double, typename TAutoWrapPolicy = math::angle::Signed>
 using tUncertainPose2D = tUncertainPose<2, TElement, si_units::tMeter, si_units::tNoUnit, TAutoWrapPolicy>;
+//! The standard change of uncertain pose wrt time for the two dimensional case.
+/*! For further documentation, see \ref rrlib::localization::tUncertainPose< 2, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy >
+ */
 template <typename TElement = double, typename TAutoWrapPolicy = math::angle::NoWrap>
 using tUncertainPoseChange2D = tUncertainPose < 2, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy >;
+//! Synonym for \ref tUncertainPoseChange2D.
 template <typename TElement = double, typename TAutoWrapPolicy = math::angle::NoWrap>
 using tUncertainTwist2D = tUncertainPoseChange2D<TElement, TAutoWrapPolicy>;
 
+//! The standard uncertain pose for the three dimensional case.
+/*! For further documentation, see \ref rrlib::localization::tUncertainPose< 3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy >
+ */
 template <typename TElement = double, typename TAutoWrapPolicy = math::angle::Signed>
 using tUncertainPose3D = tUncertainPose<3, TElement, si_units::tMeter, si_units::tNoUnit, TAutoWrapPolicy>;
+//! The standard change of uncertain pose wrt time for the three dimensional case.
+/*! For further documentation, see \ref rrlib::localization::tUncertainPose< 3, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy >
+ */
 template <typename TElement = double, typename TAutoWrapPolicy = math::angle::NoWrap>
 using tUncertainPoseChange3D = tUncertainPose < 3, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy >;
+//! Synonym for \ref tUncertainPoseChange3D.
 template <typename TElement = double, typename TAutoWrapPolicy = math::angle::NoWrap>
 using tUncertainTwist3D = tUncertainPoseChange3D<TElement, TAutoWrapPolicy>;
 

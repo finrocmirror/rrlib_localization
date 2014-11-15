@@ -28,10 +28,6 @@
  *
  * \brief   Contains tUncertainPoseBase
  *
- * \b tUncertainPoseBase
- *
- * Base class for poses with additional uncertainty (covariance matrix)
- *
  */
 //----------------------------------------------------------------------
 #ifndef __rrlib__localization__uncertain_pose__include_guard__
@@ -72,10 +68,7 @@ namespace pose
 //----------------------------------------------------------------------
 // Class declaration
 //----------------------------------------------------------------------
-//! SHORT_DESCRIPTION
-/*!
- * Base class for poses with additional uncertainty (covariance matrix)
- */
+//! Base class for poses with additional uncertainty (attached covariance matrix)
 template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy>
 class tUncertainPoseBase : public tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>
 {
