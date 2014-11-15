@@ -116,7 +116,7 @@ public:
     *
     * @param pose The pose to be updated
     * @param previous_twist The linear and angular velocities of the previous time-step
-    * @param twist The currentlinear and angular velocities
+    * @param twist The current linear and angular velocities
     * @param elapsed_time The elapsed time
     */
   static void UpdatePose(tPose &pose, const tTwist &previous_twist, const tTwist &twist, const rrlib::time::tDuration &elapsed_time);
