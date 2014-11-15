@@ -25,6 +25,8 @@
  *
  * \date    2014-05-12
  *
+ * \brief   Contains Runtime Type Information initializations
+ *
  */
 //----------------------------------------------------------------------
 

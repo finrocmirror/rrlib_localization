@@ -25,7 +25,7 @@
  *
  * \date    2014-06-05
  *
- * \brief   Contains tDeadReckoning
+ * \brief   Contains \ref rrlib::localization::tDeadReckoning
  *
  */
 //----------------------------------------------------------------------
