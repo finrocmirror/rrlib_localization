@@ -161,11 +161,13 @@ private:
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 bool IsEqual(const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &right, float max_error = 1E-6, math::tFloatComparisonMethod method = math::eFCM_ABSOLUTE_ERROR);
 
+#ifndef __clang__  // Compile fix for clang 3.4 - as it cannot cope with these forward declarations ("ambiguous"). Operators are, however, still defined in tOrientation2D.hpp.
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy, typename TFactor>
 tOrientation <2, decltype(TElement() * TFactor()), TSIUnit, TAutoWrapPolicy> operator * (const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &orientation, TFactor factor);
 
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy, typename TFactor>
 tOrientation <2, decltype(TElement() * TFactor()), TSIUnit, TAutoWrapPolicy> operator * (TFactor factor, const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &orientation);
+#endif
 
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 const bool operator == (const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &left, const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &right);
