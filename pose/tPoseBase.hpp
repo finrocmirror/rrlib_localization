@@ -196,7 +196,8 @@ template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, 
 template <typename TReferenceElement, typename TReferenceAutoWrapPolicy>
 tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::GetPoseInParentFrame(const tPose<Tdimension, TReferenceElement, TPositionSIUnit, TOrientationSIUnit, TReferenceAutoWrapPolicy> &reference) const
 {
-  return tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>(reference.Position() + (reference.Orientation().GetMatrix() * this->Position()), reference.Orientation() + this->Orientation());
+  typedef tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPose;
+  return tPose(reference.GetTransformationMatrix() * reinterpret_cast<const tPose *>(this)->GetTransformationMatrix());
 }
 
 //----------------------------------------------------------------------
@@ -206,7 +207,8 @@ template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, 
 template <typename TReferenceElement, typename TReferenceAutoWrapPolicy>
 tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPoseBase<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>::GetPoseInLocalFrame(const tPose<Tdimension, TReferenceElement, TPositionSIUnit, TOrientationSIUnit, TReferenceAutoWrapPolicy> &reference) const
 {
-  return tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy>(reference.Orientation().GetMatrix().Inverse() * (this->Position() - reference.Position()), this->Orientation() - reference.Orientation());
+  typedef tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tPose;
+  return tPose(reference.GetTransformationMatrix().Inverse() * reinterpret_cast<const tPose *>(this)->GetTransformationMatrix());
 }
 
 //----------------------------------------------------------------------
