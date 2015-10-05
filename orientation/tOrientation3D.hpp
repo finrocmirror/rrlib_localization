@@ -194,16 +194,14 @@ template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
 void tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::Rotate(tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw)
 {
-  this->roll += roll;
-  this->pitch += pitch;
-  this->yaw += yaw;
+  this->Rotate(roll.Value(), pitch.Value(), yaw.Value());
 }
 
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
 void tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::Rotate(math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw)
 {
-  this->Rotate(tComponent<>(roll), tComponent<>(pitch), tComponent<>(yaw));
+  this->Rotate(math::Get3DRotationMatrixFromRollPitchYaw<TElement>(roll, pitch, yaw));
 }
 
 //----------------------------------------------------------------------
@@ -213,14 +211,14 @@ template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
 tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::Rotated(tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, tComponent<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw) const
 {
-  return tOrientation(this->roll + roll, this->pitch + pitch, this->yaw + yaw);
+  return this->Rotated(roll.Value(), pitch.Value(), yaw.Value());
 }
 
 template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy>
 template <typename TAngleElement, typename TAngleUnitPolicy, typename TAngleAutoWrapPolicy>
 tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy>::Rotated(math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> roll, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> pitch, math::tAngle<TAngleElement, TAngleUnitPolicy, TAngleAutoWrapPolicy> yaw) const
 {
-  return this->Rotated(tComponent<>(roll), tComponent<>(pitch), tComponent<>(yaw));
+  return this->Rotated(math::Get3DRotationMatrixFromRollPitchYaw<TElement>(roll, pitch, yaw));
 }
 
 //----------------------------------------------------------------------
