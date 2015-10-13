@@ -81,49 +81,34 @@ using tTwist3D = tPoseChange3D<TElement, TAutoWrapPolicy>;
 //----------------------------------------------------------------------
 // Arithmetic operators
 //----------------------------------------------------------------------
-template <typename TElement, typename TAutoWrapPolicy, typename TValue>
-tPose2D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (const tPoseChange2D<TElement, TAutoWrapPolicy> &pose_change, si_units::tTime<TValue> time)
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy, typename TValue>
+tPose<Tdimension, decltype(TElement() * TValue()), typename si_units::operators::tProduct<TPositionSIUnit, si_units::tSecond>::tResult, typename si_units::operators::tProduct<TOrientationSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap> operator * (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose, si_units::tTime<TValue> time)
 {
-  return tPose2D<decltype(TElement() * TValue()), math::angle::NoWrap>(pose_change.Position() * time, pose_change.Orientation() * time);
+  typedef tPose<Tdimension, decltype(TElement() * TValue()), typename si_units::operators::tProduct<TPositionSIUnit, si_units::tSecond>::tResult, typename si_units::operators::tProduct<TOrientationSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap> tResult;
+  return tResult(pose.Position() * time, pose.Orientation() * time);
 }
-template <typename TElement, typename TAutoWrapPolicy, typename TValue>
-tPose2D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tPoseChange2D<TElement, TAutoWrapPolicy> &pose_change)
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy, typename TValue>
+tPose<Tdimension, decltype(TElement() * TValue()), typename si_units::operators::tProduct<TPositionSIUnit, si_units::tSecond>::tResult, typename si_units::operators::tProduct<TOrientationSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
 {
-  return pose_change * time;
-}
-
-template <typename TElement, typename TAutoWrapPolicy, typename TValue>
-tPose3D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (const tPoseChange3D<TElement, TAutoWrapPolicy> &pose_change, si_units::tTime<TValue> time)
-{
-  return tPose3D<decltype(TElement() * TValue()), math::angle::NoWrap>(pose_change.Position() * time, pose_change.Orientation() * time);
-}
-template <typename TElement, typename TAutoWrapPolicy, typename TValue>
-tPose3D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tPoseChange3D<TElement, TAutoWrapPolicy> &pose_change)
-{
-  return pose_change * time;
+  return pose * time;
 }
 
-template <typename TElement, typename TAutoWrapPolicy, typename TValue>
-tPoseChange2D < decltype(TElement() / TValue()) > operator / (const tPose2D<TElement, TAutoWrapPolicy> &pose, si_units::tTime<TValue> time)
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy, typename TValue>
+tPose < Tdimension, decltype(TElement() / TValue()), typename si_units::operators::tQuotient<TPositionSIUnit, si_units::tSecond>::tResult, typename si_units::operators::tQuotient<TOrientationSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap > operator / (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose, si_units::tTime<TValue> time)
 {
-  return tPoseChange2D < decltype(TElement() / TValue()), math::angle::NoWrap > (pose.Position() / time, pose.Orientation() / time);
-}
-
-template <typename TElement, typename TAutoWrapPolicy, typename TValue>
-tPoseChange3D < decltype(TElement() / TValue()) > operator / (const tPose3D<TElement, TAutoWrapPolicy> &pose, si_units::tTime<TValue> time)
-{
-  return tPoseChange3D < decltype(TElement() / TValue()), math::angle::NoWrap > (pose.Position() / time, pose.Orientation() / time);
+  typedef tPose < Tdimension, decltype(TElement() / TValue()), typename si_units::operators::tQuotient<TPositionSIUnit, si_units::tSecond>::tResult, typename si_units::operators::tQuotient<TOrientationSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap > tResult;
+  return tResult(pose.Position() / time, pose.Orientation() / time);
 }
 
 // Multiplication is defined for the first derivatives so that velocities can be multiplied with a factor
-template <unsigned int Tdimension, typename TElement, typename TAutoWrapPolicy, typename TFactor>
-tPose < Tdimension, decltype(TElement() * TFactor()), si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > operator * (const tPose < Tdimension, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > &pose, TFactor factor)
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy, typename TFactor>
+tPose<Tdimension, decltype(TElement() * typename std::enable_if<std::is_scalar<TFactor>::value, TFactor>::type()), TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> operator * (const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose, TFactor factor)
 {
-  return tPose < Tdimension, decltype(TElement() * TFactor()), si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > (pose.Position() * factor, pose.Orientation() * factor);
+  typedef tPose<Tdimension, decltype(TElement() * TFactor()), TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> tResult;
+  return tResult(pose.Position() * factor, pose.Orientation() * factor);
 }
-
-template <unsigned int Tdimension, typename TElement, typename TAutoWrapPolicy, typename TFactor>
-tPose < Tdimension, decltype(TElement() * TFactor()), si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > operator * (TFactor factor, const tPose < Tdimension, TElement, si_units::tSIUnit < 1, 0, -1, 0, 0, 0, 0 > , si_units::tHertz, TAutoWrapPolicy > &pose)
+template <unsigned int Tdimension, typename TElement, typename TPositionSIUnit, typename TOrientationSIUnit, typename TAutoWrapPolicy, typename TFactor>
+tPose<Tdimension, decltype(TElement() * typename std::enable_if<std::is_scalar<TFactor>::value, TFactor>::type()), TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> operator * (TFactor factor, const tPose<Tdimension, TElement, TPositionSIUnit, TOrientationSIUnit, TAutoWrapPolicy> &pose)
 {
   return pose * factor;
 }

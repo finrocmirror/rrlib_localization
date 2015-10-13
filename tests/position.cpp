@@ -282,19 +282,27 @@ private:
   {
     tPosition2D<> position_2d(si_units::tLength<>(10), si_units::tLength<>(20));
     tPositionChange2D<> position_change_2d(si_units::tVelocity<>(1), si_units::tVelocity<>(2));
+    tPosition < 2, double, si_units::tSIUnit < 1, 0, -2, 0, 0, 0, 0 >> acceleration_2d(si_units::tAcceleration<>(0.1), si_units::tAcceleration<>(0.2));
 
     RRLIB_UNIT_TESTS_EQUALITY(position_2d, position_change_2d * si_units::tTime<float>(10));
     RRLIB_UNIT_TESTS_EQUALITY(position_2d, si_units::tTime<float>(10) * position_change_2d);
-
     RRLIB_UNIT_TESTS_EQUALITY(position_change_2d, position_2d / si_units::tTime<float>(10));
+
+    RRLIB_UNIT_TESTS_EQUALITY(position_change_2d, acceleration_2d * si_units::tTime<float>(10));
+    RRLIB_UNIT_TESTS_EQUALITY(position_change_2d, si_units::tTime<float>(10) * acceleration_2d);
+    RRLIB_UNIT_TESTS_EQUALITY(acceleration_2d, position_change_2d / si_units::tTime<float>(10));
 
     tPosition3D<> position_3d(si_units::tLength<>(10), si_units::tLength<>(20), si_units::tLength<>(30));
     tPositionChange3D<> position_change_3d(si_units::tVelocity<>(1), si_units::tVelocity<>(2), si_units::tVelocity<>(3));
+    tPosition < 3, double, si_units::tSIUnit < 1, 0, -2, 0, 0, 0, 0 >> acceleration_3d(si_units::tAcceleration<>(0.1), si_units::tAcceleration<>(0.2), si_units::tAcceleration<>(0.3));
 
     RRLIB_UNIT_TESTS_EQUALITY(position_3d, position_change_3d * si_units::tTime<float>(10));
     RRLIB_UNIT_TESTS_EQUALITY(position_3d, si_units::tTime<float>(10) * position_change_3d);
-
     RRLIB_UNIT_TESTS_EQUALITY(position_change_3d, position_3d / si_units::tTime<float>(10));
+
+    RRLIB_UNIT_TESTS_EQUALITY(position_change_3d, acceleration_3d * si_units::tTime<float>(10));
+    RRLIB_UNIT_TESTS_EQUALITY(position_change_3d, si_units::tTime<float>(10) * acceleration_3d);
+    RRLIB_UNIT_TESTS_EQUALITY(acceleration_3d, position_change_3d / si_units::tTime<float>(10));
   }
 };
 
