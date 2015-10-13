@@ -350,19 +350,29 @@ private:
   {
     tPose2D<> pose_2d(10, 20, tPose2D<>::tOrientationComponent<>(2));
     tPoseChange2D<> pose_change_2d(1, 2, tTwist2D<>::tOrientationComponent<>(0.2));
+    typedef tPose < 2, double, si_units::tSIUnit < 1, 0, -2, 0, 0, 0, 0 > , si_units::tSIUnit < 0, 0, -2, 0, 0, 0, 0 > , math::angle::NoWrap > tAcceleration2D;
+    tAcceleration2D acceleration_2d(0.1, 0.2, tAcceleration2D::tOrientationComponent<>(0.02));
 
     RRLIB_UNIT_TESTS_EQUALITY(pose_2d, tPose2D<>(pose_change_2d * si_units::tTime<float>(10)));
     RRLIB_UNIT_TESTS_EQUALITY(pose_2d, tPose2D<>(si_units::tTime<float>(10) * pose_change_2d));
-
     RRLIB_UNIT_TESTS_ASSERT(IsEqual(pose_change_2d, pose_2d / si_units::tTime<float>(10), 0));
+
+    RRLIB_UNIT_TESTS_EQUALITY(pose_change_2d, acceleration_2d * si_units::tTime<float>(10));
+    RRLIB_UNIT_TESTS_EQUALITY(pose_change_2d, si_units::tTime<float>(10) * acceleration_2d);
+    RRLIB_UNIT_TESTS_EQUALITY(acceleration_2d, pose_change_2d / si_units::tTime<float>(10));
 
     tPose3D<> pose_3d(10, 20, 30, tPose3D<>::tOrientationComponent<>(2), tPose3D<>::tOrientationComponent<>(1), tPose3D<>::tOrientationComponent<>(1.6));
     tPoseChange3D<> pose_change_3d(1, 2, 3, tTwist3D<>::tOrientationComponent<>(0.2), tTwist3D<>::tOrientationComponent<>(0.1), tTwist3D<>::tOrientationComponent<>(0.16));
+    typedef tPose < 3, double, si_units::tSIUnit < 1, 0, -2, 0, 0, 0, 0 > , si_units::tSIUnit < 0, 0, -2, 0, 0, 0, 0 > , math::angle::NoWrap > tAcceleration3D;
+    tAcceleration3D acceleration_3d(0.1, 0.2, 0.3, tAcceleration3D::tOrientationComponent<>(0.02), tAcceleration3D::tOrientationComponent<>(0.01), tAcceleration3D::tOrientationComponent<>(0.016));
 
     RRLIB_UNIT_TESTS_EQUALITY(pose_3d, tPose3D<>(pose_change_3d * si_units::tTime<float>(10)));
     RRLIB_UNIT_TESTS_EQUALITY(pose_3d, tPose3D<>(si_units::tTime<float>(10) * pose_change_3d));
-
     RRLIB_UNIT_TESTS_ASSERT(IsEqual(pose_change_3d, pose_3d / si_units::tTime<float>(10), 0));
+
+    RRLIB_UNIT_TESTS_EQUALITY(pose_change_3d, acceleration_3d * si_units::tTime<float>(10));
+    RRLIB_UNIT_TESTS_EQUALITY(pose_change_3d, si_units::tTime<float>(10) * acceleration_3d);
+    RRLIB_UNIT_TESTS_EQUALITY(acceleration_3d, pose_change_3d / si_units::tTime<float>(10));
   }
 
   void MultiplyVelocityWithFactor()

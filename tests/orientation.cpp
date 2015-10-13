@@ -230,7 +230,7 @@ private:
     RRLIB_UNIT_TESTS_EQUALITY(tOrientation2D(tAngle2D(1 + 2)), tOrientation2D(tAngle2D(1)) + tOrientation2D(tAngle2D(2)));
     RRLIB_UNIT_TESTS_EQUALITY(tOrientation2D(tAngle2D(1 - 2)), tOrientation2D(tAngle2D(1)) - tOrientation2D(tAngle2D(2)));
     RRLIB_UNIT_TESTS_EQUALITY(tOrientation2D(tAngle2D(2 * 3)), tOrientation2D(tAngle2D(2)) * 3);
-    RRLIB_UNIT_TESTS_EQUALITY(tOrientation2D(tAngle2D(2 * 3)), 3 * tOrientation2D(tAngle2D(2)));
+    RRLIB_UNIT_TESTS_EQUALITY(tOrientation2D(tAngle2D(2)) * 3, 3 * tOrientation2D(tAngle2D(2)));
 
     typedef localization::tOrientation3D<double> tOrientation3D;
     typedef tOrientation3D::tComponent<> tAngle3D;
@@ -238,7 +238,7 @@ private:
     RRLIB_UNIT_TESTS_EQUALITY(tOrientation3D(tAngle3D(1 + 2), tAngle3D(2 + 3), tAngle3D(3 + 4)), tOrientation3D(tAngle3D(1), tAngle3D(2), tAngle3D(3)) + tOrientation3D(tAngle3D(2), tAngle3D(3), tAngle3D(4)));
     RRLIB_UNIT_TESTS_EQUALITY(tOrientation3D(tAngle3D(1 - 2), tAngle3D(2 - 3), tAngle3D(3 - 4)), tOrientation3D(tAngle3D(1), tAngle3D(2), tAngle3D(3)) - tOrientation3D(tAngle3D(2), tAngle3D(3), tAngle3D(4)));
     RRLIB_UNIT_TESTS_EQUALITY(tOrientation3D(tAngle2D(2 * 3), tAngle3D(3 * 3), tAngle3D(4 * 3)), tOrientation3D(tAngle3D(2), tAngle3D(3), tAngle3D(4)) * 3);
-    RRLIB_UNIT_TESTS_EQUALITY(tOrientation3D(tAngle2D(2 * 3), tAngle3D(3 * 3), tAngle3D(4 * 3)), 3 * tOrientation3D(tAngle3D(2), tAngle3D(3), tAngle3D(4)));
+    RRLIB_UNIT_TESTS_EQUALITY(tOrientation3D(tAngle3D(2), tAngle3D(3), tAngle3D(4)) * 3, 3 * tOrientation3D(tAngle3D(2), tAngle3D(3), tAngle3D(4)));
   }
 
   void Streaming()
@@ -332,21 +332,30 @@ private:
   {
     typedef si_units::tQuantity<si_units::tNoUnit, math::tAngle<double, math::angle::Degree, math::angle::NoWrap>> tAngle;
     typedef si_units::tQuantity<si_units::tHertz, math::tAngle<double, math::angle::Degree, math::angle::NoWrap>> tAngularVelocity;
+    typedef si_units::tQuantity < si_units::tSIUnit < 0, 0, -2, 0, 0, 0, 0 > , math::tAngle<double, math::angle::Degree, math::angle::NoWrap >> tAngularAcceleration;
     tOrientation2D<> orientation_2d(tAngle(20));
     tOrientationChange2D<> orientation_change_2d(tAngularVelocity(2));
+    tOrientation < 2, double, si_units::tSIUnit < 0, 0, -2, 0, 0, 0, 0 > , math::angle::NoWrap > acceleration_2d(tAngularAcceleration(0.2));
 
     RRLIB_UNIT_TESTS_EQUALITY(orientation_2d, tOrientation2D<>(orientation_change_2d * si_units::tTime<float>(10)));
     RRLIB_UNIT_TESTS_EQUALITY(orientation_2d, tOrientation2D<>(si_units::tTime<float>(10) * orientation_change_2d));
-
     RRLIB_UNIT_TESTS_ASSERT(IsEqual(orientation_change_2d, orientation_2d / si_units::tTime<float>(10), 0));
+
+    RRLIB_UNIT_TESTS_EQUALITY(orientation_change_2d, acceleration_2d * si_units::tTime<float>(10));
+    RRLIB_UNIT_TESTS_EQUALITY(orientation_change_2d, si_units::tTime<float>(10) * acceleration_2d);
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(acceleration_2d, orientation_change_2d / si_units::tTime<float>(10), 0));
 
     tOrientation3D<> orientation_3d(tAngle(10), tAngle(20), tAngle(30));
     tOrientationChange3D<> orientation_change_3d(tAngularVelocity(1), tAngularVelocity(2), tAngularVelocity(3));
+    tOrientation < 3, double, si_units::tSIUnit < 0, 0, -2, 0, 0, 0, 0 > , math::angle::NoWrap > acceleration_3d(tAngularAcceleration(0.1), tAngularAcceleration(0.2), tAngularAcceleration(0.3));
 
     RRLIB_UNIT_TESTS_EQUALITY(orientation_3d, tOrientation3D<>(orientation_change_3d * si_units::tTime<float>(10)));
     RRLIB_UNIT_TESTS_EQUALITY(orientation_3d, tOrientation3D<>(si_units::tTime<float>(10) * orientation_change_3d));
-
     RRLIB_UNIT_TESTS_ASSERT(IsEqual(orientation_change_3d, orientation_3d / si_units::tTime<float>(10), 0));
+
+    RRLIB_UNIT_TESTS_EQUALITY(orientation_change_3d, acceleration_3d * si_units::tTime<float>(10));
+    RRLIB_UNIT_TESTS_EQUALITY(orientation_change_3d, si_units::tTime<float>(10) * acceleration_3d);
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(acceleration_3d, orientation_change_3d / si_units::tTime<float>(10), 0));
   }
 };
 

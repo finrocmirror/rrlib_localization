@@ -89,44 +89,48 @@ using tOrientationChange3D = tOrientation<3, TElement, si_units::tHertz, TAutoWr
 //----------------------------------------------------------------------
 // Arithmetic operators
 //----------------------------------------------------------------------
-//! Operator to multiply a \ref tOrientation2D with a factor
-template <typename TElement, typename TValue>
-tOrientation2D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (const tOrientationChange2D<TElement> &orientation_change, si_units::tTime<TValue> time)
+//! Operator to multiply a (maybe derived) 2D \ref tOrientation with time (intergrate over time)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy, typename TValue>
+tOrientation<2, decltype(TElement() * TValue()), typename si_units::operators::tProduct<TSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap> operator * (const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &orientation, si_units::tTime<TValue> time)
 {
-  return tOrientation2D<decltype(TElement() * TValue()), math::angle::NoWrap>(orientation_change.Yaw() * time);
+  typedef tOrientation<2, decltype(TElement() * TValue()), typename si_units::operators::tProduct<TSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap> tResult;
+  return tResult(orientation.Yaw() * time);
 }
-//! Operator to multiply a factor with a \ref tOrientation2D
-template <typename TElement, typename TValue>
-tOrientation2D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tOrientationChange2D<TElement> &orientation_change)
+//! Operator to multiply time with a (maybe derived) 2D \ref tOrientation (intergrate over time)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy, typename TValue>
+tOrientation<2, decltype(TElement() * TValue()), typename si_units::operators::tProduct<TSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &orientation)
 {
-  return orientation_change * time;
-}
-
-//! Operator to mutliply a \ref tOrientationChange3D with time, result is a \ref tOrientation3D
-template <typename TElement, typename TValue>
-tOrientation3D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (const tOrientationChange3D<TElement> &orientation_change, si_units::tTime<TValue> time)
-{
-  return tOrientation3D<decltype(TElement() * TValue()), math::angle::NoWrap>(orientation_change.Roll() * time, orientation_change.Pitch() * time, orientation_change.Yaw() * time);
-}
-//! Operator to mutliply time with a \ref tOrientationChange3D, result is a \ref tOrientation3D
-template <typename TElement, typename TValue>
-tOrientation3D<decltype(TElement() * TValue()), math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tOrientationChange3D<TElement> &orientation_change)
-{
-  return orientation_change * time;
+  return orientation * time;
 }
 
-//! Operator to divide a \ref tOrientation2D by time, result is a \ref tOrientationChange2D
-template <typename TElement, typename TValue>
-tOrientationChange2D < decltype(TElement() / TValue()) > operator / (const tOrientation2D<TElement> &orientation, si_units::tTime<TValue> time)
+//! Operator to multiply a (maybe derived) 3D \ref tOrientation with time (intergrate over time)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy, typename TValue>
+tOrientation<3, decltype(TElement() * TValue()), typename si_units::operators::tProduct<TSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap> operator * (const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &orientation, si_units::tTime<TValue> time)
 {
-  return tOrientationChange2D < decltype(TElement() / TValue()) > (orientation.Yaw() / time);
+  typedef tOrientation<3, decltype(TElement() * TValue()), typename si_units::operators::tProduct<TSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap> tResult;
+  return tResult(orientation.Roll() * time, orientation.Pitch() * time, orientation.Yaw() * time);
+}
+//! Operator to multiply time with a (maybe derived) 3D \ref tOrientation (intergrate over time)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy, typename TValue>
+tOrientation<3, decltype(TElement() * TValue()), typename si_units::operators::tProduct<TSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap> operator * (si_units::tTime<TValue> time, const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &orientation)
+{
+  return orientation * time;
 }
 
-//! Operator to divide a \ref tOrientation3D by time, result is a \ref tOrientationChange3D
-template <typename TElement, typename TValue>
-tOrientationChange3D < decltype(TElement() / TValue()) > operator / (const tOrientation3D<TElement> &orientation, si_units::tTime<TValue> time)
+//! Operator to divide a (maybe derived) 2D \ref tOrientation by time (differentiate by time)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy, typename TValue>
+tOrientation < 2, decltype(TElement() / TValue()), typename si_units::operators::tQuotient<TSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap > operator / (const tOrientation<2, TElement, TSIUnit, TAutoWrapPolicy> &orientation, si_units::tTime<TValue> time)
 {
-  return tOrientationChange3D < decltype(TElement() / TValue()) > (orientation.Roll() / time, orientation.Pitch() / time, orientation.Yaw() / time);
+  typedef tOrientation < 2, decltype(TElement() / TValue()), typename si_units::operators::tQuotient<TSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap > tResult;
+  return tResult(orientation.Yaw() / time);
+}
+
+//! Operator to divide a (maybe derived) 3D \ref tOrientation by time (differentiate by time)
+template <typename TElement, typename TSIUnit, typename TAutoWrapPolicy, typename TValue>
+tOrientation < 3, decltype(TElement() / TValue()), typename si_units::operators::tQuotient<TSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap > operator / (const tOrientation<3, TElement, TSIUnit, TAutoWrapPolicy> &orientation, si_units::tTime<TValue> time)
+{
+  typedef tOrientation < 3, decltype(TElement() / TValue()), typename si_units::operators::tQuotient<TSIUnit, si_units::tSecond>::tResult, math::angle::NoWrap > tResult;
+  return tResult(orientation.Roll() / time, orientation.Pitch() / time, orientation.Yaw() / time);
 }
 
 //----------------------------------------------------------------------
