@@ -264,7 +264,7 @@ private:
     source.clear();
     source << "120°";
     source >> orientation_2d;
-    RRLIB_UNIT_TESTS_EQUALITY(tOrientation2D<double>(math::tAngle<double, math::angle::Degree>(120)), orientation_2d);
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(tOrientation2D<double>(math::tAngle<double, math::angle::Degree>(120)), orientation_2d));
     source.clear();
     source << "(120)";
     RRLIB_UNIT_TESTS_EXCEPTION(source >> orientation_2d, std::ios_base::failure);
