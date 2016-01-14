@@ -248,17 +248,17 @@ private:
   {
     typedef localization::tPose2D<double> tPose2D;
     typedef tPose2D::tOrientationComponent<> tAngle2D;
-    RRLIB_UNIT_TESTS_EQUALITY(tPose2D(0, 4, rrlib::math::cPI_2), tPose2D(1, 2, tAngle2D()).GetPoseInParentFrame(tPose2D(2, 3, rrlib::math::cPI_2)));
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(tPose2D(0, 4, rrlib::math::cPI_2), tPose2D(1, 2, tAngle2D()).GetPoseInParentFrame(tPose2D(2, 3, rrlib::math::cPI_2))));
     RRLIB_UNIT_TESTS_EQUALITY(tPose2D(1, 2, tAngle2D()), tPose2D(0, 4, rrlib::math::cPI_2).GetPoseInLocalFrame(tPose2D(2, 3, rrlib::math::cPI_2)));
     RRLIB_UNIT_TESTS_EQUALITY(tPose2D(-5.7245235339065470015, -1.1089771457293844392, rrlib::math::tAngleDeg(-59.999999999999985789)), tPose2D(4, 0, rrlib::math::tAngleDeg(50)).GetPoseInLocalFrame(tPose2D(1, 5, rrlib::math::tAngleDeg(110))));
 
     typedef localization::tPose3D<double> tPose3D;
     typedef tPose3D::tOrientationComponent<> tAngle3D;
-    RRLIB_UNIT_TESTS_EQUALITY(tPose3D(tPose2D(0, 4, rrlib::math::cPI_2)), tPose3D(tPose2D(1, 2, tAngle2D())).GetPoseInParentFrame(tPose3D(tPose2D(2, 3, rrlib::math::cPI_2))));
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(tPose3D(tPose2D(0, 4, rrlib::math::cPI_2)), tPose3D(tPose2D(1, 2, tAngle2D())).GetPoseInParentFrame(tPose3D(tPose2D(2, 3, rrlib::math::cPI_2)))));
     RRLIB_UNIT_TESTS_EQUALITY(tPose3D(5, 4, 6, tAngle3D(rrlib::math::cPI_2), tAngle3D(), tAngle3D(rrlib::math::cPI_2)), tPose3D(1, 2, 3, tAngle3D(), tAngle3D(), tAngle3D()).GetPoseInParentFrame(tPose3D(2, 3, 4, tAngle3D(rrlib::math::cPI_2), tAngle3D(), tAngle3D(rrlib::math::cPI_2))));
     RRLIB_UNIT_TESTS_EQUALITY(tPose3D(tPose2D(1, 2, tAngle2D())), tPose3D(tPose2D(0, 4, rrlib::math::cPI_2)).GetPoseInLocalFrame(tPose3D(tPose2D(2, 3, rrlib::math::cPI_2))));
     RRLIB_UNIT_TESTS_EQUALITY(tPose3D(1, 2, 3, tAngle3D(), tAngle3D(), tAngle3D()), tPose3D(5, 4, 6, tAngle3D(rrlib::math::cPI_2), tAngle3D(), tAngle3D(rrlib::math::cPI_2)).GetPoseInLocalFrame(tPose3D(2, 3, 4, tAngle3D(rrlib::math::cPI_2), tAngle3D(), tAngle3D(rrlib::math::cPI_2))));
-    RRLIB_UNIT_TESTS_EQUALITY(tPose3D(7.1268527929895304496, 1.6625896653520155777, -0.83292548989809533921, rrlib::math::tAngleDeg(146.09730144611353353), rrlib::math::tAngleDeg(-58.431575860715696535), rrlib::math::tAngleDeg(101.5351421642720311)), tPose3D(4, 0, 0.5, rrlib::math::tAngleDeg(100), rrlib::math::tAngleDeg(-150), rrlib::math::tAngleDeg(50)).GetPoseInLocalFrame(tPose3D(1, 5, 5, rrlib::math::tAngleDeg(-100), rrlib::math::tAngleDeg(130), rrlib::math::tAngleDeg(110))));
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(tPose3D(7.12685279298953, 1.66258966535201, -0.83292548989809, rrlib::math::tAngleDeg(146.09730144611353), rrlib::math::tAngleDeg(-58.43157586071569), rrlib::math::tAngleDeg(101.53514216427203)), tPose3D(4, 0, 0.5, rrlib::math::tAngleDeg(100), rrlib::math::tAngleDeg(-150), rrlib::math::tAngleDeg(50)).GetPoseInLocalFrame(tPose3D(1, 5, 5, rrlib::math::tAngleDeg(-100), rrlib::math::tAngleDeg(130), rrlib::math::tAngleDeg(110))), 1E-14));
   }
 
   void Streaming()
