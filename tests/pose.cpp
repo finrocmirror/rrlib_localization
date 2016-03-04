@@ -250,7 +250,7 @@ private:
     typedef tPose2D::tOrientationComponent<> tAngle2D;
     RRLIB_UNIT_TESTS_ASSERT(IsEqual(tPose2D(0, 4, rrlib::math::cPI_2), tPose2D(1, 2, tAngle2D()).GetPoseInParentFrame(tPose2D(2, 3, rrlib::math::cPI_2))));
     RRLIB_UNIT_TESTS_EQUALITY(tPose2D(1, 2, tAngle2D()), tPose2D(0, 4, rrlib::math::cPI_2).GetPoseInLocalFrame(tPose2D(2, 3, rrlib::math::cPI_2)));
-    RRLIB_UNIT_TESTS_EQUALITY(tPose2D(-5.7245235339065470015, -1.1089771457293844392, rrlib::math::tAngleDeg(-59.999999999999985789)), tPose2D(4, 0, rrlib::math::tAngleDeg(50)).GetPoseInLocalFrame(tPose2D(1, 5, rrlib::math::tAngleDeg(110))));
+    RRLIB_UNIT_TESTS_ASSERT(IsEqual(tPose2D(-5.724523, -1.108977, rrlib::math::tAngleDeg(-59.999999)), tPose2D(4, 0, rrlib::math::tAngleDeg(50)).GetPoseInLocalFrame(tPose2D(1, 5, rrlib::math::tAngleDeg(110)))));
 
     typedef localization::tPose3D<double> tPose3D;
     typedef tPose3D::tOrientationComponent<> tAngle3D;
