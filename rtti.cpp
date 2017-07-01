@@ -57,15 +57,21 @@ using namespace rrlib::localization;
 // Type initializers
 //----------------------------------------------------------------------
 
-static tDataType<tPose2D<>> init_type_pose_2d("rrlib.localization.Pose2D");
-static tDataType<tPose3D<>> init_type_pose_3d("rrlib.localization.Pose3D");
-static tDataType<tUncertainPose2D<>> init_type_uncertain_pose_2d("rrlib.localization.UncertainPose2D");
-static tDataType<tUncertainPose3D<>> init_type_uncertain_pose_3d("rrlib.localization.UncertainPose3D");
+namespace
+{
+tType cINIT_TYPES[] =
+{
+  tDataType<tPose2D<>>("rrlib.localization.Pose2D").AddName("rrlib.localization.Pose<2u, double, rrlib.si_units.SIUnit<1, 0, 0, 0, 0, 0, 0>, rrlib.si_units.SIUnit<0, 0, 0, 0, 0, 0, 0>, rrlib.math.angle.Signed>"),
+  tDataType<tPose3D<>>("rrlib.localization.Pose3D").AddName("rrlib.localization.Pose<3u, double, rrlib.si_units.SIUnit<1, 0, 0, 0, 0, 0, 0>, rrlib.si_units.SIUnit<0, 0, 0, 0, 0, 0, 0>, rrlib.math.angle.Signed>"),
+  tDataType<tUncertainPose2D<>>("rrlib.localization.UncertainPose2D").AddName("rrlib.localization.UncertainPose<2u, double, rrlib.si_units.SIUnit<1, 0, 0, 0, 0, 0, 0>, rrlib.si_units.SIUnit<0, 0, 0, 0, 0, 0, 0>, rrlib.math.angle.Signed>"),
+  tDataType<tUncertainPose3D<>>("rrlib.localization.UncertainPose3D").AddName("rrlib.localization.UncertainPose<3u, double, rrlib.si_units.SIUnit<1, 0, 0, 0, 0, 0, 0>, rrlib.si_units.SIUnit<0, 0, 0, 0, 0, 0, 0>, rrlib.math.angle.Signed>"),
 
-static tDataType<tTwist2D<>> init_type_twist_2d("rrlib.localization.Twist2D");
-static tDataType<tTwist3D<>> init_type_twist_3d("rrlib.localization.Twist3D");
-static tDataType<tUncertainTwist2D<>> init_type_uncertain_twist_2d("rrlib.localization.UncertainTwist2D");
-static tDataType<tUncertainTwist3D<>> init_type_uncertain_twist_3d("rrlib.localization.UncertainTwist3D");
+  tDataType<tTwist2D<>>("rrlib.localization.Twist2D").AddName("rrlib.localization.Pose<2u, double, rrlib.si_units.SIUnit<1, 0, -1, 0, 0, 0, 0>, rrlib.si_units.SIUnit<0, 0, -1, 0, 0, 0, 0>, rrlib.math.angle.NoWrap>"),
+  tDataType<tTwist3D<>>("rrlib.localization.Twist3D").AddName("rrlib.localization.Pose<3u, double, rrlib.si_units.SIUnit<1, 0, -1, 0, 0, 0, 0>, rrlib.si_units.SIUnit<0, 0, -1, 0, 0, 0, 0>, rrlib.math.angle.NoWrap>"),
+  tDataType<tUncertainTwist2D<>>("rrlib.localization.UncertainTwist2D").AddName("rrlib.localization.UncertainPose<2u, double, rrlib.si_units.SIUnit<1, 0, -1, 0, 0, 0, 0>, rrlib.si_units.SIUnit<0, 0, -1, 0, 0, 0, 0>, rrlib.math.angle.NoWrap>"),
+  tDataType<tUncertainTwist3D<>>("rrlib.localization.UncertainTwist3D").AddName("rrlib.localization.UncertainPose<3u, double, rrlib.si_units.SIUnit<1, 0, -1, 0, 0, 0, 0>, rrlib.si_units.SIUnit<0, 0, -1, 0, 0, 0, 0>, rrlib.math.angle.NoWrap>")
+};
+}
 
 #endif
 
